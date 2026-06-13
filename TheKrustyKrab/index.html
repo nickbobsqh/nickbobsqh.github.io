@@ -192,12 +192,13 @@
             box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
             z-index: 1000;
             max-height: 270px;
+            transform: translateY(0); /* Default fully up */
             transition: transform 0.3s ease-in-out;
         }
 
         /* Class applied when the panel is slid down/collapsed */
         .cart-bar.collapsed {
-            transform: translateY(195px);
+            transform: translateY(195px) !important;
         }
 
         .cart-header-row {
@@ -739,6 +740,7 @@
         let cart = {};
         let currentModalItem = { name: '', basePrice: '' };
 
+        // Clean toggle logic that switches states safely every click
         function toggleCartPanel() {
             const cartBar = document.getElementById('money-cart');
             cartBar.classList.toggle('collapsed');
@@ -761,6 +763,8 @@
                 };
             }
             renderCart();
+            
+            // Pop the cart open automatically whenever a fresh item drops in
             document.getElementById('money-cart').classList.remove('collapsed');
         }
 
