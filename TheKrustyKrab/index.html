@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Krusty Krab | Home of the Krabby Patty</title>
-    <!-- Importing the bubbly SpongeBob-style font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
@@ -23,7 +22,7 @@
             color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
-            padding-bottom: 260px; /* Space so content doesn't hide behind the cart panel */
+            padding-bottom: 280px; /* Space so content doesn't hide behind the cart panel */
         }
 
         /* Header / Nautical Decor */
@@ -180,7 +179,7 @@
         /* Floating Money Cart & List Panel */
         .cart-bar {
             position: fixed;
-            bottom: 0;
+            bottom: 0; /* Controls position from bottom edge */
             left: 0;
             width: 100%;
             background-color: #228b22;
@@ -191,14 +190,13 @@
             gap: 12px;
             box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
             z-index: 1000;
-            max-height: 270px;
-            transform: translateY(0); /* Default fully up */
-            transition: transform 0.3s ease-in-out;
+            height: 260px; /* Locked height so transitions operate predictably */
+            transition: bottom 0.3s ease-in-out;
         }
 
         /* Class applied when the panel is slid down/collapsed */
         .cart-bar.collapsed {
-            transform: translateY(195px) !important;
+            bottom: -205px; /* Hides everything except the clean header row banner */
         }
 
         .cart-header-row {
@@ -207,6 +205,7 @@
             align-items: center;
             border-bottom: 2px dashed rgba(255,255,255,0.3);
             padding-bottom: 8px;
+            height: 40px;
         }
 
         .cart-text {
@@ -241,7 +240,7 @@
             flex-direction: column;
             gap: 6px;
             overflow-y: auto;
-            max-height: 110px;
+            height: 100px;
             padding-right: 10px;
         }
 
@@ -308,6 +307,7 @@
             align-self: center;
             width: 100%;
             max-width: 400px;
+            height: 45px;
         }
 
         .checkout-btn:active {
@@ -525,7 +525,6 @@
         <h2 class="menu-title">The Galley Grub Menu</h2>
         
         <div class="menu-grid">
-            <!-- Item 1 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krabby Patty</span>
@@ -538,7 +537,6 @@
                 </div>
             </div>
 
-            <!-- Item 2 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Double Krabby Patty</span>
@@ -551,7 +549,6 @@
                 </div>
             </div>
 
-            <!-- Item 3 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krusty Combo</span>
@@ -564,7 +561,6 @@
                 </div>
             </div>
 
-            <!-- Special Item: Krusty Krab Pizza -->
             <div class="menu-item special-item">
                 <div class="item-name">
                     <span>Krusty Krab Pizza</span>
@@ -577,7 +573,6 @@
                 </div>
             </div>
 
-            <!-- Item: Diet Dr. Kelp -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Diet Dr. Kelp</span>
@@ -590,7 +585,6 @@
                 </div>
             </div>
 
-            <!-- Item: Kelp Soda -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Kelp Soda</span>
@@ -603,7 +597,6 @@
                 </div>
             </div>
 
-            <!-- Item 4 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Coral Bits</span>
@@ -616,7 +609,6 @@
                 </div>
             </div>
 
-            <!-- Item 5 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Kelp Rings</span>
@@ -629,7 +621,6 @@
                 </div>
             </div>
 
-            <!-- Item 6 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Seafoam Soda</span>
@@ -643,12 +634,10 @@
             </div>
         </div>
 
-        <!-- Crew Section -->
         <div class="crew-section">
             <h2 class="crew-title">Meet the Krusty Krew</h2>
             <div class="crew-grid">
                 
-                <!-- SpongeBob -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/sb.png" alt="SpongeBob SquarePants">
@@ -659,7 +648,6 @@
                     <p>"I'm ready! I'm ready! I'm ready to flip your lunch with love and unmatched corporate loyalty!"</p>
                 </div>
 
-                <!-- Squidward -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/sq.png" alt="Squidward Tentacles">
@@ -670,7 +658,6 @@
                     <p>"Please state your order quickly so I can go back to regretting every single life choice that brought me here."</p>
                 </div>
 
-                <!-- Mr. Krabs -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/mrk.png" alt="Eugene H. Krabs">
@@ -686,14 +673,12 @@
 
     </div>
 
-    <!-- Floating Dynamic Checkout Panel -->
     <div class="cart-bar" id="money-cart">
         <div class="cart-header-row">
             <div class="cart-text" id="cart-total">Total Money Owed to Mr. Krabs: $0.00 (0 items)</div>
             <button class="toggle-panel-btn" onclick="toggleCartPanel()">⚓ Toggle Panel</button>
         </div>
         
-        <!-- Live Itemized Output Box -->
         <div class="cart-items-list" id="cart-items-container">
             <div style="color: rgba(255,255,255,0.5); font-style: italic; font-size: 0.95rem; text-align: center; padding: 10px;">
                 Your belly is empty... Add some Galley Grub!
@@ -703,7 +688,6 @@
         <button class="checkout-btn" id="checkout-button" onclick="checkout()">GIVE ME ME MONEY</button>
     </div>
 
-    <!-- Customization Modal -->
     <div class="modal-overlay" id="customize-modal">
         <div class="modal-content">
             <div class="modal-header" id="modal-item-title">Customize Item</div>
@@ -735,12 +719,11 @@
         </p>
     </footer>
 
-    <!-- Advanced Interactive Ordering Script -->
     <script>
         let cart = {};
         let currentModalItem = { name: '', basePrice: '' };
 
-        // Clean toggle logic that switches states safely every click
+        // Fully functional toggle that interacts explicitly with bottom positioning 
         function toggleCartPanel() {
             const cartBar = document.getElementById('money-cart');
             cartBar.classList.toggle('collapsed');
