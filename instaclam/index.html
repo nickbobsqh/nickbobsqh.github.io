@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Instaclam - Admin Edition</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Comic Sans MS', 'Helvetica Neue', sans-serif;
+            background: #07162c;
+            color: #e2f1ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 60px;
+        }
+
+        header {
+            width: 100%; max-width: 600px; background: #0b2240; 
+            border-bottom: 4px solid #00d2ff; padding: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        header h1 {
+            font-size: 2rem; color: #ff6b6b;
+            text-shadow: 1px 1px 0px #fffb00, 2px 2px 0px #000;
+            font-style: italic;
+        }
+
+        .refresh-btn {
+            cursor: pointer; background: #113057; padding: 6px 12px;
+            border-radius: 20px; font-size: 0.9rem; border: 2px solid #00d2ff;
+            color: #00d2ff; font-weight: bold;
+        }
+
+        .feed { width: 100%; max-width: 600px; margin-top: 20px; display: flex; flex-direction: column; gap: 25px; }
+
+        /* Identity Banner */
+        .account-bar {
+            background: #113057;
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px dashed #00d2ff;
+        }
+
+        .user-badge { display: flex; align-items: center; gap: 10px; }
+        
+        .logout-btn {
+            background: none; border: none; color: #ff6b6b; 
+            cursor: pointer; font-weight: bold; text-decoration: underline;
+        }
+
+        .create-post-card { background: #2c2a14; border: 3px solid #ff6b6b; border-radius: 16px; padding: 15px; box-shadow: 0 4px 0px #9e2a2b; }
+        .create-post-card h3 { margin-bottom: 10px; font-size: 1.1rem; color: #ffb703; }
+        .create-post-card textarea { width: 100%; height: 60px; padding: 10px; border-radius: 8px; background: #121212; color: #ffffff; border: 2px solid #00d2ff; font-family: inherit; resize: none; outline: none; }
+        .create-post-card button { margin-top: 10px; background: #00d2ff; color: #07162c; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 3px 0px #0086a3; float: right; }
+
+        /* Setup Account Portal overlay */
+        .portal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(7, 22, 44, 0.95); display: flex; 
+            justify-content: center; align-items: center; z-index: 1000;
+        }
+        .portal-box {
+            background: #0b2240; padding: 30px; border-radius: 20px;
+            border: 4px solid #fffb00; text-align: center; max-width: 400px; width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .portal-box h2 { color: #ff6b6b; margin-bottom: 15px; text-shadow: 1px 1px 0px #fff; }
+        .portal-box input { width: 100%; padding: 12px; margin: 15px 0; border-radius: 8px; border: 2px solid #00d2ff; background: #121212; color: white; font-family: inherit; font-size: 1.1rem; text-align: center; }
+        .portal-box button { background: #ffb703; color: #07162c; border: none; padding: 10px 24px; border-radius: 20px; font-weight: bold; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 0px #b58100; }
+
+        .clam-card { background: #0b2240; border: 4px solid #00d2ff; border-radius: 16px; overflow: hidden; box-shadow: 0 6px 0px #004b5c; margin-top: 25px; }
+        .post-header { display: flex; align-items: center; padding: 12px; gap: 12px; border-bottom: 1px solid #113057; position: relative; }
+        
+        /* Delete Button Action Design */
+        .delete-btn {
+            position: absolute;
+            right: 15px;
+            background: #3e1215;
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: inherit;
+        }
+        .delete-btn:hover {
+            background: #ff6b6b;
+            color: #07162c;
+        }
+
+        .avatar-placeholder { 
+            width: 40px; height: 40px; border-radius: 50%; 
+            border: 2px solid #ff6b6b; display: flex; 
+            justify-content: center; align-items: center; font-size: 1.2rem; 
+        }
+        
+        .username { font-weight: bold; color: #00d2ff; }
+        .post-image-area { width: 100%; height: 250px; background: radial-gradient(circle, #10335e 0%, #051326 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; border-bottom: 3px solid #00d2ff; }
+        .post-image-area .main-emoji { font-size: 5rem; filter: drop-shadow(0 0 12px rgba(0, 210, 255, 0.6)); }
+        .post-actions { padding: 12px; display: flex; gap: 15px; font-size: 1.4rem; }
+        .action-btn { cursor: pointer; user-select: none; }
+        .pearl-count { padding: 0 12px; font-weight: bold; font-size: 0.95rem; color: #ffb703; }
+        .post-caption { padding: 8px 12px 15px 12px; font-size: 0.95rem; line-height: 1.4; color: #ccdff0; }
+        .post-caption strong { color: #ff6b6b; margin-right: 6px; }
+    </style>
+</head>
+<body>
+
+    <div id="accountPortal" class="portal-overlay" style="display: none;">
+        <div class="portal-box">
+            <h2>Claim Your Clam Handle! 🐚</h2>
+            <p>Choose an identity before diving into the live stream feed.</p>
+            <input type="text" id="usernameInput" placeholder="e.g., star_gazer_pat" maxlength="20">
+            <button onclick="registerAccount()">Dive In!</button>
+        </div>
+    </div>
+
+    <header>
+        <h1>Instaclam Live 🌌🐚</h1>
+        <button class="refresh-btn" onclick="fetchLivePosts()">🔄 Refresh Reef</button>
+    </header>
+
+    <div class="feed">
+        <div class="account-bar">
+            <div class="user-badge">
+                <div id="myAvatar" class="avatar-placeholder">❓</div>
+                <div>Logged in as: <span id="myUsername" style="color:#00d2ff; font-weight:bold;">...</span></div>
+            </div>
+            <button class="logout-btn" onclick="logout()">Change Fish</button>
+        </div>
+
+        <div class="create-post-card">
+            <h3>Broadcast a dark-sea transmission!</h3>
+            <textarea id="captionInput" placeholder="What's floating around Bikini Bottom tonight?"></textarea>
+            <button onclick="addNewPost()">Cast Out Post</button>
+            <div style="clear:both;"></div>
+        </div>
+
+        <div id="postsFeed">
+            <p style="text-align:center; padding: 20px; color:#00d2ff;">Diving into the abyss for posts...</p>
+        </div>
+    </div>
+
+    <script>
+        // === CONNECT TO YOUR DATABASE ===
+        const SUPABASE_URL = "https://gdmbucbxgzjirtghczfa.supabase.co"; 
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkbWJ1Y2J4Z3pqaXJ0Z2hjemZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNzYyMzQsImV4cCI6MjA5Njk1MjIzNH0.dWbxCwnjBk1hr2GNvk0n8nj8fFnpfboe7NALTxZ2fVQ";
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const fishEmojis = ["🧽", "⭐", "🐙", "🦀", "🐿️", "🐳", "🐡", "🐠", "🦐", "🐚"];
+        const bioColors = ["#fffbcc", "#ffccd5", "#bbf2f6", "#ffcccc", "#e2c4a4", "#c0d6e4", "#d1f2d9", "#fae1af"];
+
+        let currentAccount = null;
+
+        function checkIdentity() {
+            const savedUser = localStorage.getItem('instaclam_user');
+            if (!savedUser) {
+                document.getElementById('accountPortal').style.display = 'flex';
+            } else {
+                currentAccount = JSON.parse(savedUser);
+                document.getElementById('accountPortal').style.display = 'none';
+                
+                document.getElementById('myUsername').innerText = currentAccount.username + (currentAccount.isAdmin ? " 👑" : "");
+                const myAv = document.getElementById('myAvatar');
+                myAv.innerText = currentAccount.emoji;
+                myAv.style.backgroundColor = currentAccount.color;
+                
+                fetchLivePosts();
+            }
+        }
+
+        function registerAccount() {
+            const nameInput = document.getElementById('usernameInput').value.trim().toLowerCase();
+            if(nameInput === "" || nameInput.length < 3) {
+                alert("Barnacles! Your handle must be at least 3 sea letters long!");
+                return;
+            }
+            const cleanName = nameInput.replace(/[^a-z0-9_]/g, "");
+
+            // ADMIN ACCOUNT CHECK TRIGGER
+            let isAdminAccount = false;
+            if (cleanName === "neptune") {
+                const pass = prompt("Enter King Neptune's Secret Passphrase:");
+                if (pass === "krabby_patty_secret_formula") {
+                    alert("Welcome back, Sire! King Neptune mode activated. 👑");
+                    isAdminAccount = true;
+                } else {
+                    alert("Imposter! Guards, seize him! (Wrong passphrase. Reverting to normal account.)");
+                    return;
+                }
+            }
+
+            const randomEmoji = isAdminAccount ? "👑" : fishEmojis[Math.floor(Math.random() * fishEmojis.length)];
+            const randomColor = isAdminAccount ? "#ffe3e8" : bioColors[Math.floor(Math.random() * bioColors.length)];
+
+            currentAccount = {
+                username: cleanName,
+                emoji: randomEmoji,
+                color: randomColor,
+                isAdmin: isAdminAccount
+            };
+
+            localStorage.setItem('instaclam_user', JSON.stringify(currentAccount));
+            checkIdentity();
+        }
+
+        function logout() {
+            if(confirm("Are you sure you want to abandon this sea identity?")) {
+                localStorage.removeItem('instaclam_user');
+                checkIdentity();
+            }
+        }
+
+        // FETCH PACKS FROM CLOUD
+        async function fetchLivePosts() {
+            const feed = document.getElementById('postsFeed');
+            
+            let { data: posts, error } = await _supabase
+                .from('instaclam_posts')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                feed.innerHTML = `<p style="color:#ff6b6b; text-align:center;">Error accessing database: ${error.message}</p>`;
+                return;
+            }
+
+            feed.innerHTML = ""; 
+
+            if(posts.length === 0) {
+                feed.innerHTML = `<p style="text-align:center; padding:20px; color:#00d2ff;">The sea floor is pitch black... drop a spark!</p>`;
+                return;
+            }
+
+            posts.forEach(post => {
+                const avatarEmoji = post.user_emoji || "🫧";
+                const avatarBg = post.user_color || "#113057";
+
+                // ADMIN & OWNER UI INJECTION CHECK
+                let deleteButtonHTML = "";
+                if (currentAccount) {
+                    if (currentAccount.isAdmin || post.username === currentAccount.username) {
+                        deleteButtonHTML = `<button class="delete-btn" onclick="deletePost(${post.id})">🗑️ Scrap</button>`;
+                    }
+                }
+
+                const card = document.createElement('div');
+                card.className = 'clam-card';
+                card.innerHTML = `
+                    <div class="post-header">
+                        <div class="avatar-placeholder" style="background: ${avatarBg};">${avatarEmoji}</div>
+                        <span class="username">${post.username}</span>
+                        ${deleteButtonHTML}
+                    </div>
+                    <div class="post-image-area">
+                        <span class="main-emoji">${avatarEmoji}</span>
+                    </div>
+                    <div class="post-actions">
+                        <span class="action-btn" onclick="this.innerText = '🦪'">⚪</span>
+                        <span>💬</span>
+                    </div>
+                    <div class="pearl-count">✨ Bioluminescent Transmission</div>
+                    <div class="post-caption">
+                        <strong>${post.username}</strong> ${escapeHTML(post.caption)}
+                    </div>
+                `;
+                feed.appendChild(card);
+            });
+        }
+
+        // DELETE POST ROW BY ID
+        async function deletePost(postId) {
+            if (!confirm("Are you sure you want to throw this post into Davy Jones' locker forever?")) {
+                return;
+            }
+
+            const { error } = await _supabase
+                .from('instaclam_posts')
+                .delete()
+                .eq('id', postId);
+
+            if (error) {
+                alert("Could not delete post: " + error.message);
+            } else {
+                fetchLivePosts(); 
+            }
+        }
+
+        // POST ONTO SERVER
+        async function addNewPost() {
+            if(!currentAccount) return;
+
+            const input = document.getElementById('captionInput');
+            const captionText = input.value.trim();
+
+            if (captionText === "") {
+                alert("Barnacles! Your message floated away empty!");
+                return;
+            }
+
+            const { error } = await _supabase
+                .from('instaclam_posts')
+                .insert([{ 
+                    username: currentAccount.username, 
+                    caption: captionText,
+                    user_emoji: currentAccount.emoji,
+                    user_color: currentAccount.color
+                }]);
+
+            if (error) {
+                alert("Could not update the sea: " + error.message);
+            } else {
+                input.value = "";
+                fetchLivePosts(); 
+            }
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        checkIdentity();
+    </script>
+</body>
+</html>
