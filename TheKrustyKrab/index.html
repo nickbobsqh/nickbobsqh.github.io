@@ -23,7 +23,7 @@
             color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
-            padding-bottom: 240px; /* Space so content doesn't hide behind the cart panel */
+            padding-bottom: 260px; /* Space so content doesn't hide behind the cart panel */
         }
 
         /* Header / Nautical Decor */
@@ -130,6 +130,13 @@
             line-height: 1.4;
         }
 
+        /* Action Buttons Wrapper */
+        .item-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
         /* Order Button */
         .order-btn {
             background-color: #ffcc00;
@@ -140,11 +147,31 @@
             font-size: 1.1rem;
             border-radius: 8px;
             cursor: pointer;
-            width: 100%;
+            flex: 2;
             transition: background 0.1s;
         }
 
         .order-btn:hover {
+            background-color: #228b22;
+            color: white;
+            border-color: #ffd700;
+        }
+
+        /* Customize Button */
+        .cust-btn {
+            background-color: #00ffff;
+            color: #003366;
+            border: 3px solid #003366;
+            padding: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            flex: 1;
+            transition: all 0.1s;
+        }
+
+        .cust-btn:hover {
             background-color: #ff3333;
             color: white;
             border-color: #ffcc00;
@@ -164,13 +191,13 @@
             gap: 12px;
             box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
             z-index: 1000;
-            max-height: 250px;
+            max-height: 270px;
             transition: transform 0.3s ease-in-out;
         }
 
         /* Class applied when the panel is slid down/collapsed */
         .cart-bar.collapsed {
-            transform: translateY(175px);
+            transform: translateY(195px);
         }
 
         .cart-header-row {
@@ -213,7 +240,7 @@
             flex-direction: column;
             gap: 6px;
             overflow-y: auto;
-            max-height: 90px;
+            max-height: 110px;
             padding-right: 10px;
         }
 
@@ -222,9 +249,21 @@
             justify-content: space-between;
             align-items: center;
             background: rgba(0, 0, 0, 0.2);
-            padding: 6px 12px;
+            padding: 8px 12px;
             border-radius: 6px;
             font-size: 1.05rem;
+        }
+
+        .cart-item-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-item-customs {
+            font-size: 0.85rem;
+            color: #ffcc00;
+            font-style: italic;
+            margin-top: 2px;
         }
 
         .item-qty-controls {
@@ -278,6 +317,97 @@
         .checkout-btn:hover {
             background-color: #fff;
             color: #228b22;
+        }
+
+        /* Customization Modal Popup Window */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fff8dc;
+            color: #333;
+            border: 8px solid #d2691e;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 450px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .modal-header {
+            color: #8b4513;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 3px dashed #d2691e;
+            padding-bottom: 8px;
+        }
+
+        .modal-options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .customize-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .customize-option input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: #228b22;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            padding: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+        }
+
+        .modal-save {
+            background-color: #ffcc00;
+            border: 3px solid #8b4513;
+            color: #333;
+        }
+
+        .modal-save:hover {
+            background-color: #228b22;
+            color: white;
+        }
+
+        .modal-cancel {
+            background-color: #bbb;
+            border: 3px solid #555;
+            color: #333;
         }
 
         /* Employee Spotlight Section */
@@ -401,7 +531,10 @@
                     <span class="item-price">$2.99</span>
                 </div>
                 <div class="item-desc">Cooked to absolute perfection by our passionate fry cook. Pure perfection on a bun.</div>
-                <button class="order-btn" onclick="addToCart('Krabby Patty', 2.99)">Add to Cart</button>
+                <div class="item-actions">
+                    <button class="order-btn" onclick="addToCart('Krabby Patty', 2.99)">Add to Cart</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Krabby Patty', 2.99)">🍔 Customize</button>
+                </div>
             </div>
 
             <!-- Item 2 -->
@@ -411,7 +544,10 @@
                     <span class="item-price">$3.99</span>
                 </div>
                 <div class="item-desc">Twice the patties, twice the flavor, twice the absolute strain on Squidward's patience.</div>
-                <button class="order-btn" onclick="addToCart('Double Krabby Patty', 3.99)">Add to Cart</button>
+                <div class="item-actions">
+                    <button class="order-btn" onclick="addToCart('Double Krabby Patty', 3.99)">Add to Cart</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Double Krabby Patty', 3.99)">🍔 Customize</button>
+                </div>
             </div>
 
             <!-- Item 3 -->
@@ -421,7 +557,10 @@
                     <span class="item-price">$5.99</span>
                 </div>
                 <div class="item-desc">Includes a regular Patty, crisp Coral Bits, and a refreshing, ice-cold Seafoam Soda.</div>
-                <button class="order-btn" onclick="addToCart('Krusty Combo', 5.99)">Add to Cart</button>
+                <div class="item-actions">
+                    <button class="order-btn" onclick="addToCart('Krusty Combo', 5.99)">Add to Cart</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Krusty Combo', 5.99)">🍔 Customize</button>
+                </div>
             </div>
 
             <!-- Special Item: Krusty Krab Pizza -->
@@ -431,7 +570,10 @@
                     <span class="item-price">$12.49</span>
                 </div>
                 <div class="item-desc"><b>The pizza for you and me!</b> Hand-delivered through sandstorms, hitchhiked pioneers, and wild rocks. Diet Dr. Kelp not included.</div>
-                <button class="order-btn" onclick="addToCart('Krusty Krab Pizza', 12.49)">Add to Cart</button>
+                <div class="item-actions">
+                    <button class="order-btn" onclick="addToCart('Krusty Krab Pizza', 12.49)">Add to Cart</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Krusty Krab Pizza', 12.49)">🍔 Customize</button>
+                </div>
             </div>
 
             <!-- Item: Diet Dr. Kelp -->
@@ -441,7 +583,10 @@
                     <span class="item-price">$1.75</span>
                 </div>
                 <div class="item-desc">Don't forget the drink! How can you expect anyone to eat their pizza without their drink?!</div>
-                <button class="order-btn" onclick="addToCart('Diet Dr. Kelp', 1.75)">Add to Cart</button>
+                <div class="item-actions">
+                    <button class="order-btn" onclick="addToCart('Diet Dr. Kelp', 1.75)">Add to Cart</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Diet Dr. Kelp', 1.75)">🍔 Customize</button>
+                </div>
             </div>
 
             <!-- Item: Kelp Soda -->
@@ -451,7 +596,10 @@
                     <span class="item-price">$1.50</span>
                 </div>
                 <div class="item-desc">A deep-green underwater classic. Packed full of sugary radioactive sea-minerals!</div>
-                <button class="order-btn" onclick="addToCart('Kelp Soda', 1.50)">Add to Cart</button>
+                <div class="item-actions">
+                    <button class="order-btn" onclick="addToCart('Kelp Soda', 1.50)">Add to Cart</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Kelp Soda', 1.50)">🍔 Customize</button>
+                </div>
             </div>
 
             <!-- Item 4 -->
@@ -461,7 +609,10 @@
                     <span class="item-price">$1.95</span>
                 </div>
                 <div class="item-desc">Crunchy, salty, and perfect for snacking while waiting for your order to be yelled out.</div>
-                <button class="order-btn" onclick="addToCart('Coral Bits', 1.95)">Add to Cart</button>
+                <div class="item-actions">
+                    <button class="order-btn" onclick="addToCart('Coral Bits', 1.95)">Add to Cart</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Coral Bits', 1.95)">🍔 Customize</button>
+                </div>
             </div>
 
             <!-- Item 5 -->
@@ -471,7 +622,10 @@
                     <span class="item-price">$1.50</span>
                 </div>
                 <div class="item-desc">Deep-fried underwater plant life shaped into delicious golden rings. Tartar sauce extra.</div>
-                <button class="order-btn" onclick="addToCart('Kelp Rings', 1.50)">Add to Cart</button>
+                <div class="item-actions">
+                    <button class="order-btn" onclick="addToCart('Kelp Rings', 1.50)">Add to Cart</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Kelp Rings', 1.50)">🍔 Customize</button>
+                </div>
             </div>
 
             <!-- Item 6 -->
@@ -481,7 +635,10 @@
                     <span class="item-price">$1.25</span>
                 </div>
                 <div class="item-desc">Bubbly, sugary, and served in a cup that we strictly wash... occasionally.</div>
-                <button class="order-btn" onclick="addToCart('Seafoam Soda', 1.25)">Add to Cart</button>
+                <div class="item-actions">
+                    <button class="order-btn" onclick="addToCart('Seafoam Soda', 1.25)">Add to Cart</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Seafoam Soda', 1.25)">🍔 Customize</button>
+                </div>
             </div>
         </div>
 
@@ -545,6 +702,31 @@
         <button class="checkout-btn" id="checkout-button" onclick="checkout()">GIVE ME ME MONEY</button>
     </div>
 
+    <!-- Customization Modal -->
+    <div class="modal-overlay" id="customize-modal">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-item-title">Customize Item</div>
+            <div class="modal-options-list">
+                <label class="customize-option">
+                    <input type="checkbox" id="opt-pickles"> Extra Pickles (+$0.25)
+                </label>
+                <label class="customize-option">
+                    <input type="checkbox" id="opt-cheese"> Sea Cheese (+$0.50)
+                </label>
+                <label class="customize-option">
+                    <input type="checkbox" id="opt-jelly"> Jellyfish Jelly (+$0.75)
+                </label>
+                <label class="customize-option">
+                    <input type="checkbox" id="opt-onions"> "Cryin' Johnny" Style / Extra Onions (+$0.30)
+                </label>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-cancel" onclick="closeCustomizeModal()">Belay That</button>
+                <button class="modal-btn modal-save" onclick="saveCustomizedItem()">Add Custom Order</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p>Located at 831 Bottom Feeder Lane, Bikini Bottom</p>
         <p class="fine-print">
@@ -555,33 +737,87 @@
     <!-- Advanced Interactive Ordering Script -->
     <script>
         let cart = {};
+        let currentModalItem = { name: '', basePrice: '' };
 
         function toggleCartPanel() {
             const cartBar = document.getElementById('money-cart');
             cartBar.classList.toggle('collapsed');
         }
 
-        function addToCart(itemName, price) {
-            if (cart[itemName]) {
-                cart[itemName].quantity += 1;
+        // Standard Add To Cart (No customization toppings)
+        function addToCart(itemName, price, customizationString = "", extraCost = 0) {
+            // Generate a unique identifier key for distinct custom versions
+            const uniqueCartKey = itemName + (customizationString ? "|" + customizationString : "");
+            const finalPrice = price + extraCost;
+
+            if (cart[uniqueCartKey]) {
+                cart[uniqueCartKey].quantity += 1;
             } else {
-                cart[itemName] = {
-                    price: price,
-                    quantity: 1
+                cart[uniqueCartKey] = {
+                    displayName: itemName,
+                    price: finalPrice,
+                    quantity: 1,
+                    customs: customizationString
                 };
             }
             renderCart();
-            
             document.getElementById('money-cart').classList.remove('collapsed');
         }
 
-        function changeQuantity(itemName, delta) {
-            if (!cart[itemName]) return;
+        // Customization Modal Management
+        function openCustomizeModal(itemName, price) {
+            currentModalItem.name = itemName;
+            currentModalItem.basePrice = price;
             
-            cart[itemName].quantity += delta;
+            document.getElementById('modal-item-title').innerText = `Fixin's for ${itemName}`;
             
-            if (cart[itemName].quantity <= 0) {
-                delete cart[itemName];
+            // Clear prior checkbox values
+            document.getElementById('opt-pickles').checked = false;
+            document.getElementById('opt-cheese').checked = false;
+            document.getElementById('opt-jelly').checked = false;
+            document.getElementById('opt-onions').checked = false;
+
+            document.getElementById('customize-modal').style.display = 'flex';
+        }
+
+        function closeCustomizeModal() {
+            document.getElementById('customize-modal').style.display = 'none';
+        }
+
+        function saveCustomizedItem() {
+            let selectedToppings = [];
+            let addedCost = 0;
+
+            if (document.getElementById('opt-pickles').checked) {
+                selectedToppings.push("Extra Pickles");
+                addedCost += 0.25;
+            }
+            if (document.getElementById('opt-cheese').checked) {
+                selectedToppings.push("Sea Cheese");
+                addedCost += 0.50;
+            }
+            if (document.getElementById('opt-jelly').checked) {
+                selectedToppings.push("Jellyfish Jelly");
+                addedCost += 0.75;
+            }
+            if (document.getElementById('opt-onions').checked) {
+                selectedToppings.push("Cryin' Johnny Style");
+                addedCost += 0.30;
+            }
+
+            const toppingSummary = selectedToppings.length > 0 ? selectedToppings.join(', ') : "Standard Prep";
+
+            addToCart(currentModalItem.name, currentModalItem.basePrice, toppingSummary, addedCost);
+            closeCustomizeModal();
+        }
+
+        function changeQuantity(cartKey, delta) {
+            if (!cart[cartKey]) return;
+            
+            cart[cartKey].quantity += delta;
+            
+            if (cart[cartKey].quantity <= 0) {
+                delete cart[cartKey];
             }
             renderCart();
         }
@@ -603,19 +839,26 @@
                 return;
             }
 
-            keys.forEach(itemName => {
-                const item = cart[itemName];
+            keys.forEach(key => {
+                const item = cart[key];
                 const itemTotalCost = item.price * item.quantity;
                 totalCash += itemTotalCost;
                 totalItems += item.quantity;
 
                 const itemRow = document.createElement('div');
                 itemRow.className = 'cart-list-item';
+                
+                // Formulate nested custom instructions if applicable
+                const customLabelHTML = item.customs ? `<span class="cart-item-customs">(${item.customs})</span>` : '';
+
                 itemRow.innerHTML = `
-                    <span>${itemName} (x${item.quantity}) - $${itemTotalCost.toFixed(2)}</span>
+                    <div class="cart-item-details">
+                        <span>${item.displayName} (x${item.quantity}) - $${itemTotalCost.toFixed(2)}</span>
+                        ${customLabelHTML}
+                    </div>
                     <div class="item-qty-controls">
-                        <button class="qty-btn" onclick="changeQuantity('${itemName}', -1)">-</button>
-                        <button class="qty-btn" onclick="changeQuantity('${itemName}', 1)">+</button>
+                        <button class="qty-btn" onclick="changeQuantity('${key}', -1)">-</button>
+                        <button class="qty-btn" onclick="changeQuantity('${key}', 1)">+</button>
                     </div>
                 `;
                 container.appendChild(itemRow);
