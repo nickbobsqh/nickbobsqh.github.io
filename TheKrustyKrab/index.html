@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Krusty Krab | Home of the Krabby Patty</title>
+    <!-- Importing the bubbly SpongeBob-style font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+    
     <style>
         /* Base Styling & Underwater Vibes */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            /* Applying the SpongeBob style font globally */
+            font-family: 'Fredoka', 'Comic Sans MS', sans-serif; 
         }
 
         body {
@@ -25,7 +31,7 @@
         header {
             background-color: #d2691e;
             border-bottom: 10px solid #8b4513;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
             position: relative;
@@ -34,22 +40,25 @@
         .anchor-deco {
             font-size: 2rem;
             color: #ffd700;
-            margin: 10px 0;
+            margin-bottom: 10px;
         }
 
         h1 {
             color: #ffcc00;
-            font-size: 3rem;
-            text-shadow: 3px 3px 0px #ff0000, 5px 5px 0px #000;
-            letter-spacing: 2px;
+            font-size: 3.5rem;
+            font-weight: 900;
+            /* Classic 3D SpongeBob drop shadow effect */
+            text-shadow: 4px 4px 0px #ff0000, 7px 7px 0px #111;
+            letter-spacing: 3px;
             text-transform: uppercase;
         }
 
         .slogan {
             font-style: italic;
             color: #fff;
-            font-size: 1.2rem;
-            margin-top: 5px;
+            font-size: 1.4rem;
+            margin-top: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
         }
 
         /* Main Layout */
@@ -66,9 +75,10 @@
         .banner {
             background-color: #ff3333;
             color: yellow;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 1.1rem;
             border-radius: 5px;
             margin-bottom: 25px;
             border: 2px solid white;
@@ -85,9 +95,10 @@
         .menu-title {
             text-align: center;
             color: #00ffff;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            text-decoration: underline;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-shadow: 3px 3px 0px #000;
         }
 
         .menu-grid {
@@ -99,13 +110,14 @@
         .menu-item {
             background-color: #fff8dc;
             color: #333;
-            padding: 15px;
+            padding: 18px;
             border-radius: 10px;
             border: 5px solid #d2691e;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             transition: transform 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         .menu-item:hover {
@@ -113,8 +125,8 @@
         }
 
         .item-name {
-            font-size: 1.4rem;
-            font-weight: bold;
+            font-size: 1.5rem;
+            font-weight: 700;
             color: #8b4513;
             display: flex;
             justify-content: space-between;
@@ -126,20 +138,22 @@
         }
 
         .item-desc {
-            font-size: 0.95rem;
-            margin: 10px 0;
-            color: #555;
+            font-size: 1rem;
+            margin: 12px 0;
+            color: #444;
             flex-grow: 1;
+            line-height: 1.4;
         }
 
         /* Order Button */
         .order-btn {
             background-color: #ffcc00;
             color: #333;
-            border: 2px solid #8b4513;
-            padding: 8px;
-            font-weight: bold;
-            border-radius: 5px;
+            border: 3px solid #8b4513;
+            padding: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 8px;
             cursor: pointer;
             width: 100%;
             transition: background 0.1s;
@@ -148,6 +162,7 @@
         .order-btn:hover {
             background-color: #ff3333;
             color: white;
+            border-color: #ffcc00;
         }
 
         /* Floating Money Cart */
@@ -167,21 +182,28 @@
         }
 
         .cart-text {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: white;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px black;
+            font-weight: 700;
+            text-shadow: 2px 2px 0px #000;
         }
 
         .checkout-btn {
             background-color: #ffd700;
             color: #111;
-            font-size: 1.1rem;
-            font-weight: bold;
-            padding: 10px 20px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 10px 25px;
             border: 3px solid white;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
+            text-shadow: 1px 1px 0px #fff;
+            box-shadow: 0 4px 0px #b8860b;
+        }
+
+        .checkout-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px #b8860b;
         }
 
         .checkout-btn:hover {
@@ -189,7 +211,7 @@
             color: #228b22;
         }
 
-        /* Crew Section */
+        /* Employee Spotlight Section */
         .crew-section {
             margin-top: 40px;
             border-top: 4px solid #00ffff;
@@ -199,8 +221,9 @@
         .crew-title {
             text-align: center;
             color: #ffcc00;
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 2.3rem;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 0px #000;
         }
 
         .crew-grid {
@@ -214,30 +237,46 @@
             background: #112244;
             border: 3px solid #ffcc00;
             border-radius: 10px;
-            padding: 15px;
+            padding: 20px;
             width: 280px;
             text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .crew-card h3 {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 5px;
         }
 
         .crew-role {
             color: #00ffff;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .crew-card p {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            font-style: italic;
         }
 
         /* Microscopic Footer */
         footer {
             text-align: center;
-            padding: 30px;
+            padding: 40px 20px;
             margin-top: 40px;
             background-color: #001f3f;
             border-top: 5px solid #8b4513;
         }
 
         .fine-print {
-            font-size: 0.5rem;
+            font-family: sans-serif; /* Keep fine print boring so nobody reads it */
+            font-size: 0.6rem;
             color: #777;
-            line-height: 1.2;
+            line-height: 1.3;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -367,9 +406,6 @@
             
             // Update the floating cart text
             document.getElementById('cart-total').innerText = `Total Money Owed to Mr. Krabs: $${totalCash.toFixed(2)} (${totalItems} items)`;
-            
-            // Fun audio cue alternative since we don't have local sound files
-            console.log(`Added ${itemName} to cart! Ka-ching!`);
         }
 
         function checkout() {
