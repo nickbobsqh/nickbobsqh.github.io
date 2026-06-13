@@ -183,19 +183,21 @@
         }
 
         function registerAccount() {
-            const nameInput = document.getElementById('usernameInput').value.trim().toLowerCase();
-            if(nameInput === "" || nameInput.length < 3) {
+            const rawInput = document.getElementById('usernameInput').value.trim();
+            if(rawInput === "" || rawInput.length < 3) {
                 alert("Barnacles! Your handle must be at least 3 sea letters long!");
                 return;
             }
-            const cleanName = nameInput.replace(/[^a-z0-9_]/g, "");
+            
+            // Clean the username but allow uppercase so NickBobSqH works perfectly
+            const cleanName = rawInput.replace(/[^a-zA-Z0-9_]/g, "");
 
             // ADMIN ACCOUNT CHECK TRIGGER
             let isAdminAccount = false;
-            if (cleanName === "neptune") {
-                const pass = prompt("Enter King Neptune's Secret Passphrase:");
-                if (pass === "krabby_patty_secret_formula") {
-                    alert("Welcome back, Sire! King Neptune mode activated. 👑");
+            if (cleanName === "NickBobSqH") {
+                const pass = prompt("Enter the Admin Passphrase:");
+                if (pass === "2954@") {
+                    alert("Welcome back, Captain! King Neptune mode activated. 👑");
                     isAdminAccount = true;
                 } else {
                     alert("Imposter! Guards, seize him! (Wrong passphrase. Reverting to normal account.)");
