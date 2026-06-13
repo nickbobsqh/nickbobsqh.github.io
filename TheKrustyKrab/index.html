@@ -575,6 +575,18 @@
 
             <div class="menu-item">
                 <div class="item-name">
+                    <span>Krusty Dog</span>
+                    <span class="item-price">$3.25</span>
+                </div>
+                <div class="item-desc">Squidward's genius invention! A succulent Krabby Patty ingredient profile hot dog that practically sells itself.</div>
+                <div class="item-actions">
+                    <button class="order-btn" onclick="addToCart('Krusty Dog', 3.25)">Add to Cart</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Krusty Dog', 3.25)">🌭 Customize</button>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-name">
                     <span>Diet Dr. Kelp</span>
                     <span class="item-price">$1.75</span>
                 </div>
@@ -582,18 +594,6 @@
                 <div class="item-actions">
                     <button class="order-btn" onclick="addToCart('Diet Dr. Kelp', 1.75)">Add to Cart</button>
                     <button class="cust-btn" onclick="openCustomizeModal('Diet Dr. Kelp', 1.75)">🍔 Customize</button>
-                </div>
-            </div>
-
-            <div class="menu-item">
-                <div class="item-name">
-                    <span>Kelp Soda</span>
-                    <span class="item-price">$1.50</span>
-                </div>
-                <div class="item-desc">A deep-green underwater classic. Packed full of sugary radioactive sea-minerals!</div>
-                <div class="item-actions">
-                    <button class="order-btn" onclick="addToCart('Kelp Soda', 1.50)">Add to Cart</button>
-                    <button class="cust-btn" onclick="openCustomizeModal('Kelp Soda', 1.50)">🍔 Customize</button>
                 </div>
             </div>
 
@@ -735,14 +735,15 @@
                 { id: "anchovies", name: "ANCHOVIES! (Meep!)", cost: 1.50 },
                 { id: "hot-sauce", name: "Volcano Sauce", cost: 0.40 }
             ],
+            "Krusty Dog": [
+                { id: "mustard", name: "Squirt of Nautical Mustard", cost: 0.15 },
+                { id: "kelp-relish", name: "Swamp Kelp Relish", cost: 0.25 },
+                { id: "footlong", name: "Footlong Upgrade", cost: 1.10 }
+            ],
             "Diet Dr. Kelp": [
                 { id: "extra-ice", name: "Extra Glacier Ice", cost: 0.15 },
                 { id: "kelp-pulp", name: "Add Organic Kelp Pulp", cost: 0.35 },
                 { id: "large", name: "Make it a Kelp Sized Cup", cost: 0.60 }
-            ],
-            "Kelp Soda": [
-                { id: "sour", name: "Sour Sea-Lime Squirt", cost: 0.20 },
-                { id: "sugar", name: "Double Sugar-Radioactive Crystals", cost: 0.40 }
             ],
             "Coral Bits": [
                 { id: "salty", name: "Extra Sea Salt", cost: 0.10 },
