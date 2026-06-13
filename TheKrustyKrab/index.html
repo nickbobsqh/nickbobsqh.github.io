@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Krusty Krab | Home of the Krabby Patty</title>
-    <!-- Importing the bubbly SpongeBob-style font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
@@ -562,7 +561,6 @@
         <h2 class="menu-title">The Galley Grub Menu</h2>
         
         <div class="menu-grid">
-            <!-- Item 1 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krabby Patty</span>
@@ -575,7 +573,6 @@
                 </div>
             </div>
 
-            <!-- Item 2 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Double Krabby Patty</span>
@@ -588,7 +585,6 @@
                 </div>
             </div>
 
-            <!-- Item 3 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krusty Combo</span>
@@ -601,7 +597,6 @@
                 </div>
             </div>
 
-            <!-- Special Item: Krusty Krab Pizza -->
             <div class="menu-item special-item">
                 <div class="item-name">
                     <span>Krusty Krab Pizza</span>
@@ -610,11 +605,10 @@
                 <div class="item-desc"><b>The pizza for you and me!</b> Hand-delivered through sandstorms, hitchhiked pioneers, and wild rocks. Diet Dr. Kelp not included.</div>
                 <div class="item-actions">
                     <button class="order-btn" onclick="addToCart('Krusty Krab Pizza', 12.49)">Add to Cart</button>
-                    <button class="cust-btn" onclick="openCustomizeModal('Krusty Krab Pizza', 12.49)">🍔 Customize</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Krusty Krab Pizza', 12.49)">🍕 Customize</button>
                 </div>
             </div>
 
-            <!-- New Item: Krusty Dogs -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krusty Dog</span>
@@ -627,7 +621,6 @@
                 </div>
             </div>
 
-            <!-- Item: Diet Dr. Kelp -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Diet Dr. Kelp</span>
@@ -640,7 +633,6 @@
                 </div>
             </div>
 
-            <!-- Item 4 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Coral Bits</span>
@@ -653,7 +645,6 @@
                 </div>
             </div>
 
-            <!-- Item 5 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Kelp Rings</span>
@@ -666,7 +657,6 @@
                 </div>
             </div>
 
-            <!-- Item 6 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Seafoam Soda</span>
@@ -680,12 +670,10 @@
             </div>
         </div>
 
-        <!-- Crew Section -->
         <div class="crew-section">
             <h2 class="crew-title">Meet the Krusty Krew</h2>
             <div class="crew-grid">
                 
-                <!-- SpongeBob -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/sb.png" alt="SpongeBob SquarePants">
@@ -696,7 +684,6 @@
                     <p>"I'm ready! I'm ready! I'm ready to flip your lunch with love and unmatched corporate loyalty!"</p>
                 </div>
 
-                <!-- Squidward -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/sq.png" alt="Squidward Tentacles">
@@ -707,7 +694,6 @@
                     <p>"Please state your order quickly so I can go back to regretting every single life choice that brought me here."</p>
                 </div>
 
-                <!-- Mr. Krabs -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/mrk.png" alt="Eugene H. Krabs">
@@ -723,21 +709,18 @@
 
     </div>
 
-    <!-- Floating Dynamic Checkout Panel -->
     <div class="cart-bar" id="money-cart">
         <div class="cart-header-row">
             <div class="cart-text" id="cart-total">Total Money Owed to Mr. Krabs: $0.00 (0 items)</div>
             <button class="toggle-panel-btn" onclick="toggleCartPanel()">⚓ Toggle Panel</button>
         </div>
         
-        <!-- Live Itemized Output Box -->
         <div class="cart-items-list" id="cart-items-container">
             <div style="color: rgba(255,255,255,0.5); font-style: italic; font-size: 0.95rem; text-align: center; padding: 10px;">
                 Your belly is empty... Add some Galley Grub!
             </div>
         </div>
 
-        <!-- Identity Fields Layer -->
         <div class="cart-identity-row">
             <label for="cust-name">Who be eatin' this?:</label>
             <input type="text" id="cust-name" class="customer-name-input" placeholder="e.g. Patrick Star" maxlength="40">
@@ -746,11 +729,9 @@
         <button class="checkout-btn" id="checkout-button" onclick="checkout()">GIVE ME ME MONEY</button>
     </div>
 
-    <!-- Customization Modal -->
     <div class="modal-overlay" id="customize-modal">
         <div class="modal-content">
             <div class="modal-header" id="modal-item-title">Customize Item</div>
-            <!-- Checkboxes will be programmatically injected here per item clicked -->
             <div class="modal-options-list" id="modal-options-container"></div>
             
             <div class="modal-actions">
@@ -767,7 +748,6 @@
         </p>
     </footer>
 
-    <!-- Advanced Interactive Ordering Script -->
     <script>
         let cart = {};
         let currentModalItem = { name: '', basePrice: '' };
@@ -952,81 +932,9 @@
         }
 
         function checkout() {
-    let totalItems = 0;
-    let totalCash = 0;
-    let itemDetailsArray = [];
-
-    // Name Field Validation logic
-    const customerNameInput = document.getElementById('cust-name').value.trim();
-
-    // The cheapskate validation check!
-    if (!customerNameInput) {
-        alert("ENTER YOUR NAME YA CHEAPSKATE!");
-        return;
-    }
-
-    // Gather order details
-    Object.keys(cart).forEach(key => {
-        totalItems += cart[key].quantity;
-        totalCash += cart[key].price * cart[key].quantity;
-        
-        let customSpecs = cart[key].customs ? ` (${cart[key].customs})` : '';
-        itemDetailsArray.push(`${cart[key].displayName} x${cart[key].quantity}${customSpecs}`);
-    });
-
-    if (totalItems === 0) {
-        alert(`Hey ${customerNameInput}, at least get somethin'. Mr. Krabs doesn't run a charity!`);
-        return;
-    }
-
-    // Disable the checkout button while sending to prevent duplicate entries
-    const checkoutBtn = document.getElementById('checkout-button');
-    checkoutBtn.disabled = true;
-    checkoutBtn.innerText = "SENDING ORDER TO MR. KRABS...";
-
-    // --- GOOGLE SHEETS INTEGRATION ---
-    // PASTE YOUR GOOGLE WEB APP URL HERE:
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwAtkvtcHPzjH8v147lM0iAwKCCrmj9O0YPKD3oWDs4swi3p1YzyXKV37OcZJrk-1ch/exec";
-
-    const orderData = {
-        customerName: customerNameInput,
-        itemsOrdered: itemDetailsArray.join(', '),
-        totalSpent: `$${totalCash.toFixed(2)}`
-    };
-
-    // Use fetch to send data to Google Sheets via the Apps Script
-    fetch(SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors", // Required to bypass cross-origin browser restrictions
-        cache: "no-cache",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderData)
-    })
-    .then(response => {
-        // Since mode is 'no-cors', we won't get a readable response body, but the data still sends!
-        alert(
-            `ARRRGH! Thanks for the money, ${customerNameInput}!\n\n` +
-            `Your order has been logged in Mr. Krabs' master ledger, and we locked away $${totalCash.toFixed(2)}!\n\n` +
-            `SpongeBob is gettin' to work! ARRRGH ARGHARGH!`
-        );
-
-        // Wipe cart and name clean on completion
-        cart = {};
-        document.getElementById('cust-name').value = '';
-        renderCart();
-    })
-    .catch(error => {
-        console.error("Ledger Error:", error);
-        alert("Barnacles! The order couldn't reach the spreadsheet. Try again, boyo!");
-    })
-    .finally(() => {
-        // Re-enable checkout button
-        checkoutBtn.disabled = false;
-        checkoutBtn.innerText = "GIVE ME ME MONEY";
-    });
-}
+            let totalItems = 0;
+            let totalCash = 0;
+            let itemDetailsArray = [];
 
             // Name Field Validation logic
             const customerNameInput = document.getElementById('cust-name').value.trim();
@@ -1037,9 +945,13 @@
                 return;
             }
 
+            // Gather order details
             Object.keys(cart).forEach(key => {
                 totalItems += cart[key].quantity;
                 totalCash += cart[key].price * cart[key].quantity;
+                
+                let customSpecs = cart[key].customs ? ` (${cart[key].customs})` : '';
+                itemDetailsArray.push(`${cart[key].displayName} x${cart[key].quantity}${customSpecs}`);
             });
 
             if (totalItems === 0) {
@@ -1047,15 +959,56 @@
                 return;
             }
 
-            alert(
-                `ARRRGH! Thanks for the money, ${customerNameInput}!\n\n` +
-                `We gladly collected your $${totalCash.toFixed(2)}! As for your ${totalItems} items... consider it a corporate donation to the Eugene H. Krabs piggy bank! ARRRGH ARGHARGH!`
-            );
+            // Disable the checkout button while sending to prevent duplicate entries
+            const checkoutBtn = document.getElementById('checkout-button');
+            checkoutBtn.disabled = true;
+            checkoutBtn.innerText = "SENDING ORDER TO MR. KRABS...";
 
-            // Wipe cart and name clean on completion
-            cart = {};
-            document.getElementById('cust-name').value = '';
-            renderCart();
+            // --- GOOGLE SHEETS INTEGRATION ---
+            // PASTE YOUR GOOGLE WEB APP URL HERE:
+            const SCRIPT_URL = "YOUR_GOOGLE_WEB_APP_URL_HERE";
+
+            const orderData = {
+                customerName: customerNameInput,
+                itemsOrdered: itemDetailsArray.join(', '),
+                totalSpent: `$${totalCash.toFixed(2)}`
+            };
+
+            // Use fetch to send data to Google Sheets via the Apps Script
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors", // Required to bypass cross-origin browser restrictions
+                cache: "no-cache",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(orderData)
+            })
+            .then(response => {
+                // Since mode is 'no-cors', we won't get a readable response body, but the data still sends successfully!
+                alert(
+                    `ARRRGH! Thanks for the money, ${customerNameInput}!\n\n` +
+                    `Your order has been logged in Mr. Krabs' master ledger, and we locked away $${totalCash.toFixed(2)}!\n\n` +
+                    `SpongeBob is gettin' to work! ARRRGH ARGHARGH!`
+                );
+
+                // Wipe cart and name clean on completion
+                cart = {};
+                document.getElementById('cust-name').value = '';
+                renderCart();
+            })
+            .catch(error => {
+                console.error("Ledger Error:", error);
+                alert("Barnacles! The order couldn't reach the spreadsheet. Try again, boyo!");
+            })
+            .finally(() => {
+                // Re-enable checkout button
+                checkoutBtn.disabled = false;
+                checkoutBtn.innerText = "GIVE ME ME MONEY";
+                
+                // Automatically collapse panel after transactional clearing
+                document.getElementById('money-cart').classList.add('collapsed');
+            });
         }
     </script>
 
