@@ -459,7 +459,7 @@
             totalItems += 1;
             
             // Update the floating cart text
-            document.getElementById('cart-total').innerText = `Total Money Owed to Mr. Krabs: $${totalCash.toFixed(2)} (${totalItems} items)`;
+            document.getElementById('cart-total').innerText = `Total value of Cart: $${totalCash.toFixed(2)} (${totalItems} items)`;
         }
 
         // Catch for typo in item 5 button click function
@@ -474,15 +474,14 @@
             }
 
             alert(
-                `ARRRGH! Thank ye for the $${totalCash.toFixed(2)}!\n\n` +
-                `SpongeBob is happily making your ${totalItems} items right now!\n\n` +
-                `Squidward is rolling his eyes, and your internet browser is safely hoarding your fake money. Come back soon!`
+                `ARRRGH! Get scammed bucko! Thank ye for the $${totalCash.toFixed(2)} tho!\n\n` +
+                `We will never give your ${totalItems} items! ARRRGH ARGHARGH!`
             );
 
             // Reset cart
             totalCash = 0.00;
             totalItems = 0;
-            document.getElementById('cart-total').innerText = `Total Money Owed to Mr. Krabs: $0.00 (0 items)`;
+            document.getElementById('cart-total').innerText = `Total value of Cart: $0.00 (0 items)`;
         }
     </script>
 
