@@ -179,7 +179,7 @@
         /* Floating Money Cart & List Panel */
         .cart-bar {
             position: fixed;
-            bottom: 0; /* Controls position from bottom edge */
+            bottom: 0;
             left: 0;
             width: 100%;
             background-color: #228b22;
@@ -691,20 +691,8 @@
     <div class="modal-overlay" id="customize-modal">
         <div class="modal-content">
             <div class="modal-header" id="modal-item-title">Customize Item</div>
-            <div class="modal-options-list">
-                <label class="customize-option">
-                    <input type="checkbox" id="opt-pickles"> Extra Pickles (+$0.25)
-                </label>
-                <label class="customize-option">
-                    <input type="checkbox" id="opt-cheese"> Sea Cheese (+$0.50)
-                </label>
-                <label class="customize-option">
-                    <input type="checkbox" id="opt-jelly"> Jellyfish Jelly (+$0.75)
-                </label>
-                <label class="customize-option">
-                    <input type="checkbox" id="opt-onions"> "Cryin' Johnny" Style / Extra Onions (+$0.30)
-                </label>
-            </div>
+            <div class="modal-options-list" id="modal-options-container"></div>
+            
             <div class="modal-actions">
                 <button class="modal-btn modal-cancel" onclick="closeCustomizeModal()">Belay That</button>
                 <button class="modal-btn modal-save" onclick="saveCustomizedItem()">Add Custom Order</button>
@@ -723,6 +711,53 @@
         let cart = {};
         let currentModalItem = { name: '', basePrice: '' };
 
+        // Central Database containing unique customization choices for every single menu item
+        const menuCustomizations = {
+            "Krabby Patty": [
+                { id: "pickles", name: "Extra Pickles", cost: 0.25 },
+                { id: "cheese", name: "Sea Cheese", cost: 0.50 },
+                { id: "jelly", name: "Jellyfish Jelly", cost: 0.75 },
+                { id: "onions", name: "Cryin' Johnny Style (Onions)", cost: 0.30 }
+            ],
+            "Double Krabby Patty": [
+                { id: "triple", name: "Make it a Triple Patty", cost: 1.50 },
+                { id: "cheese", name: "Extra Sea Cheese", cost: 0.50 },
+                { id: "barnacle", name: "Add Barnacle Loaf", cost: 0.85 },
+                { id: "no-bun", name: "No Bun (Underwater Style)", cost: 0.00 }
+            ],
+            "Krusty Combo": [
+                { id: "king-size", name: "King-Size the Combo", cost: 1.25 },
+                { id: "kelp-shake", name: "Upgrade to Kelp Shake", cost: 0.95 },
+                { id: "extra-bits", name: "Double Coral Bits", cost: 0.75 }
+            ],
+            "Krusty Krab Pizza": [
+                { id: "crust", name: "Kelp-Crunch Crust", cost: 2.00 },
+                { id: "anchovies", name: "ANCHOVIES! (Meep!)", cost: 1.50 },
+                { id: "hot-sauce", name: "Volcano Sauce", cost: 0.40 }
+            ],
+            "Diet Dr. Kelp": [
+                { id: "extra-ice", name: "Extra Glacier Ice", cost: 0.15 },
+                { id: "kelp-pulp", name: "Add Organic Kelp Pulp", cost: 0.35 },
+                { id: "large", name: "Make it a Kelp Sized Cup", cost: 0.60 }
+            ],
+            "Kelp Soda": [
+                { id: "sour", name: "Sour Sea-Lime Squirt", cost: 0.20 },
+                { id: "sugar", name: "Double Sugar-Radioactive Crystals", cost: 0.40 }
+            ],
+            "Coral Bits": [
+                { id: "salty", name: "Extra Sea Salt", cost: 0.10 },
+                { id: "sauce", name: "Soggy Barnacle Cheese Dip", cost: 0.50 }
+            ],
+            "Kelp Rings": [
+                { id: "tartar", name: "Extra Tartar Sauce", cost: 0.30 },
+                { id: "burnt", name: "Well Done / Burnt Crisp", cost: 0.00 }
+            ],
+            "Seafoam Soda": [
+                { id: "foam", name: "Extra Carbonated Surface Foam", cost: 0.15 },
+                { id: "cherry", name: "Add Deep Sea Cherry", cost: 0.30 }
+            ]
+        };
+
         // Fully functional toggle that interacts explicitly with bottom positioning 
         function toggleCartPanel() {
             const cartBar = document.getElementById('money-cart');
@@ -731,7 +766,6 @@
 
         // Standard Add To Cart (No customization toppings)
         function addToCart(itemName, price, customizationString = "", extraCost = 0) {
-            // Generate a unique identifier key for distinct custom versions
             const uniqueCartKey = itemName + (customizationString ? "|" + customizationString : "");
             const finalPrice = price + extraCost;
 
@@ -751,18 +785,28 @@
             document.getElementById('money-cart').classList.remove('collapsed');
         }
 
-        // Customization Modal Management
+        // Customization Modal Dynamic Construction
         function openCustomizeModal(itemName, price) {
             currentModalItem.name = itemName;
             currentModalItem.basePrice = price;
             
             document.getElementById('modal-item-title').innerText = `Fixin's for ${itemName}`;
             
-            // Clear prior checkbox values
-            document.getElementById('opt-pickles').checked = false;
-            document.getElementById('opt-cheese').checked = false;
-            document.getElementById('opt-jelly').checked = false;
-            document.getElementById('opt-onions').checked = false;
+            const container = document.getElementById('modal-options-container');
+            container.innerHTML = ''; // Wipe out old choices
+            
+            const options = menuCustomizations[itemName] || [];
+            
+            // Map over specific options and loop individual dynamic inputs into DOM
+            options.forEach(opt => {
+                const optionLabel = document.createElement('label');
+                optionLabel.className = 'customize-option';
+                optionLabel.innerHTML = `
+                    <input type="checkbox" class="modal-checkbox-input" data-name="${opt.name}" data-cost="${opt.cost}">
+                    ${opt.name} (+$${opt.cost.toFixed(2)})
+                `;
+                container.appendChild(optionLabel);
+            });
 
             document.getElementById('customize-modal').style.display = 'flex';
         }
@@ -774,23 +818,15 @@
         function saveCustomizedItem() {
             let selectedToppings = [];
             let addedCost = 0;
-
-            if (document.getElementById('opt-pickles').checked) {
-                selectedToppings.push("Extra Pickles");
-                addedCost += 0.25;
-            }
-            if (document.getElementById('opt-cheese').checked) {
-                selectedToppings.push("Sea Cheese");
-                addedCost += 0.50;
-            }
-            if (document.getElementById('opt-jelly').checked) {
-                selectedToppings.push("Jellyfish Jelly");
-                addedCost += 0.75;
-            }
-            if (document.getElementById('opt-onions').checked) {
-                selectedToppings.push("Cryin' Johnny Style");
-                addedCost += 0.30;
-            }
+            
+            const checkboxes = document.querySelectorAll('.modal-checkbox-input');
+            
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedToppings.push(cb.getAttribute('data-name'));
+                    addedCost += parseFloat(cb.getAttribute('data-cost'));
+                }
+            });
 
             const toppingSummary = selectedToppings.length > 0 ? selectedToppings.join(', ') : "Standard Prep";
 
@@ -835,7 +871,6 @@
                 const itemRow = document.createElement('div');
                 itemRow.className = 'cart-list-item';
                 
-                // Formulate nested custom instructions if applicable
                 const customLabelHTML = item.customs ? `<span class="cart-item-customs">(${item.customs})</span>` : '';
 
                 itemRow.innerHTML = `
