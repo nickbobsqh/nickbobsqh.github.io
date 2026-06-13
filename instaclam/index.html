@@ -215,4 +215,224 @@
         </div>
 
         <div class="chat-feed-window" id="chatFeedBox">
-            <p style="text-align:center; color:#55729
+            <p style="text-align:center; color:#557299; font-size:0.85rem; padding-top:20px;">Connecting to reef frequencies...</p>
+        </div>
+
+        <div class="input-deck">
+            <input type="text" id="chatMessageInput" placeholder="Send a live message..." maxlength="120" onkeydown="if(event.key === 'Enter') sendChatMessage()">
+            <button onclick="sendChatMessage()">Chat</button>
+        </div>
+
+    </div>
+
+    <script>
+        // === CONNECT TO YOUR DATABASE ===
+        const SUPABASE_URL = "https://gdmbucbxgzjirtghczfa.supabase.co"; 
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkbWJ1Y2J4Z3pqaXJ0Z2hjemZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNzYyMzQsImV4cCI6MjA5Njk1MjIzNH0.dWbxCwnjBk1hr2GNvk0n8nj8fFnpfboe7NALTxZ2fVQ";
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // === APARAT USER LIVE IDENTIFIER ===
+        const APARAT_CHANNEL_USERNAME = "n1ckb0b";
+
+        const fishEmojis = ["🧽", "⭐", "🐙", "🦀", "🐿️", "🐳", "🐡", "🐠", "🦐", "🐚"];
+        const bioColors = ["#fffbcc", "#ffccd5", "#bbf2f6", "#ffcccc", "#e2c4a4", "#c0d6e4", "#d1f2d9", "#fae1af"];
+
+        let currentAccount = null;
+
+        function checkIdentity() {
+            const savedUser = localStorage.getItem('instaclam_user');
+            if (!savedUser) {
+                document.getElementById('accountPortal').style.display = 'flex';
+            } else {
+                currentAccount = JSON.parse(savedUser);
+                document.getElementById('accountPortal').style.display = 'none';
+                
+                document.getElementById('myUsername').innerText = currentAccount.username + (currentAccount.isAdmin ? " [ADMIN]" : "");
+                
+                fetchLiveChat();
+            }
+        }
+
+        function registerAccount() {
+            const rawInput = document.getElementById('usernameInput').value.trim();
+            if(rawInput === "" || rawInput.length < 3) {
+                alert("Handle must be at least 3 letters long!");
+                return;
+            }
+            
+            const cleanName = rawInput.replace(/[^a-zA-Z0-9_]/g, "");
+
+            // ADMIN LOGIC ACCOUNT VERIFICATION
+            let isAdminAccount = false;
+            if (cleanName === "NickBobSqH") {
+                const pass = prompt("Enter Admin Passphrase:");
+                if (pass === "2954@") {
+                    alert("Admin clearance granted. 👑");
+                    isAdminAccount = true;
+                } else {
+                    alert("Wrong authorization key.");
+                    return;
+                }
+            }
+
+            const randomEmoji = isAdminAccount ? "👑" : fishEmojis[Math.floor(Math.random() * fishEmojis.length)];
+            const randomColor = isAdminAccount ? "#ffe3e8" : bioColors[Math.floor(Math.random() * bioColors.length)];
+
+            currentAccount = {
+                username: cleanName,
+                emoji: randomEmoji,
+                color: randomColor,
+                isAdmin: isAdminAccount
+            };
+
+            localStorage.setItem('instaclam_user', JSON.stringify(currentAccount));
+            
+            document.getElementById('accountPortal').style.display = 'none';
+            document.getElementById('myUsername').innerText = currentAccount.username + (currentAccount.isAdmin ? " [ADMIN]" : "");
+            fetchLiveChat();
+        }
+
+        function logout() {
+            if(confirm("Log out of this handle?")) {
+                localStorage.removeItem('instaclam_user');
+                checkIdentity();
+            }
+        }
+
+        // FETCH CHAT ROW STREAM DATA
+        async function fetchLiveChat() {
+            const chatBox = document.getElementById('chatFeedBox');
+            
+            let { data: entries, error } = await _supabase
+                .from('instaclam_posts')
+                .select('*')
+                .order('created_at', { ascending: true })
+                .limit(40);
+
+            if (error) {
+                chatBox.innerHTML = `<p style="color:#ff6b6b; text-align:center;">Feed error: ${error.message}</p>`;
+                return;
+            }
+
+            chatBox.innerHTML = ""; 
+
+            if(entries.length === 0) {
+                chatBox.innerHTML = `<p style="text-align:center; padding:20px; color:#557299;">Chat is quiet. Say something below!</p>`;
+                return;
+            }
+
+            entries.forEach(entry => {
+                const avatarEmoji = entry.user_emoji || "🫧";
+                const avatarBg = entry.user_color || "#113057";
+
+                let inlineDeleteHTML = "";
+                if (currentAccount) {
+                    if (currentAccount.isAdmin || entry.username === currentAccount.username) {
+                        inlineDeleteHTML = `<button class="chat-scrap-btn" onclick="deleteChatMessage(${entry.id})">[scrap]</button>`;
+                    }
+                }
+
+                const msgRow = document.createElement('div');
+                msgRow.className = 'chat-msg';
+                msgRow.innerHTML = `
+                    <div class="chat-avatar" style="background: ${avatarBg};">${avatarEmoji}</div>
+                    <div class="chat-details">
+                        <span class="chat-name">${entry.username}:</span>
+                        <span class="chat-text">${escapeHTML(entry.caption)}</span>
+                        ${inlineDeleteHTML}
+                    </div>
+                `;
+                chatBox.appendChild(msgRow);
+            });
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // WRITE CHAT TO DB
+        async function sendChatMessage() {
+            if(!currentAccount) return;
+
+            const input = document.getElementById('chatMessageInput');
+            const messageText = input.value.trim();
+
+            if (messageText === "") return;
+
+            input.value = ""; 
+
+            const { error } = await _supabase
+                .from('instaclam_posts')
+                .insert([{ 
+                    username: currentAccount.username, 
+                    caption: messageText,
+                    user_emoji: currentAccount.emoji,
+                    user_color: currentAccount.color
+                }]);
+
+            if (error) {
+                alert("Message failed: " + error.message);
+            } else {
+                fetchLiveChat(); 
+            }
+        }
+
+        // WIPE CHAT ROW BY UNIQUE ID
+        async function deleteChatMessage(id) {
+            if (!confirm("Remove this comment from the broadcast logs?")) return;
+
+            const { error } = await _supabase
+                .from('instaclam_posts')
+                .delete()
+                .eq('id', id);
+
+            if (error) {
+                alert("Failed deletion: " + error.message);
+            } else {
+                fetchLiveChat(); 
+            }
+        }
+
+        // FETCH REAL-TIME USER LIVE METRICS FROM APARAT
+        async function syncAparatViewers() {
+            try {
+                const response = await fetch(`https://www.aparat.com/api/fa/v1/user/user/profile/username/${APARAT_CHANNEL_USERNAME}`);
+                if (!response.ok) return;
+                
+                const json = await response.json();
+                const liveInfo = json.data?.attributes?.live_info;
+                
+                const playerElement = document.getElementById('aparatPlayer');
+                const offlineGraphic = document.getElementById('offlineGraphic');
+                
+                if (liveInfo && liveInfo.is_live) {
+                    const viewCount = liveInfo.participant_count || 0;
+                    document.getElementById('liveViewerCount').innerText = `👁️ ${Number(viewCount).toLocaleString()} watching`;
+                    
+                    // Toggle visibility to show the live video frame player
+                    playerElement.style.display = "block";
+                    offlineGraphic.style.display = "none";
+                } else {
+                    document.getElementById('liveViewerCount').innerText = `👁️ Stream Offline`;
+                    
+                    // Hide the player if offline
+                    playerElement.style.display = "none";
+                    offlineGraphic.style.display = "block";
+                }
+            } catch (err) {
+                console.log("Aparat live view refresh skipped:", err);
+            }
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        checkIdentity();
+        syncAparatViewers();
+
+        setInterval(fetchLiveChat, 3000);
+        setInterval(syncAparatViewers, 10000);
+    </script>
+</body>
+</html>
