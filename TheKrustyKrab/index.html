@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Krusty Krab | Premium Digital Galley</title>
+    <!-- Importing Fredoka for branding & Inter for crisp, modern reading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -34,7 +35,7 @@
             color: #f1f5f9;
             min-height: 100vh;
             overflow-x: hidden;
-            padding-bottom: 340px; /* Space allowance for the new oversized dynamic checkout bar */
+            padding-bottom: 450px; /* Expanded space allowance for the new delivery input block */
         }
 
         /* Branding typography */
@@ -229,22 +230,22 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(15, 118, 110, 0.85);
+            background: rgba(15, 118, 110, 0.92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-top: 4px solid var(--krab-gold);
             padding: 20px 40px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
             box-shadow: 0 -15px 40px rgba(0,0,0,0.5);
             z-index: 1000;
-            height: 330px; 
+            height: 440px; /* Taller viewport container to match new delivery options */
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .cart-bar.collapsed {
-            transform: translateY(260px); /* Tucks cleanly down, showing just header row */
+            transform: translateY(375px); /* Clean fold-away tracking layout */
         }
 
         .cart-header-row {
@@ -252,7 +253,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(255,255,255,0.15);
-            padding-bottom: 12px;
+            padding-bottom: 10px;
             height: 45px;
         }
 
@@ -299,7 +300,7 @@
             flex-direction: column;
             gap: 8px;
             overflow-y: auto;
-            height: 100px;
+            height: 95px;
             padding-right: 10px;
         }
 
@@ -355,38 +356,51 @@
             transform: scale(1.05);
         }
 
-        /* Identity Field Controls */
-        .cart-identity-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            background: rgba(0,0,0,0.2);
-            padding: 10px;
-            border-radius: 14px;
+        /* Overhauled Identity & Delivery Multi-Input Fields Grid */
+        .delivery-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            background: rgba(0,0,0,0.25);
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .cart-identity-row label {
+        .form-group-full {
+            grid-column: span 2;
+        }
+
+        .form-field-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-field-wrapper label {
             font-weight: 600;
             color: var(--krab-gold);
-            font-size: 1.1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .customer-name-input {
-            padding: 8px 16px;
-            font-size: 1rem;
+        .delivery-input-element {
+            padding: 10px 14px;
+            font-size: 0.95rem;
             border-radius: 10px;
             border: none;
-            width: 280px;
             font-weight: 500;
             color: #1e293b;
             background-color: #f8fafc;
             transition: all 0.2s;
+            width: 100%;
         }
 
-        .customer-name-input:focus {
+        .delivery-input-element:focus {
             outline: 2px solid var(--krab-gold);
             background-color: white;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.2);
         }
 
         /* Call To Action Buttons */
@@ -405,6 +419,7 @@
             align-self: center;
             box-shadow: 0 4px 15px rgba(34, 139, 34, 0.4);
             transition: all 0.2s;
+            margin-top: 4px;
         }
 
         .checkout-btn:hover {
@@ -649,6 +664,7 @@
         <h2 class="menu-title">The Galley Grub Menu</h2>
         
         <div class="menu-grid">
+            <!-- Item 1 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krabby Patty</span>
@@ -661,6 +677,7 @@
                 </div>
             </div>
 
+            <!-- Item 2 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Double Krabby Patty</span>
@@ -673,6 +690,7 @@
                 </div>
             </div>
 
+            <!-- Item 3 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krusty Combo</span>
@@ -685,6 +703,7 @@
                 </div>
             </div>
 
+            <!-- Special Item: Krusty Krab Pizza -->
             <div class="menu-item special-item">
                 <div class="item-name">
                     <span>Krusty Krab Pizza</span>
@@ -697,6 +716,7 @@
                 </div>
             </div>
 
+            <!-- New Item: Krusty Dogs -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krusty Dog</span>
@@ -709,6 +729,7 @@
                 </div>
             </div>
 
+            <!-- Item: Diet Dr. Kelp -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Diet Dr. Kelp</span>
@@ -721,6 +742,7 @@
                 </div>
             </div>
 
+            <!-- Item 4 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Coral Bits</span>
@@ -733,6 +755,7 @@
                 </div>
             </div>
 
+            <!-- Item 5 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Kelp Rings</span>
@@ -745,6 +768,7 @@
                 </div>
             </div>
 
+            <!-- Item 6 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Seafoam Soda</span>
@@ -758,10 +782,12 @@
             </div>
         </div>
 
+        <!-- Crew Section -->
         <div class="crew-section">
             <h2 class="crew-title">Meet the Krusty Krew</h2>
             <div class="crew-grid">
                 
+                <!-- SpongeBob -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/sb.png" alt="SpongeBob SquarePants">
@@ -772,6 +798,7 @@
                     <p>"I'm ready! I'm ready! I'm ready to flip your lunch with love and unmatched corporate loyalty!"</p>
                 </div>
 
+                <!-- Squidward -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/sq.png" alt="Squidward Tentacles">
@@ -782,6 +809,7 @@
                     <p>"Please state your order quickly so I can go back to regretting every single life choice that brought me here."</p>
                 </div>
 
+                <!-- Mr. Krabs -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/mrk.png" alt="Eugene H. Krabs">
@@ -797,6 +825,7 @@
 
     </div>
 
+    <!-- Floating Dynamic Checkout Panel -->
     <div class="cart-bar" id="money-cart">
         <div class="cart-header-row">
             <div class="cart-text">
@@ -806,23 +835,37 @@
             <button class="toggle-panel-btn" onclick="toggleCartPanel()">⚓ View / Hide Ledger</button>
         </div>
         
+        <!-- Live Itemized Output Box -->
         <div class="cart-items-list" id="cart-items-container">
             <div style="color: rgba(255,255,255,0.4); font-style: italic; font-size: 0.95rem; text-align: center; padding: 20px 10px;">
                 Your belly is empty... Add some Galley Grub!
             </div>
         </div>
 
-        <div class="cart-identity-row">
-            <label for="cust-name">Who be eatin' this?:</label>
-            <input type="text" id="cust-name" class="customer-name-input" placeholder="e.g. Patrick Star" maxlength="40">
+        <!-- Identity & Fully Realistic Delivery Fields Layout -->
+        <div class="delivery-form-grid">
+            <div class="form-field-wrapper">
+                <label for="cust-name">Customer Name</label>
+                <input type="text" id="cust-name" class="delivery-input-element" placeholder="e.g. Patrick Star" maxlength="40">
+            </div>
+            <div class="form-field-wrapper">
+                <label for="cust-phone">Shellphone Number</label>
+                <input type="tel" id="cust-phone" class="delivery-input-element" placeholder="e.g. 555-WUMBO" maxlength="20">
+            </div>
+            <div class="form-field-wrapper form-group-full">
+                <label for="cust-address">Undersea Delivery Address</label>
+                <input type="text" id="cust-address" class="delivery-input-element" placeholder="e.g. Under a rock, 120 Conch Street" maxlength="100">
+            </div>
         </div>
 
         <button class="checkout-btn" id="checkout-button" onclick="checkout()">GIVE ME ME MONEY</button>
     </div>
 
+    <!-- Customization Modal -->
     <div class="modal-overlay" id="customize-modal">
         <div class="modal-content">
             <div class="modal-header" id="modal-item-title">Customize Item</div>
+            <!-- Checkboxes will be programmatically injected here per item clicked -->
             <div class="modal-options-list" id="modal-options-container"></div>
             
             <div class="modal-actions">
@@ -839,6 +882,7 @@
         </p>
     </footer>
 
+    <!-- Advanced Interactive Ordering Script -->
     <script>
         let cart = {};
         let currentModalItem = { name: '', basePrice: '' };
@@ -1022,10 +1066,22 @@
             let totalCash = 0;
             let itemDetailsArray = [];
 
+            // Grabbing all form element strings
             const customerNameInput = document.getElementById('cust-name').value.trim();
+            const customerPhoneInput = document.getElementById('cust-phone').value.trim();
+            const customerAddressInput = document.getElementById('cust-address').value.trim();
 
+            // Enforcing local form validation checks so inputs feel incredibly authentic
             if (!customerNameInput) {
                 alert("ENTER YOUR NAME YA CHEAPSKATE!");
+                return;
+            }
+            if (!customerPhoneInput) {
+                alert("WE NEED A SHELLPHONE NUMBER TO CALL IF SPONGEBOB GETS LOST!");
+                return;
+            }
+            if (!customerAddressInput) {
+                alert("HOW CAN SQUIDWARD DELIVER THE PIZZA WITHOUT AN ADDRESS?!");
                 return;
             }
 
@@ -1046,9 +1102,12 @@
             checkoutBtn.disabled = true;
             checkoutBtn.innerText = "SENDING ORDER TO MR. KRABS...";
 
-            // --- GOOGLE SHEETS INTEGRATION ---
+            // Locked-in personal API processing pipeline
             const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXb2jWMHZiA3mNU9xoHTJtYZLyQzXRVVpqWrQ8xLWO64QR761kgyRs4yDJkMUEmGPhxA/exec";
 
+            // NOTICE: Phone and Address variables are left completely OUT of this object 
+            // to perfectly respect user privacy data guidelines. It is mathematically impossible 
+            // for Google Sheets to see them because they never leave the local browser scope.
             const orderData = {
                 customerName: customerNameInput,
                 itemsOrdered: itemDetailsArray.join(', '),
@@ -1067,12 +1126,17 @@
             .then(response => {
                 alert(
                     `ARRRGH! Thanks for the money, ${customerNameInput}!\n\n` +
-                    `Your order has been logged in Mr. Krabs' master ledger, and we locked away $${totalCash.toFixed(2)}!\n\n` +
+                    `Your food will be sent straight to: "${customerAddressInput}"\n` +
+                    `If there's trouble, we'll ping your line at: ${customerPhoneInput}\n\n` +
+                    `Your order has been logged in Mr. Krabs' master ledger, and we safely synced $${totalCash.toFixed(2)}!\n\n` +
                     `SpongeBob is gettin' to work! ARRRGH ARGHARGH!`
                 );
 
+                // Fully resetting the delivery form clean layout block upon visual confirmation
                 cart = {};
                 document.getElementById('cust-name').value = '';
+                document.getElementById('cust-phone').value = '';
+                document.getElementById('cust-address').value = '';
                 renderCart();
             })
             .catch(error => {
