@@ -952,8 +952,81 @@
         }
 
         function checkout() {
-            let totalItems = 0;
-            let totalCash = 0;
+    let totalItems = 0;
+    let totalCash = 0;
+    let itemDetailsArray = [];
+
+    // Name Field Validation logic
+    const customerNameInput = document.getElementById('cust-name').value.trim();
+
+    // The cheapskate validation check!
+    if (!customerNameInput) {
+        alert("ENTER YOUR NAME YA CHEAPSKATE!");
+        return;
+    }
+
+    // Gather order details
+    Object.keys(cart).forEach(key => {
+        totalItems += cart[key].quantity;
+        totalCash += cart[key].price * cart[key].quantity;
+        
+        let customSpecs = cart[key].customs ? ` (${cart[key].customs})` : '';
+        itemDetailsArray.push(`${cart[key].displayName} x${cart[key].quantity}${customSpecs}`);
+    });
+
+    if (totalItems === 0) {
+        alert(`Hey ${customerNameInput}, at least get somethin'. Mr. Krabs doesn't run a charity!`);
+        return;
+    }
+
+    // Disable the checkout button while sending to prevent duplicate entries
+    const checkoutBtn = document.getElementById('checkout-button');
+    checkoutBtn.disabled = true;
+    checkoutBtn.innerText = "SENDING ORDER TO MR. KRABS...";
+
+    // --- GOOGLE SHEETS INTEGRATION ---
+    // PASTE YOUR GOOGLE WEB APP URL HERE:
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwAtkvtcHPzjH8v147lM0iAwKCCrmj9O0YPKD3oWDs4swi3p1YzyXKV37OcZJrk-1ch/exec";
+
+    const orderData = {
+        customerName: customerNameInput,
+        itemsOrdered: itemDetailsArray.join(', '),
+        totalSpent: `$${totalCash.toFixed(2)}`
+    };
+
+    // Use fetch to send data to Google Sheets via the Apps Script
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors", // Required to bypass cross-origin browser restrictions
+        cache: "no-cache",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => {
+        // Since mode is 'no-cors', we won't get a readable response body, but the data still sends!
+        alert(
+            `ARRRGH! Thanks for the money, ${customerNameInput}!\n\n` +
+            `Your order has been logged in Mr. Krabs' master ledger, and we locked away $${totalCash.toFixed(2)}!\n\n` +
+            `SpongeBob is gettin' to work! ARRRGH ARGHARGH!`
+        );
+
+        // Wipe cart and name clean on completion
+        cart = {};
+        document.getElementById('cust-name').value = '';
+        renderCart();
+    })
+    .catch(error => {
+        console.error("Ledger Error:", error);
+        alert("Barnacles! The order couldn't reach the spreadsheet. Try again, boyo!");
+    })
+    .finally(() => {
+        // Re-enable checkout button
+        checkoutBtn.disabled = false;
+        checkoutBtn.innerText = "GIVE ME ME MONEY";
+    });
+}
 
             // Name Field Validation logic
             const customerNameInput = document.getElementById('cust-name').value.trim();
