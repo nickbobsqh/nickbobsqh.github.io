@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Krusty Krab | Home of the Krabby Patty</title>
+    <!-- Importing the bubbly SpongeBob-style font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
@@ -22,7 +23,7 @@
             color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
-            padding-bottom: 280px; /* Space so content doesn't hide behind the cart panel */
+            padding-bottom: 320px; /* Expanded space to make room for name input formatting */
         }
 
         /* Header / Nautical Decor */
@@ -190,13 +191,13 @@
             gap: 12px;
             box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
             z-index: 1000;
-            height: 260px; /* Locked height so transitions operate predictably */
+            height: 310px; /* Increased height allocation for user fields */
             transition: bottom 0.3s ease-in-out;
         }
 
         /* Class applied when the panel is slid down/collapsed */
         .cart-bar.collapsed {
-            bottom: -205px; /* Hides everything except the clean header row banner */
+            bottom: -255px; /* Hides everything except the clean header row banner banner */
         }
 
         .cart-header-row {
@@ -240,7 +241,7 @@
             flex-direction: column;
             gap: 6px;
             overflow-y: auto;
-            height: 100px;
+            height: 90px;
             padding-right: 10px;
         }
 
@@ -291,6 +292,42 @@
         .qty-btn:hover {
             background-color: #ff3333;
             color: white;
+        }
+
+        /* Identity Field Selection Box Layout */
+        .cart-identity-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.15);
+            padding: 8px;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .cart-identity-row label {
+            font-weight: 700;
+            color: #ffcc00;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        .customer-name-input {
+            padding: 6px 12px;
+            font-size: 1rem;
+            border-radius: 6px;
+            border: 2px solid #8b4513;
+            width: 250px;
+            font-weight: 600;
+            color: #333;
+            background-color: #fff8dc;
+        }
+
+        .customer-name-input:focus {
+            outline: none;
+            border-color: #ffcc00;
+            box-shadow: 0 0 5px #ffcc00;
         }
 
         .checkout-btn {
@@ -525,6 +562,7 @@
         <h2 class="menu-title">The Galley Grub Menu</h2>
         
         <div class="menu-grid">
+            <!-- Item 1 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krabby Patty</span>
@@ -537,6 +575,7 @@
                 </div>
             </div>
 
+            <!-- Item 2 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Double Krabby Patty</span>
@@ -549,6 +588,7 @@
                 </div>
             </div>
 
+            <!-- Item 3 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krusty Combo</span>
@@ -561,6 +601,7 @@
                 </div>
             </div>
 
+            <!-- Special Item: Krusty Krab Pizza -->
             <div class="menu-item special-item">
                 <div class="item-name">
                     <span>Krusty Krab Pizza</span>
@@ -573,6 +614,7 @@
                 </div>
             </div>
 
+            <!-- New Item: Krusty Dogs -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krusty Dog</span>
@@ -585,6 +627,7 @@
                 </div>
             </div>
 
+            <!-- Item: Diet Dr. Kelp -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Diet Dr. Kelp</span>
@@ -597,6 +640,7 @@
                 </div>
             </div>
 
+            <!-- Item 4 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Coral Bits</span>
@@ -609,6 +653,7 @@
                 </div>
             </div>
 
+            <!-- Item 5 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Kelp Rings</span>
@@ -621,6 +666,7 @@
                 </div>
             </div>
 
+            <!-- Item 6 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Seafoam Soda</span>
@@ -634,10 +680,12 @@
             </div>
         </div>
 
+        <!-- Crew Section -->
         <div class="crew-section">
             <h2 class="crew-title">Meet the Krusty Krew</h2>
             <div class="crew-grid">
                 
+                <!-- SpongeBob -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/sb.png" alt="SpongeBob SquarePants">
@@ -648,6 +696,7 @@
                     <p>"I'm ready! I'm ready! I'm ready to flip your lunch with love and unmatched corporate loyalty!"</p>
                 </div>
 
+                <!-- Squidward -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/sq.png" alt="Squidward Tentacles">
@@ -658,6 +707,7 @@
                     <p>"Please state your order quickly so I can go back to regretting every single life choice that brought me here."</p>
                 </div>
 
+                <!-- Mr. Krabs -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/mrk.png" alt="Eugene H. Krabs">
@@ -673,24 +723,34 @@
 
     </div>
 
+    <!-- Floating Dynamic Checkout Panel -->
     <div class="cart-bar" id="money-cart">
         <div class="cart-header-row">
             <div class="cart-text" id="cart-total">Total Money Owed to Mr. Krabs: $0.00 (0 items)</div>
             <button class="toggle-panel-btn" onclick="toggleCartPanel()">⚓ Toggle Panel</button>
         </div>
         
+        <!-- Live Itemized Output Box -->
         <div class="cart-items-list" id="cart-items-container">
             <div style="color: rgba(255,255,255,0.5); font-style: italic; font-size: 0.95rem; text-align: center; padding: 10px;">
                 Your belly is empty... Add some Galley Grub!
             </div>
         </div>
 
+        <!-- Brand New Identity Fields Layer -->
+        <div class="cart-identity-row">
+            <label for="cust-name">Who be eatin' this?:</label>
+            <input type="text" id="cust-name" class="customer-name-input" placeholder="e.g. Patrick Star" maxlength="40">
+        </div>
+
         <button class="checkout-btn" id="checkout-button" onclick="checkout()">GIVE ME ME MONEY</button>
     </div>
 
+    <!-- Customization Modal -->
     <div class="modal-overlay" id="customize-modal">
         <div class="modal-content">
             <div class="modal-header" id="modal-item-title">Customize Item</div>
+            <!-- Checkboxes will be programmatically injected here per item clicked -->
             <div class="modal-options-list" id="modal-options-container"></div>
             
             <div class="modal-actions">
@@ -707,6 +767,7 @@
         </p>
     </footer>
 
+    <!-- Advanced Interactive Ordering Script -->
     <script>
         let cart = {};
         let currentModalItem = { name: '', basePrice: '' };
@@ -894,22 +955,32 @@
             let totalItems = 0;
             let totalCash = 0;
 
+            // Name Field Validation logic
+            const customerNameInput = document.getElementById('cust-name').value.trim();
+
+            if (!customerNameInput) {
+                alert("Squidward sighs deeply:\n\n\"Look, I can't check you out until you type your name. Don't make this day longer than it already is.\"");
+                return;
+            }
+
             Object.keys(cart).forEach(key => {
                 totalItems += cart[key].quantity;
                 totalCash += cart[key].price * cart[key].quantity;
             });
 
             if (totalItems === 0) {
-                alert("Atleast get somethin'.");
+                alert(`Hey ${customerNameInput}, at least get somethin'. Mr. Krabs doesn't run a charity!`);
                 return;
             }
 
             alert(
-                `ARRRGH! Get scammed bucko! Thank ye for the $${totalCash.toFixed(2)} tho!\n\n` +
-                `We will never give your ${totalItems} items! ARRRGH ARGHARGH!`
+                `ARRRGH! Thanks for the money, ${customerNameInput}!\n\n` +
+                `We gladly collected your $${totalCash.toFixed(2)}! As for your ${totalItems} items... consider it a corporate donation to the Eugene H. Krabs piggy bank! ARRRGH ARGHARGH!`
             );
 
+            // Wipe cart and name clean on completion
             cart = {};
+            document.getElementById('cust-name').value = '';
             renderCart();
         }
     </script>
