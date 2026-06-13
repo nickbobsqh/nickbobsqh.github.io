@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Krusty Krab | Home of the Krabby Patty</title>
+    <style>
+        /* Base Styling & Underwater Vibes */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #1a8cff 0%, #003366 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header / Nautical Decor */
+        header {
+            background-color: #d2691e;
+            border-bottom: 10px solid #8b4513;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .anchor-deco {
+            font-size: 2rem;
+            color: #ffd700;
+            margin: 10px 0;
+        }
+
+        h1 {
+            color: #ffcc00;
+            font-size: 3rem;
+            text-shadow: 3px 3px 0px #ff0000, 5px 5px 0px #000;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .slogan {
+            font-style: italic;
+            color: #fff;
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(0, 0, 51, 0.6);
+            border: 4px dashed #00ffff;
+            border-radius: 15px;
+        }
+
+        /* Order Alert Banner */
+        .banner {
+            background-color: #ff3333;
+            color: yellow;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            border: 2px solid white;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* The Galley Grub Menu */
+        .menu-title {
+            text-align: center;
+            color: #00ffff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-decoration: underline;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .menu-item {
+            background-color: #fff8dc;
+            color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            border: 5px solid #d2691e;
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .menu-item:hover {
+            transform: scale(1.03);
+        }
+
+        .item-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #8b4513;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .item-price {
+            color: #228b22;
+            font-weight: 900;
+        }
+
+        .item-desc {
+            font-size: 0.9.5rem;
+            margin-top: 5px;
+            color: #555;
+        }
+
+        /* Employee Spotlight Section */
+        .crew-section {
+            margin-top: 40px;
+            border-top: 4px solid #00ffff;
+            padding-top: 20px;
+        }
+
+        .crew-title {
+            text-align: center;
+            color: #ffcc00;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .crew-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .crew-card {
+            background: #112244;
+            border: 3px solid #ffcc00;
+            border-radius: 10px;
+            padding: 15px;
+            width: 280px;
+            text-align: center;
+        }
+
+        .crew-role {
+            color: #00ffff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        /* Microscopic Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            background-color: #001f3f;
+            border-top: 5px solid #8b4513;
+        }
+
+        .fine-print {
+            font-size: 0.5rem; /* Exactly how Mr. Krabs likes it */
+            color: #777;
+            line-height: 1.2;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="anchor-deco">⚓ ⚓ ⚓</div>
+        <h1>The Krusty Krab</h1>
+        <div class="slogan">"Come Spend Your Money Here!"</div>
+    </header>
+
+    <div class="container">
+        
+        <div class="banner">
+            NOTICE: COMPLAINTS ABOUT THE LACK OF BREAKS WILL RESULT IN A $5 fine per minute.
+        </div>
+
+        <h2 class="menu-title">The Galley Grub Menu</h2>
+        
+        <div class="menu-grid">
+            <!-- Item 1 -->
+            <div class="menu-item">
+                <div class="item-name">
+                    <span>Krabby Patty</span>
+                    <span class="item-price">$2.99</span>
+                </div>
+                <div class="item-desc">Cooked to absolute perfection by our passionate fry cook. Pure perfection on a bun. (Secret formula strictly classified).</div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="menu-item">
+                <div class="item-name">
+                    <span>Double Krabby Patty</span>
+                    <span class="item-price">$3.99</span>
+                </div>
+                <div class="item-desc">Twice the patties, twice the flavor, twice the absolute strain on Squidward's patience to wrap it.</div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="menu-item">
+                <div class="item-name">
+                    <span>Krusty Combo</span>
+                    <span class="item-price">$5.99</span>
+                </div>
+                <div class="item-desc">Includes a regular Patty, crisp Coral Bits, and a refreshing, ice-cold Seafoam Soda.</div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="menu-item">
+                <div class="item-name">
+                    <span>Coral Bits</span>
+                    <span class="item-price">$1.95</span>
+                </div>
+                <div class="item-desc">Crunchy, salty, and perfect for snacking while waiting for your order to be yelled out.</div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="menu-item">
+                <div class="item-name">
+                    <span>Kelp Rings</span>
+                    <span class="item-price">$1.50</span>
+                </div>
+                <div class="item-desc">Deep-fried underwater plant life shaped into delicious golden rings. Don't ask for extra sauce, it costs 50 cents.</div>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="menu-item">
+                <div class="item-name">
+                    <span>Seafoam Soda</span>
+                    <span class="item-price">$1.25</span>
+                </div>
+                <div class="item-desc">Bubbly, sugary, and served in a cup that we strictly wash... occasionally. Kelp juice upgrade available.</div>
+            </div>
+        </div>
+
+        <!-- Crew Section -->
+        <div class="crew-section">
+            <h2 class="crew-title">Meet the Krusty Crew</h2>
+            <div class="crew-grid">
+                <div class="crew-card">
+                    <h3>SpongeBob SquarePants</h3>
+                    <div class="crew-role">Fry Cook Extraordinaire</div>
+                    <p>"I'm ready! I'm ready! I'm ready to flip your lunch with love and unmatched corporate loyalty!"</p>
+                </div>
+                <div class="crew-card">
+                    <h3>Squidward Tentacles</h3>
+                    <div class="crew-role">Cash Register Operator</div>
+                    <p>"Please state your order quickly so I can go back to regretting every single life choice that brought me here."</p>
+                </div>
+                <div class="crew-card">
+                    <h3>Eugene H. Krabs</h3>
+                    <div class="crew-role">Founder & Owner</div>
+                    <p>"Hello! I like money! If you see any loose change on the floor, it belongs directly to the management."</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Located at 831 Bottom Feeder Lane, Bikini Bottom</p>
+        <p class="fine-print">
+            *Money-back guarantee void upon entering the building. All prices subject to unannounced sudden increases if Mr. Krabs needs to buy Pearl a new pair of boots. By reading this website you agree to give up your soul to the Krusty Krab corporation in the event of a fry cook shortage. Keep away from Plankton.
+        </p>
+    </footer>
+
+</body>
+</html>
