@@ -22,7 +22,7 @@
             color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
-            padding-bottom: 100px; /* Space for the floating cart */
+            padding-bottom: 240px; /* Increased space so content doesn't hide behind the larger cart */
         }
 
         /* Header / Nautical Decor */
@@ -163,7 +163,7 @@
             border-color: #ffcc00;
         }
 
-        /* Floating Money Cart */
+        /* Floating Money Cart & List Panel */
         .cart-bar {
             position: fixed;
             bottom: 0;
@@ -171,12 +171,21 @@
             width: 100%;
             background-color: #228b22;
             border-top: 5px solid #ffd700;
-            padding: 15px;
+            padding: 15px 30px;
             display: flex;
-            justify-content: space-around;
-            align-items: center;
+            flex-direction: column;
+            gap: 12px;
             box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
             z-index: 1000;
+            max-height: 230px;
+        }
+
+        .cart-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px dashed rgba(255,255,255,0.3);
+            padding-bottom: 8px;
         }
 
         .cart-text {
@@ -184,6 +193,53 @@
             color: white;
             font-weight: 700;
             text-shadow: 2px 2px 0px #000;
+        }
+
+        /* Dynamic Itemized Shopping List */
+        .cart-items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            overflow-y: auto;
+            max-height: 90px;
+            padding-right: 10px;
+        }
+
+        .cart-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 1.05rem;
+        }
+
+        .item-qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Micro Plus/Minus Buttons */
+        .qty-btn {
+            background-color: #ffcc00;
+            color: #228b22;
+            border: 2px solid white;
+            font-weight: 900;
+            font-size: 1rem;
+            width: 26px;
+            height: 26px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:hover {
+            background-color: #ff3333;
+            color: white;
         }
 
         .checkout-btn {
@@ -197,6 +253,9 @@
             cursor: pointer;
             text-shadow: 1px 1px 0px #fff;
             box-shadow: 0 4px 0px #b8860b;
+            align-self: center;
+            width: 100%;
+            max-width: 400px;
         }
 
         .checkout-btn:active {
@@ -422,7 +481,16 @@
     </div>
 
     <div class="cart-bar">
-        <div class="cart-text" id="cart-total">Total Money Owed to Mr. Krabs: $0.00 (0 items)</div>
+        <div class="cart-header-row">
+            <div class="cart-text" id="cart-total">Total Money Owed to Mr. Krabs: $0.00 (0 items)</div>
+        </div>
+        
+        <div class="cart-items-list" id="cart-items-container">
+            <div style="color: rgba(255,255,255,0.5); font-style: italic; font-size: 0.95rem; text-align: center; padding: 10px;">
+                Your belly is empty... Add some Galley Grub!
+            </div>
+        </div>
+
         <button class="checkout-btn" onclick="checkout()">GIVE ME ME MONEY</button>
     </div>
 
@@ -434,18 +502,82 @@
     </footer>
 
     <script>
-        let totalCash = 0.00;
-        let totalItems = 0;
+        // Store items inside a state object structure
+        let cart = {};
 
         function addToCart(itemName, price) {
-            totalCash += price;
-            totalItems += 1;
+            if (cart[itemName]) {
+                cart[itemName].quantity += 1;
+            } else {
+                cart[itemName] = {
+                    price: price,
+                    quantity: 1
+                };
+            }
+            renderCart();
+        }
+
+        function changeQuantity(itemName, delta) {
+            if (!cart[itemName]) return;
             
-            // Update the floating cart text
+            cart[itemName].quantity += delta;
+            
+            // If item amount drops to zero, eliminate it from the invoice
+            if (cart[itemName].quantity <= 0) {
+                delete cart[itemName];
+            }
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            container.innerHTML = '';
+            
+            let totalCash = 0;
+            let totalItems = 0;
+            const keys = Object.keys(cart);
+
+            if (keys.length === 0) {
+                container.innerHTML = `
+                    <div style="color: rgba(255,255,255,0.5); font-style: italic; font-size: 0.95rem; text-align: center; padding: 10px;">
+                        Your belly is empty... Add some Galley Grub!
+                    </div>`;
+                document.getElementById('cart-total').innerText = `Total Money Owed to Mr. Krabs: $0.00 (0 items)`;
+                return;
+            }
+
+            keys.forEach(itemName => {
+                const item = cart[itemName];
+                const itemTotalCost = item.price * item.quantity;
+                totalCash += itemTotalCost;
+                totalItems += item.quantity;
+
+                // Build structural list view node
+                const itemRow = document.createElement('div');
+                itemRow.className = 'cart-list-item';
+                itemRow.innerHTML = `
+                    <span>${itemName} (x${item.quantity}) - $${itemTotalCost.toFixed(2)}</span>
+                    <div class="item-qty-controls">
+                        <button class="qty-btn" onclick="changeQuantity('${itemName}', -1)">-</button>
+                        <button class="qty-btn" onclick="changeQuantity('${itemName}', 1)">+</button>
+                    </div>
+                `;
+                container.appendChild(itemRow);
+            });
+
+            // Refresh overarching scoreboard summary metrics
             document.getElementById('cart-total').innerText = `Total Money Owed to Mr. Krabs: $${totalCash.toFixed(2)} (${totalItems} items)`;
         }
 
         function checkout() {
+            let totalItems = 0;
+            let totalCash = 0;
+
+            Object.keys(cart).forEach(key => {
+                totalItems += cart[key].quantity;
+                totalCash += cart[key].price * cart[key].quantity;
+            });
+
             if (totalItems === 0) {
                 alert("Atleast get somethin'.");
                 return;
@@ -456,10 +588,9 @@
                 `We will never give your ${totalItems} items! ARRRGH ARGHARGH!`
             );
 
-            // Reset cart
-            totalCash = 0.00;
-            totalItems = 0;
-            document.getElementById('cart-total').innerText = `Total Money Owed to Mr. Krabs: $0.00 (0 items)`;
+            // Empty shopping state entirely post transaction mock
+            cart = {};
+            renderCart();
         }
     </script>
 
