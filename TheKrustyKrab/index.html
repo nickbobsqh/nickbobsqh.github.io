@@ -184,7 +184,13 @@
             gap: 12px;
             box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
             z-index: 1000;
-            max-height: 230px;
+            max-height: 250px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Class applied when the panel is slid down/collapsed */
+        .cart-bar.collapsed {
+            transform: translateY(175px);
         }
 
         .cart-header-row {
@@ -200,6 +206,25 @@
             color: white;
             font-weight: 700;
             text-shadow: 2px 2px 0px #000;
+        }
+
+        /* Toggle Panel Button styling */
+        .toggle-panel-btn {
+            background-color: #ffcc00;
+            color: #333;
+            border: 2px solid white;
+            padding: 6px 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background 0.2s;
+        }
+
+        .toggle-panel-btn:hover {
+            background-color: #ff3333;
+            color: white;
         }
 
         /* Dynamic Itemized Shopping List */
@@ -527,10 +552,12 @@
 
     </div>
 
-    <!-- Floating Dynamic Checkout Panel -->
-    <div class="cart-bar">
+    <!-- Floating Dynamic Checkout Panel (with id for toggle tracking) -->
+    <div class="cart-bar" id="money-cart">
         <div class="cart-header-row">
             <div class="cart-text" id="cart-total">Total Money Owed to Mr. Krabs: $0.00 (0 items)</div>
+            <!-- New Minimize/Maximize Option -->
+            <button class="toggle-panel-btn" onclick="toggleCartPanel()">⚓ Toggle Panel</button>
         </div>
         
         <!-- Live Itemized Output Box -->
@@ -540,7 +567,7 @@
             </div>
         </div>
 
-        <button class="checkout-btn" onclick="checkout()">GIVE ME ME MONEY</button>
+        <button class="checkout-btn" id="checkout-button" onclick="checkout()">GIVE ME ME MONEY</button>
     </div>
 
     <footer>
@@ -554,6 +581,12 @@
     <script>
         let cart = {};
 
+        // Toggles the list and main buttons up or down
+        function toggleCartPanel() {
+            const cartBar = document.getElementById('money-cart');
+            cartBar.classList.toggle('collapsed');
+        }
+
         function addToCart(itemName, price) {
             if (cart[itemName]) {
                 cart[itemName].quantity += 1;
@@ -564,6 +597,9 @@
                 };
             }
             renderCart();
+            
+            // Automatically make sure the panel is popped UP if they add an item
+            document.getElementById('money-cart').classList.remove('collapsed');
         }
 
         function changeQuantity(itemName, delta) {
