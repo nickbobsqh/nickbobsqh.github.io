@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Video Player</title>
+    <title>Bikini Bottom Video Shanty</title>
     <style>
+        /* SpongeBob Aesthetic Styling */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -12,63 +13,154 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
+            font-family: 'Comic Sans MS', 'Impact', sans-serif;
+            background: linear-gradient(180deg, #4ba3e3 0%, #a1c4fd 60%, #eed9b3 100%);
+            color: #0b3c5d;
+            min-height: 100vh;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
         }
 
-        .video-container {
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 0px #fffb00, -2px -2px 0px #fffb00, 4px 4px 0px #000;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            color: #ff6b6b;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* 2x2 Video Grid Layout */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
             width: 100%;
-            max-width: 800px;
-            background: #1e1e1e;
-            border-radius: 12px;
+            max-width: 1000px;
+        }
+
+        /* Nautical Card Styling */
+        .video-card {
+            background: #fffbcc; /* Krabby Patty bun yellow */
+            border: 6px solid #329cd6; /* Deep sea blue border */
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 0px #1e6287;
+            transition: transform 0.2s ease;
+        }
+
+        .video-card:hover {
+            transform: scale(1.02);
         }
 
         video {
             width: 100%;
             display: block;
             background-color: #000;
+            border-bottom: 5px solid #329cd6;
         }
 
         .video-info {
             padding: 20px;
+            background: #ffffff;
         }
 
-        .video-info h1 {
-            font-size: 1.5rem;
+        .video-info h2 {
+            font-size: 1.4rem;
+            color: #e65c00;
             margin-bottom: 8px;
-            color: #f1f1f1;
         }
 
         .video-info p {
             font-size: 0.95rem;
-            color: #aaaaaa;
+            color: #444444;
             line-height: 1.4;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #555;
         }
     </style>
 </head>
 <body>
 
-    <div class="video-container">
-        <video controls poster="placeholder.jpg">
-            <source src="your-video.mp4" type="video/mp4">
-            <source src="your-video.webm" type="video/webm">
-            Your browser does not support the video tag.
-        </video>
+    <header>
+        <h1>Bikini Bottom Broadcasts</h1>
+        <p>"The best time to watch videos is all the time!"</p>
+    </header>
 
-        <div class="video-info">
-            <h1>My Awesome Video Title</h1>
-            <p>This is a description for the video. You can talk about what happens in the video, add links, or include credits here.</p>
+    <!-- The 4-Video Grid -->
+    <div class="video-grid">
+
+        <!-- Video 1: SpongeBob Slot -->
+        <div class="video-card">
+            <video controls poster="spongebob-poster.jpg">
+                <source src="video1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-info">
+                <h2>Spatula Skills 101</h2>
+                <p>Learn the art of the perfect Krabby Patty flip with Fry Cook champion SpongeBob SquarePants!</p>
+            </div>
         </div>
+
+        <!-- Video 2: Patrick Slot -->
+        <div class="video-card">
+            <video controls poster="patrick-poster.jpg">
+                <source src="video2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-info">
+                <h2>The Inner Machinations of My Mind</h2>
+                <p>An statistical breakdown of what happens when Patrick Star sits around doing absolutely nothing.</p>
+            </div>
+        </div>
+
+        <!-- Video 3: Squidward Slot -->
+        <div class="video-card">
+            <video controls poster="squidward-poster.jpg">
+                <source src="video3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-info">
+                <h2>Squidward's Clarinet Masterclass</h2>
+                <p>Only for true connoisseurs of fine art. Earplugs not included in this breathtaking performance.</p>
+            </div>
+        </div>
+
+        <!-- Video 4: Mr. Krabs Slot -->
+        <div class="video-card">
+            <video controls poster="krabs-poster.jpg">
+                <source src="video4.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-info">
+                <h2>Krabs' Cash Corner</h2>
+                <p>Mr. Krabs breaks down his top financial strategies, mostly revolving around how to count money faster.</p>
+            </div>
+        </div>
+
     </div>
+
+    <footer>
+        <p>© 2026 Bikini Bottom Media • Keep it Krabby!</p>
+    </footer>
 
 </body>
 </html>
