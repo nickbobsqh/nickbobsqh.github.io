@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Video Player</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 800px;
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        video {
+            width: 100%;
+            display: block;
+            background-color: #000;
+        }
+
+        .video-info {
+            padding: 20px;
+        }
+
+        .video-info h1 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: #f1f1f1;
+        }
+
+        .video-info p {
+            font-size: 0.95rem;
+            color: #aaaaaa;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="video-container">
+        <video controls poster="placeholder.jpg">
+            <source src="your-video.mp4" type="video/mp4">
+            <source src="your-video.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+
+        <div class="video-info">
+            <h1>My Awesome Video Title</h1>
+            <p>This is a description for the video. You can talk about what happens in the video, add links, or include credits here.</p>
+        </div>
+    </div>
+
+</body>
+</html>
