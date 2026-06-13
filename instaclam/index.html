@@ -16,6 +16,7 @@
             flex-direction: column;
             align-items: center;
             height: 100vh;
+            height: 100dvh; /* Dynamic patch to force-fit mobile screen sizes safely */
             overflow: hidden;
         }
 
@@ -26,6 +27,7 @@
             display: flex; justify-content: space-between; align-items: center;
             z-index: 100;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            flex-shrink: 0; /* Keeps the header from squishing on tiny phones */
         }
 
         header h1 {
@@ -41,8 +43,17 @@
             display: flex;
             flex-direction: column;
             flex-grow: 1;
-            height: calc(100vh - 60px);
+            height: calc(100dvh - 60px); /* Synchronized with dynamic screen height */
             background: #07162c;
+            overflow: hidden;
+        }
+
+        /* Information Ribbon */
+        .identity-ribbon {
+            background: #113057; padding: 6px 12px; font-size: 0.8rem;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #1c4b82;
+            flex-shrink: 0;
         }
 
         /* The Live Chat Box Feed */
@@ -54,6 +65,7 @@
             flex-direction: column;
             gap: 10px;
             background: #051224;
+            -webkit-overflow-scrolling: touch; /* Smoother scrolling engine on iPhones */
         }
 
         /* Chat Message Bubbles */
@@ -86,7 +98,7 @@
         }
         .chat-scrap-btn:hover { opacity: 1; text-decoration: underline; }
 
-        /* Input Controls Deck */
+        /* Input Controls Deck anchored right at the thumb line */
         .input-deck {
             background: #0b2240;
             padding: 12px;
@@ -94,6 +106,7 @@
             gap: 10px;
             border-top: 2px solid #113057;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .input-deck input {
@@ -105,20 +118,13 @@
             border: 2px solid #00d2ff;
             font-family: inherit;
             outline: none;
-            font-size: 0.95rem;
+            font-size: 16px; /* 16px font baseline stops iOS Safari from zooming automatically when typing */
         }
 
         .input-deck button {
             background: #00d2ff; color: #07162c;
             border: none; padding: 10px 18px; border-radius: 20px;
             font-weight: bold; cursor: pointer; font-family: inherit;
-        }
-
-        /* Information Ribbon */
-        .identity-ribbon {
-            background: #113057; padding: 6px 12px; font-size: 0.8rem;
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid #1c4b82;
         }
 
         /* Overlay Shield */
@@ -132,7 +138,7 @@
             border: 4px solid #fffb00; text-align: center; max-width: 380px; width: 90%;
         }
         .portal-box h2 { color: #ff6b6b; margin-bottom: 15px; }
-        .portal-box input { width: 100%; padding: 12px; margin: 15px 0; border-radius: 8px; border: 2px solid #00d2ff; background: #121212; color: white; text-align: center; font-family: inherit; }
+        .portal-box input { width: 100%; padding: 12px; margin: 15px 0; border-radius: 8px; border: 2px solid #00d2ff; background: #121212; color: white; text-align: center; font-family: inherit; font-size: 16px; }
         .portal-box button { background: #ffb703; color: #07162c; border: none; padding: 10px 24px; border-radius: 20px; font-weight: bold; cursor: pointer; font-family: inherit; }
 
         @keyframes slideIn { from { transform: translateY(5px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
@@ -150,7 +156,7 @@
     </div>
 
     <header>
-        <h1>Instaclam LIVE Chat 📺</h1>
+        <h1>Instaclam Chat 📺</h1>
         <div style="color: #00d2ff; font-size: 0.85rem; cursor: pointer;" onclick="fetchLiveChat()">🔄 Force Sync</div>
     </header>
 
