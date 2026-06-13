@@ -171,6 +171,7 @@
 </head>
 <body>
 
+    <!-- Identity Setup Overlay -->
     <div id="accountPortal" class="portal-overlay" style="display: none;">
         <div class="portal-box">
             <h2>Stream Chat Sign-In 🐚</h2>
@@ -187,21 +188,25 @@
 
     <div class="stream-container">
         
+        <!-- Interactive Simulated Broadcast Screen -->
         <div class="video-stage">
             <div class="live-badge">● LIVE</div>
             <div class="viewers">👁️ 4,210 floating</div>
             <div class="stream-graphic">🐙</div>
         </div>
 
+        <!-- Identity Bar Ribbon -->
         <div class="identity-ribbon">
             <div>Chatting as: <span id="myUsername" style="color:#00d2ff; font-weight:bold;">...</span></div>
             <div style="color:#ff6b6b; cursor:pointer; text-decoration:underline;" onclick="logout()">Change Identity</div>
         </div>
 
+        <!-- Live Streaming Scroll Box -->
         <div class="chat-feed-window" id="chatFeedBox">
             <p style="text-align:center; color:#557299; font-size:0.85rem; padding-top:20px;">Connecting to reef frequencies...</p>
         </div>
 
+        <!-- Chat Controls Deck -->
         <div class="input-deck">
             <input type="text" id="chatMessageInput" placeholder="Send a live message..." maxlength="120" onkeydown="if(event.key === 'Enter') sendChatMessage()">
             <button onclick="sendChatMessage()">Chat</button>
@@ -230,7 +235,6 @@
                 
                 document.getElementById('myUsername').innerText = currentAccount.username + (currentAccount.isAdmin ? " [ADMIN]" : "");
                 
-                // Automatically run feed loop and setup real-time listener
                 fetchLiveChat();
             }
         }
@@ -268,7 +272,10 @@
             };
 
             localStorage.setItem('instaclam_user', JSON.stringify(currentAccount));
-            checkIdentity();
+            
+            document.getElementById('accountPortal').style.display = 'none';
+            document.getElementById('myUsername').innerText = currentAccount.username + (currentAccount.isAdmin ? " [ADMIN]" : "");
+            fetchLiveChat();
         }
 
         function logout() {
@@ -282,7 +289,6 @@
         async function fetchLiveChat() {
             const chatBox = document.getElementById('chatFeedBox');
             
-            // Grab the last 40 chat items ordered by creation time
             let { data: entries, error } = await _supabase
                 .from('instaclam_posts')
                 .select('*')
@@ -311,3 +317,76 @@
                         inlineDeleteHTML = `<button class="chat-scrap-btn" onclick="deleteChatMessage(${entry.id})">[scrap]</button>`;
                     }
                 }
+
+                const msgRow = document.createElement('div');
+                msgRow.className = 'chat-msg';
+                msgRow.innerHTML = `
+                    <div class="chat-avatar" style="background: ${avatarBg};">${avatarEmoji}</div>
+                    <div class="chat-details">
+                        <span class="chat-name">${entry.username}:</span>
+                        <span class="chat-text">${escapeHTML(entry.caption)}</span>
+                        ${inlineDeleteHTML}
+                    </div>
+                `;
+                chatBox.appendChild(msgRow);
+            });
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // WRITE CHAT TO DB
+        async function sendChatMessage() {
+            if(!currentAccount) return;
+
+            const input = document.getElementById('chatMessageInput');
+            const messageText = input.value.trim();
+
+            if (messageText === "") return;
+
+            input.value = ""; 
+
+            const { error } = await _supabase
+                .from('instaclam_posts')
+                .insert([{ 
+                    username: currentAccount.username, 
+                    caption: messageText,
+                    user_emoji: currentAccount.emoji,
+                    user_color: currentAccount.color
+                }]);
+
+            if (error) {
+                alert("Message failed: " + error.message);
+            } else {
+                fetchLiveChat(); 
+            }
+        }
+
+        // WIPE CHAT ROW BY UNIQUE ID
+        async function deleteChatMessage(id) {
+            if (!confirm("Remove this comment from the broadcast logs?")) return;
+
+            const { error } = await _supabase
+                .from('instaclam_posts')
+                .delete()
+                .eq('id', id);
+
+            if (error) {
+                alert("Failed deletion: " + error.message);
+            } else {
+                fetchLiveChat(); 
+            }
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        checkIdentity();
+
+        // Check for new updates every 3 seconds automatically
+        setInterval(fetchLiveChat, 3000);
+    </script>
+</body>
+</html>
