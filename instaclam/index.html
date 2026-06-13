@@ -16,7 +16,7 @@
             flex-direction: column;
             align-items: center;
             height: 100vh;
-            height: 100dvh; /* Dynamic patch to force-fit mobile screen sizes safely */
+            height: 100dvh; 
             overflow: hidden;
         }
 
@@ -27,7 +27,7 @@
             display: flex; justify-content: space-between; align-items: center;
             z-index: 100;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            flex-shrink: 0; /* Keeps the header from squishing on tiny phones */
+            flex-shrink: 0;
         }
 
         header h1 {
@@ -36,14 +36,14 @@
             font-style: italic;
         }
 
-        /* Main App Wrapper stacked vertically like a phone app */
+        /* Main App Wrapper */
         .stream-container {
             width: 100%;
             max-width: 500px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
-            height: calc(100dvh - 60px); /* Synchronized with dynamic screen height */
+            height: calc(100dvh - 60px);
             background: #07162c;
             overflow: hidden;
         }
@@ -65,7 +65,7 @@
             flex-direction: column;
             gap: 10px;
             background: #051224;
-            -webkit-overflow-scrolling: touch; /* Smoother scrolling engine on iPhones */
+            -webkit-overflow-scrolling: touch;
         }
 
         /* Chat Message Bubbles */
@@ -98,7 +98,7 @@
         }
         .chat-scrap-btn:hover { opacity: 1; text-decoration: underline; }
 
-        /* Input Controls Deck anchored right at the thumb line */
+        /* Input Controls Deck */
         .input-deck {
             background: #0b2240;
             padding: 12px;
@@ -118,7 +118,7 @@
             border: 2px solid #00d2ff;
             font-family: inherit;
             outline: none;
-            font-size: 16px; /* 16px font baseline stops iOS Safari from zooming automatically when typing */
+            font-size: 16px;
         }
 
         .input-deck button {
@@ -197,6 +197,7 @@
                 document.getElementById('accountPortal').style.display = 'none';
                 document.getElementById('myUsername').innerText = currentAccount.username + (currentAccount.isAdmin ? " [ADMIN]" : "");
                 fetchLiveChat();
+                runMaintenanceClear(); // Check cleanup immediately upon landing
             }
         }
 
@@ -236,6 +237,7 @@
             document.getElementById('accountPortal').style.display = 'none';
             document.getElementById('myUsername').innerText = currentAccount.username + (currentAccount.isAdmin ? " [ADMIN]" : "");
             fetchLiveChat();
+            runMaintenanceClear();
         }
 
         function logout() {
@@ -334,6 +336,29 @@
             }
         }
 
+        // AUTOMATED CHAT CLEARANCE MAINTENANCE ENGINE
+        async function runMaintenanceClear() {
+            // Security check: Only execute cleanup queries if the local client possesses verified admin privileges
+            if (!currentAccount || !currentAccount.isAdmin) return;
+
+            // Calculate the exact timestamp threshold for 2.5 hours ago
+            const targetTimecutoff = new Date(Date.now() - (2.5 * 60 * 60 * 1000)).toISOString();
+
+            console.log("Running chat room database maintenance cycle... Clearing rows older than:", targetTimecutoff);
+
+            // Command Supabase to target and purge any logs older than our window
+            const { error } = await _supabase
+                .from('instaclam_posts')
+                .delete()
+                .lt('created_at', targetTimecutoff);
+
+            if (error) {
+                console.error("Database self-cleanup routine failed:", error.message);
+            } else {
+                console.log("Database maintenance successful. Old chat text logs purged.");
+            }
+        }
+
         function escapeHTML(str) {
             return str.replace(/[&<>'"]/g, 
                 tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
@@ -341,7 +366,10 @@
         }
 
         checkIdentity();
-        setInterval(fetchLiveChat, 3000);
+        
+        // Interval Polling Ticks
+        setInterval(fetchLiveChat, 3000);         // Sync new messages every 3 seconds
+        setInterval(runMaintenanceClear, 60000);  // Runs background cleanup check once every 60 seconds
     </script>
 </body>
 </html>
