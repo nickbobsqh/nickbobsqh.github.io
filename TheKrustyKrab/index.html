@@ -70,26 +70,6 @@
             border-radius: 15px;
         }
 
-        /* Order Alert Banner */
-        .banner {
-            background-color: #ff3333;
-            color: yellow;
-            padding: 12px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            border-radius: 5px;
-            margin-bottom: 25px;
-            border: 2px solid white;
-            animation: blink 1.5s infinite;
-        }
-
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-
         /* The Galley Grub Menu */
         .menu-title {
             text-align: center;
@@ -410,10 +390,6 @@
     </header>
 
     <div class="container">
-        
-        <div class="banner">
-            NOTICE: COMPLAINTS ABOUT THE LACK OF BREAKS WILL RESULT IN A $5 FINE PER MINUTE.
-        </div>
 
         <h2 class="menu-title">The Galley Grub Menu</h2>
         
@@ -552,11 +528,10 @@
 
     </div>
 
-    <!-- Floating Dynamic Checkout Panel (with id for toggle tracking) -->
+    <!-- Floating Dynamic Checkout Panel -->
     <div class="cart-bar" id="money-cart">
         <div class="cart-header-row">
             <div class="cart-text" id="cart-total">Total Money Owed to Mr. Krabs: $0.00 (0 items)</div>
-            <!-- New Minimize/Maximize Option -->
             <button class="toggle-panel-btn" onclick="toggleCartPanel()">⚓ Toggle Panel</button>
         </div>
         
@@ -581,7 +556,6 @@
     <script>
         let cart = {};
 
-        // Toggles the list and main buttons up or down
         function toggleCartPanel() {
             const cartBar = document.getElementById('money-cart');
             cartBar.classList.toggle('collapsed');
@@ -598,7 +572,6 @@
             }
             renderCart();
             
-            // Automatically make sure the panel is popped UP if they add an item
             document.getElementById('money-cart').classList.remove('collapsed');
         }
 
