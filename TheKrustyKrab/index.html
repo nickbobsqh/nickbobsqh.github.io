@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Krusty Krab | Home of the Krabby Patty</title>
+    <!-- Importing the bubbly SpongeBob-style font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
@@ -241,6 +242,39 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
+        /* Portrait Frame Styles */
+        .crew-image-container {
+            width: 100%;
+            height: 180px;
+            background-color: #2c3e50;
+            border: 6px solid #8b4513; /* Wooden frame effect */
+            border-radius: 4px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .crew-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* If the image is missing, show this placeholder text style */
+        .crew-img:not([src]), .crew-img[src=""] {
+            display: none;
+        }
+        
+        .image-placeholder-text {
+            color: #888;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
         .crew-card h3 {
             font-size: 1.3rem;
             color: #fff;
@@ -295,6 +329,7 @@
         <h2 class="menu-title">The Galley Grub Menu</h2>
         
         <div class="menu-grid">
+            <!-- Item 1 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krabby Patty</span>
@@ -304,6 +339,7 @@
                 <button class="order-btn" onclick="addToCart('Krabby Patty', 2.99)">Add to Cart</button>
             </div>
 
+            <!-- Item 2 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Double Krabby Patty</span>
@@ -313,6 +349,7 @@
                 <button class="order-btn" onclick="addToCart('Double Krabby Patty', 3.99)">Add to Cart</button>
             </div>
 
+            <!-- Item 3 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krusty Combo</span>
@@ -322,6 +359,7 @@
                 <button class="order-btn" onclick="addToCart('Krusty Combo', 5.99)">Add to Cart</button>
             </div>
 
+            <!-- Item 4 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Coral Bits</span>
@@ -331,15 +369,17 @@
                 <button class="order-btn" onclick="addToCart('Coral Bits', 1.95)">Add to Cart</button>
             </div>
 
+            <!-- Item 5 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Kelp Rings</span>
                     <span class="item-price">$1.50</span>
                 </div>
                 <div class="item-desc">Deep-fried underwater plant life shaped into delicious golden rings. Tartar sauce extra.</div>
-                <button class="order-btn" onclick="addToCart('Kelp Rings', 1.50)">Add to Cart</button>
+                <button class="order-btn" onclick="alwaysAddCart('Kelp Rings', 1.50)">Add to Cart</button>
             </div>
 
+            <!-- Item 6 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Seafoam Soda</span>
@@ -350,29 +390,53 @@
             </div>
         </div>
 
+        <!-- Crew Section -->
         <div class="crew-section">
             <h2 class="crew-title">Meet the Krusty Crew</h2>
             <div class="crew-grid">
+                
+                <!-- SpongeBob -->
                 <div class="crew-card">
+                    <div class="crew-image-container">
+                        <!-- Insert SpongeBob image link inside src="" below -->
+                        <img class="crew-img" src="" alt="SpongeBob SquarePants">
+                        <span class="image-placeholder-text">[ SpongeBob Photo ]</span>
+                    </div>
                     <h3>SpongeBob SquarePants</h3>
                     <div class="crew-role">Fry Cook Extraordinaire</div>
                     <p>"I'm ready! I'm ready! I'm ready to flip your lunch with love and unmatched corporate loyalty!"</p>
                 </div>
+
+                <!-- Squidward -->
                 <div class="crew-card">
+                    <div class="crew-image-container">
+                        <!-- Insert Squidward image link inside src="" below -->
+                        <img class="crew-img" src="" alt="Squidward Tentacles">
+                        <span class="image-placeholder-text">[ Squidward Photo ]</span>
+                    </div>
                     <h3>Squidward Tentacles</h3>
                     <div class="crew-role">Cash Register Operator</div>
                     <p>"Please state your order quickly so I can go back to regretting every single life choice that brought me here."</p>
                 </div>
+
+                <!-- Mr. Krabs -->
                 <div class="crew-card">
+                    <div class="crew-image-container">
+                        <!-- Insert Mr. Krabs image link inside src="" below -->
+                        <img class="crew-img" src="" alt="Eugene H. Krabs">
+                        <span class="image-placeholder-text">[ Mr. Krabs Photo ]</span>
+                    </div>
                     <h3>Eugene H. Krabs</h3>
                     <div class="crew-role">Founder & Owner</div>
                     <p>"Hello! I like money! If you see any loose change on the floor, it belongs directly to management."</p>
                 </div>
+
             </div>
         </div>
 
     </div>
 
+    <!-- Floating Fake Order Bar -->
     <div class="cart-bar">
         <div class="cart-text" id="cart-total">Total Money Owed to Mr. Krabs: $0.00 (0 items)</div>
         <button class="checkout-btn" onclick="checkout()">GIVE ME ME MONEY</button>
@@ -385,6 +449,7 @@
         </p>
     </footer>
 
+    <!-- Interactive Fake Ordering Script -->
     <script>
         let totalCash = 0.00;
         let totalItems = 0;
@@ -395,6 +460,11 @@
             
             // Update the floating cart text
             document.getElementById('cart-total').innerText = `Total Money Owed to Mr. Krabs: $${totalCash.toFixed(2)} (${totalItems} items)`;
+        }
+
+        // Catch for typo in item 5 button click function
+        function alwaysAddCart(itemName, price) {
+            addToCart(itemName, price);
         }
 
         function checkout() {
