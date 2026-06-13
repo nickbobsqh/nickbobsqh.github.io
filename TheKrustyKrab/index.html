@@ -3,255 +3,316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Krusty Krab | Home of the Krabby Patty</title>
+    <title>The Krusty Krab | Premium Digital Galley</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Base Styling & Underwater Vibes */
+        :root {
+            --primary-wood: #d2691e;
+            --dark-wood: #8b4513;
+            --krab-gold: #ffcc00;
+            --money-green: #228b22;
+            --sea-neon: #00ffff;
+            --bubble-plankton: #ff3333;
+            --deep-ocean: #0a192f;
+            --glass-bg: rgba(10, 25, 47, 0.7);
+            --card-light: #ffffff;
+        }
+
+        /* Smooth, modern global styling reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Fredoka', 'Comic Sans MS', sans-serif; 
+            font-family: 'Inter', sans-serif; 
         }
 
         body {
-            background: linear-gradient(180deg, #1a8cff 0%, #003366 100%);
-            color: #ffffff;
+            background: radial-gradient(circle at top, #1e4d8c 0%, #0a192f 100%);
+            color: #f1f5f9;
             min-height: 100vh;
             overflow-x: hidden;
-            padding-bottom: 320px; /* Expanded space to make room for name input formatting */
+            padding-bottom: 340px; /* Space allowance for the new oversized dynamic checkout bar */
         }
 
-        /* Header / Nautical Decor */
+        /* Branding typography */
+        h1, h2, h3, .cart-text, .order-btn, .cust-btn, .toggle-panel-btn, .checkout-btn {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* Overhauled Premium Animated Header */
         header {
-            background-color: #d2691e;
-            border-bottom: 10px solid #8b4513;
-            padding: 25px;
+            background: linear-gradient(135deg, var(--primary-wood) 0%, var(--dark-wood) 100%);
+            border-bottom: 8px solid #5c2d0c;
+            padding: 40px 20px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             position: relative;
         }
 
         .anchor-deco {
-            font-size: 2rem;
-            color: #ffd700;
-            margin-bottom: 10px;
-            letter-spacing: 10px;
+            font-size: 2.2rem;
+            color: var(--krab-gold);
+            margin-bottom: 12px;
+            letter-spacing: 15px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        h1 {
-            color: #ffcc00;
-            font-size: 3.5rem;
-            font-weight: 900;
-            text-shadow: 4px 4px 0px #ff0000, 7px 7px 0px #111;
-            letter-spacing: 3px;
+        header h1 {
+            color: var(--krab-gold);
+            font-size: 4.2rem;
+            font-weight: 700;
+            text-shadow: 4px 4px 0px #b91c1c, 8px 8px 20px rgba(0,0,0,0.6);
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
         .slogan {
             font-style: italic;
-            color: #fff;
-            font-size: 1.4rem;
-            margin-top: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            color: #e2e8f0;
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-top: 12px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
         }
 
-        /* Main Layout */
+        /* Main Workspace Glass Framework */
         .container {
-            max-width: 1000px;
-            margin: 30px auto;
-            padding: 20px;
-            background: rgba(0, 0, 51, 0.6);
-            border: 4px dashed #00ffff;
-            border-radius: 15px;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 40px 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
         }
 
-        /* The Galley Grub Menu */
         .menu-title {
             text-align: center;
-            color: #00ffff;
-            font-size: 2.8rem;
+            color: var(--sea-neon);
+            font-size: 3.2rem;
             font-weight: 700;
-            margin-bottom: 25px;
+            margin-bottom: 40px;
             text-shadow: 3px 3px 0px #000;
+            letter-spacing: 1px;
         }
 
+        /* Responsive Grid Integration */
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
         }
 
+        /* Premium Modern Card Layout */
         .menu-item {
-            background-color: #fff8dc;
-            color: #333;
-            padding: 18px;
-            border-radius: 10px;
-            border: 5px solid #d2691e;
+            background: var(--card-light);
+            color: #1e293b;
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px solid rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Special highlight styling for the Pizza */
+        /* Highlight Ribbon for special items */
         .special-item {
-            border: 5px solid #ffcc00 !important;
-            box-shadow: 0 0 15px #ffcc00;
+            border: 3px solid var(--krab-gold);
+            box-shadow: 0 15px 30px rgba(255, 204, 0, 0.15);
+        }
+
+        .special-item::before {
+            content: "MANAGER'S CHOICE";
+            position: absolute;
+            top: 15px;
+            right: -35px;
+            background: #b91c1c;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 4px 35px;
+            transform: rotate(45deg);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .menu-item:hover {
-            transform: scale(1.03);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
         .item-name {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            color: #8b4513;
+            color: #451a03;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            line-height: 1.2;
         }
 
         .item-price {
-            color: #228b22;
-            font-weight: 900;
+            color: var(--money-green);
+            font-weight: 700;
+            background: #dcfce7;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 1.2rem;
         }
 
         .item-desc {
-            font-size: 1rem;
-            margin: 12px 0;
-            color: #444;
+            font-size: 0.95rem;
+            margin: 16px 0 24px 0;
+            color: #475569;
             flex-grow: 1;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
-        /* Action Buttons Wrapper */
+        /* Premium Interactive Control Elements */
         .item-actions {
             display: flex;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 10px;
+            margin-top: auto;
         }
 
-        /* Order Button */
         .order-btn {
-            background-color: #ffcc00;
-            color: #333;
-            border: 3px solid #8b4513;
-            padding: 10px;
-            font-weight: 700;
+            background: linear-gradient(135deg, #fcd34d 0%, var(--krab-gold) 100%);
+            color: #451a03;
+            border: none;
+            padding: 14px;
+            font-weight: 600;
             font-size: 1.1rem;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             flex: 2;
-            transition: background 0.1s;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(218, 165, 32, 0.2);
         }
 
         .order-btn:hover {
-            background-color: #228b22;
+            background: linear-gradient(135deg, #22c55e 0%, var(--money-green) 100%);
             color: white;
-            border-color: #ffd700;
+            transform: scale(1.02);
+            box-shadow: 0 6px 12px rgba(34, 139, 34, 0.3);
         }
 
-        /* Customize Button */
         .cust-btn {
-            background-color: #00ffff;
-            color: #003366;
-            border: 3px solid #003366;
-            padding: 10px;
-            font-weight: 700;
+            background: #e0f2fe;
+            color: #0369a1;
+            border: none;
+            padding: 14px;
+            font-weight: 600;
             font-size: 1rem;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             flex: 1;
-            transition: all 0.1s;
+            transition: all 0.2s;
         }
 
         .cust-btn:hover {
-            background-color: #ff3333;
-            color: white;
-            border-color: #ffcc00;
+            background: #fee2e2;
+            color: #b91c1c;
+            transform: scale(1.02);
         }
 
-        /* Floating Money Cart & List Panel */
+        /* Dynamic Glassmorphic Checkout System */
         .cart-bar {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: #228b22;
-            border-top: 5px solid #ffd700;
-            padding: 15px 30px;
+            background: rgba(15, 118, 110, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 4px solid var(--krab-gold);
+            padding: 20px 40px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+            gap: 16px;
+            box-shadow: 0 -15px 40px rgba(0,0,0,0.5);
             z-index: 1000;
-            height: 310px; /* Increased height allocation for user fields */
-            transition: bottom 0.3s ease-in-out;
+            height: 330px; 
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Class applied when the panel is slid down/collapsed */
         .cart-bar.collapsed {
-            bottom: -255px; /* Hides everything except the clean header row banner banner */
+            transform: translateY(260px); /* Tucks cleanly down, showing just header row */
         }
 
         .cart-header-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px dashed rgba(255,255,255,0.3);
-            padding-bottom: 8px;
-            height: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            padding-bottom: 12px;
+            height: 45px;
         }
 
         .cart-text {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             color: white;
-            font-weight: 700;
-            text-shadow: 2px 2px 0px #000;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* Toggle Panel Button styling */
-        .toggle-panel-btn {
-            background-color: #ffcc00;
-            color: #333;
-            border: 2px solid white;
-            padding: 6px 12px;
+        .cart-badge {
+            background: var(--krab-gold);
+            color: #451a03;
+            border-radius: 8px;
+            padding: 2px 10px;
+            font-size: 1rem;
             font-weight: 700;
+        }
+
+        .toggle-panel-btn {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 8px 16px;
+            font-weight: 600;
             font-size: 0.95rem;
-            border-radius: 6px;
+            border-radius: 10px;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
 
         .toggle-panel-btn:hover {
-            background-color: #ff3333;
-            color: white;
+            background: var(--krab-gold);
+            color: #451a03;
+            border-color: transparent;
         }
 
-        /* Dynamic Itemized Shopping List */
+        /* Order Output Track */
         .cart-items-list {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             overflow-y: auto;
-            height: 90px;
+            height: 100px;
             padding-right: 10px;
         }
 
+        /* Beautiful structural treatment for individual active items */
         .cart-list-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 8px 12px;
-            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 10px 16px;
+            border-radius: 12px;
             font-size: 1.05rem;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
         .cart-item-details {
@@ -261,109 +322,113 @@
 
         .cart-item-customs {
             font-size: 0.85rem;
-            color: #ffcc00;
+            color: var(--krab-gold);
             font-style: italic;
-            margin-top: 2px;
+            margin-top: 4px;
+            font-weight: 300;
         }
 
         .item-qty-controls {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        /* Micro Plus/Minus Buttons */
         .qty-btn {
-            background-color: #ffcc00;
-            color: #228b22;
-            border: 2px solid white;
-            font-weight: 900;
-            font-size: 1rem;
-            width: 26px;
-            height: 26px;
-            border-radius: 4px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.15s;
         }
 
         .qty-btn:hover {
-            background-color: #ff3333;
-            color: white;
+            background: var(--bubble-plankton);
+            transform: scale(1.05);
         }
 
-        /* Identity Field Selection Box Layout */
+        /* Identity Field Controls */
         .cart-identity-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            background: rgba(0,0,0,0.15);
-            padding: 8px;
-            border-radius: 8px;
-            border: 2px solid rgba(255,255,255,0.2);
+            gap: 15px;
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 14px;
         }
 
         .cart-identity-row label {
-            font-weight: 700;
-            color: #ffcc00;
+            font-weight: 600;
+            color: var(--krab-gold);
             font-size: 1.1rem;
-            text-shadow: 1px 1px 2px #000;
         }
 
         .customer-name-input {
-            padding: 6px 12px;
+            padding: 8px 16px;
             font-size: 1rem;
-            border-radius: 6px;
-            border: 2px solid #8b4513;
-            width: 250px;
-            font-weight: 600;
-            color: #333;
-            background-color: #fff8dc;
+            border-radius: 10px;
+            border: none;
+            width: 280px;
+            font-weight: 500;
+            color: #1e293b;
+            background-color: #f8fafc;
+            transition: all 0.2s;
         }
 
         .customer-name-input:focus {
-            outline: none;
-            border-color: #ffcc00;
-            box-shadow: 0 0 5px #ffcc00;
+            outline: 2px solid var(--krab-gold);
+            background-color: white;
         }
 
+        /* Call To Action Buttons */
         .checkout-btn {
-            background-color: #ffd700;
-            color: #111;
-            font-size: 1.2rem;
-            font-weight: 700;
-            padding: 10px 25px;
-            border: 3px solid white;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #22c55e 0%, var(--money-green) 100%);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 14px;
             cursor: pointer;
-            text-shadow: 1px 1px 0px #fff;
-            box-shadow: 0 4px 0px #b8860b;
-            align-self: center;
             width: 100%;
-            max-width: 400px;
-            height: 45px;
-        }
-
-        .checkout-btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0px #b8860b;
+            max-width: 450px;
+            height: 52px;
+            align-self: center;
+            box-shadow: 0 4px 15px rgba(34, 139, 34, 0.4);
+            transition: all 0.2s;
         }
 
         .checkout-btn:hover {
-            background-color: #fff;
-            color: #228b22;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.6);
+            filter: brightness(1.1);
         }
 
-        /* Customization Modal Popup Window */
+        .checkout-btn:disabled {
+            background: #64748b !important;
+            box-shadow: none !important;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Overhauled Clean Customization Overlay Window */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(8px);
             z-index: 2000;
             display: none;
             align-items: center;
@@ -371,127 +436,139 @@
         }
 
         .modal-content {
-            background-color: #fff8dc;
-            color: #333;
-            border: 8px solid #d2691e;
-            border-radius: 15px;
+            background-color: white;
+            color: #1e293b;
+            border-radius: 24px;
             width: 90%;
-            max-width: 450px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            position: relative;
+            max-width: 480px;
+            padding: 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalPop {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         .modal-header {
-            color: #8b4513;
-            font-size: 1.8rem;
+            color: #451a03;
+            font-size: 1.9rem;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: center;
-            border-bottom: 3px dashed #d2691e;
-            padding-bottom: 8px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 12px;
         }
 
         .modal-options-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 14px;
+            margin-bottom: 24px;
         }
 
         .customize-option {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 1.2rem;
-            font-weight: 600;
+            gap: 14px;
+            font-size: 1.1rem;
+            font-weight: 500;
             cursor: pointer;
+            background: #f8fafc;
+            padding: 12px 16px;
+            border-radius: 12px;
+            transition: background 0.15s;
+        }
+
+        .customize-option:hover {
+            background: #f1f5f9;
         }
 
         .customize-option input[type="checkbox"] {
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             cursor: pointer;
-            accent-color: #228b22;
+            accent-color: var(--money-green);
         }
 
         .modal-actions {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         .modal-btn {
-            padding: 10px;
+            padding: 14px;
             font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 8px;
+            font-weight: 600;
+            border-radius: 12px;
             cursor: pointer;
             flex: 1;
             text-align: center;
+            border: none;
+            font-family: 'Fredoka', sans-serif;
         }
 
         .modal-save {
-            background-color: #ffcc00;
-            border: 3px solid #8b4513;
-            color: #333;
+            background: var(--krab-gold);
+            color: #451a03;
         }
 
         .modal-save:hover {
-            background-color: #228b22;
+            background: linear-gradient(135deg, #22c55e 0%, var(--money-green) 100%);
             color: white;
         }
 
         .modal-cancel {
-            background-color: #bbb;
-            border: 3px solid #555;
-            color: #333;
+            background: #e2e8f0;
+            color: #475569;
         }
 
-        /* Employee Spotlight Section */
+        /* Modernized Crew Section Card Blocks */
         .crew-section {
-            margin-top: 40px;
-            border-top: 4px solid #00ffff;
-            padding-top: 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 40px;
         }
 
         .crew-title {
             text-align: center;
-            color: #ffcc00;
-            font-size: 2.3rem;
-            margin-bottom: 25px;
+            color: var(--krab-gold);
+            font-size: 2.6rem;
+            margin-bottom: 35px;
             text-shadow: 2px 2px 0px #000;
         }
 
         .crew-grid {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
-            gap: 20px;
+            justify-content: center;
+            gap: 30px;
         }
 
         .crew-card {
-            background: #112244;
-            border: 3px solid #ffcc00;
-            border-radius: 10px;
-            padding: 20px;
-            width: 280px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 24px;
+            width: 320px;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            backdrop-filter: blur(4px);
         }
 
-        /* Portrait Frame Styles */
         .crew-image-container {
-            width: 100%;
-            height: 180px;
-            background-color: #2c3e50;
-            border: 6px solid #8b4513; /* Wooden frame effect */
-            border-radius: 4px;
-            margin-bottom: 15px;
+            width: 140px;
+            height: 140px;
+            background-color: #1e293b;
+            border: 4px solid var(--primary-wood); 
+            border-radius: 50%; /* Modern Circular Profiles */
+            margin: 0 auto 20px auto;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
             position: relative;
         }
 
@@ -504,47 +581,58 @@
         }
 
         .image-placeholder-text {
-            color: #888;
-            font-size: 0.9rem;
+            color: #64748b;
+            font-size: 0.8rem;
             font-style: italic;
             position: absolute;
             z-index: 1;
         }
 
         .crew-card h3 {
-            font-size: 1.3rem;
-            color: #fff;
-            margin-bottom: 5px;
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 6px;
         }
 
         .crew-role {
-            color: #00ffff;
-            font-weight: 700;
-            margin-bottom: 10px;
+            color: var(--sea-neon);
+            font-weight: 600;
+            margin-bottom: 14px;
             font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .crew-card p {
             font-size: 0.95rem;
-            line-height: 1.4;
+            line-height: 1.5;
             font-style: italic;
+            color: #cbd5e1;
         }
 
-        /* Microscopic Footer */
+        /* Cleaner Footer Styling */
         footer {
             text-align: center;
-            padding: 40px 20px;
-            margin-top: 40px;
-            background-color: #001f3f;
-            border-top: 5px solid #8b4513;
+            padding: 50px 20px;
+            margin-top: 60px;
+            background-color: #030712;
+            border-top: 6px solid var(--dark-wood);
+        }
+
+        footer p {
+            color: #9ca3af;
+            font-size: 1rem;
         }
 
         .fine-print {
             font-family: sans-serif;
-            font-size: 0.6rem;
-            color: #777;
-            line-height: 1.3;
-            margin-top: 10px;
+            font-size: 0.7rem;
+            color: #4b5563;
+            line-height: 1.4;
+            margin-top: 16px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
@@ -569,7 +657,7 @@
                 <div class="item-desc">Cooked to absolute perfection by our passionate fry cook. Pure perfection on a bun.</div>
                 <div class="item-actions">
                     <button class="order-btn" onclick="addToCart('Krabby Patty', 2.99)">Add to Cart</button>
-                    <button class="cust-btn" onclick="openCustomizeModal('Krabby Patty', 2.99)">🍔 Customize</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Krabby Patty', 2.99)">🍔 Fixin's</button>
                 </div>
             </div>
 
@@ -581,7 +669,7 @@
                 <div class="item-desc">Twice the patties, twice the flavor, twice the absolute strain on Squidward's patience.</div>
                 <div class="item-actions">
                     <button class="order-btn" onclick="addToCart('Double Krabby Patty', 3.99)">Add to Cart</button>
-                    <button class="cust-btn" onclick="openCustomizeModal('Double Krabby Patty', 3.99)">🍔 Customize</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Double Krabby Patty', 3.99)">🍔 Fixin's</button>
                 </div>
             </div>
 
@@ -593,7 +681,7 @@
                 <div class="item-desc">Includes a regular Patty, crisp Coral Bits, and a refreshing, ice-cold Seafoam Soda.</div>
                 <div class="item-actions">
                     <button class="order-btn" onclick="addToCart('Krusty Combo', 5.99)">Add to Cart</button>
-                    <button class="cust-btn" onclick="openCustomizeModal('Krusty Combo', 5.99)">🍔 Customize</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Krusty Combo', 5.99)">🍔 Fixin's</button>
                 </div>
             </div>
 
@@ -605,7 +693,7 @@
                 <div class="item-desc"><b>The pizza for you and me!</b> Hand-delivered through sandstorms, hitchhiked pioneers, and wild rocks. Diet Dr. Kelp not included.</div>
                 <div class="item-actions">
                     <button class="order-btn" onclick="addToCart('Krusty Krab Pizza', 12.49)">Add to Cart</button>
-                    <button class="cust-btn" onclick="openCustomizeModal('Krusty Krab Pizza', 12.49)">🍕 Customize</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Krusty Krab Pizza', 12.49)">🍕 Fixin's</button>
                 </div>
             </div>
 
@@ -617,7 +705,7 @@
                 <div class="item-desc">Squidward's genius invention! A succulent Krabby Patty ingredient profile hot dog that practically sells itself.</div>
                 <div class="item-actions">
                     <button class="order-btn" onclick="addToCart('Krusty Dog', 3.25)">Add to Cart</button>
-                    <button class="cust-btn" onclick="openCustomizeModal('Krusty Dog', 3.25)">🌭 Customize</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Krusty Dog', 3.25)">🌭 Fixin's</button>
                 </div>
             </div>
 
@@ -629,7 +717,7 @@
                 <div class="item-desc">Don't forget the drink! How can you expect anyone to eat their pizza without their drink?!</div>
                 <div class="item-actions">
                     <button class="order-btn" onclick="addToCart('Diet Dr. Kelp', 1.75)">Add to Cart</button>
-                    <button class="cust-btn" onclick="openCustomizeModal('Diet Dr. Kelp', 1.75)">🍔 Customize</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Diet Dr. Kelp', 1.75)">🥤 Fixin's</button>
                 </div>
             </div>
 
@@ -641,7 +729,7 @@
                 <div class="item-desc">Crunchy, salty, and perfect for snacking while waiting for your order to be yelled out.</div>
                 <div class="item-actions">
                     <button class="order-btn" onclick="addToCart('Coral Bits', 1.95)">Add to Cart</button>
-                    <button class="cust-btn" onclick="openCustomizeModal('Coral Bits', 1.95)">🍔 Customize</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Coral Bits', 1.95)">🍿 Fixin's</button>
                 </div>
             </div>
 
@@ -653,7 +741,7 @@
                 <div class="item-desc">Deep-fried underwater plant life shaped into delicious golden rings. Tartar sauce extra.</div>
                 <div class="item-actions">
                     <button class="order-btn" onclick="addToCart('Kelp Rings', 1.50)">Add to Cart</button>
-                    <button class="cust-btn" onclick="openCustomizeModal('Kelp Rings', 1.50)">🍔 Customize</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Kelp Rings', 1.50)">🧅 Fixin's</button>
                 </div>
             </div>
 
@@ -665,7 +753,7 @@
                 <div class="item-desc">Bubbly, sugary, and served in a cup that we strictly wash... occasionally.</div>
                 <div class="item-actions">
                     <button class="order-btn" onclick="addToCart('Seafoam Soda', 1.25)">Add to Cart</button>
-                    <button class="cust-btn" onclick="openCustomizeModal('Seafoam Soda', 1.25)">🍔 Customize</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Seafoam Soda', 1.25)">🥤 Fixin's</button>
                 </div>
             </div>
         </div>
@@ -711,12 +799,15 @@
 
     <div class="cart-bar" id="money-cart">
         <div class="cart-header-row">
-            <div class="cart-text" id="cart-total">Total Money Owed to Mr. Krabs: $0.00 (0 items)</div>
-            <button class="toggle-panel-btn" onclick="toggleCartPanel()">⚓ Toggle Panel</button>
+            <div class="cart-text">
+                Ledger Due: <span id="cart-total-cash">$0.00</span> 
+                <span class="cart-badge" id="cart-total-count">0 items</span>
+            </div>
+            <button class="toggle-panel-btn" onclick="toggleCartPanel()">⚓ View / Hide Ledger</button>
         </div>
         
         <div class="cart-items-list" id="cart-items-container">
-            <div style="color: rgba(255,255,255,0.5); font-style: italic; font-size: 0.95rem; text-align: center; padding: 10px;">
+            <div style="color: rgba(255,255,255,0.4); font-style: italic; font-size: 0.95rem; text-align: center; padding: 20px 10px;">
                 Your belly is empty... Add some Galley Grub!
             </div>
         </div>
@@ -752,7 +843,6 @@
         let cart = {};
         let currentModalItem = { name: '', basePrice: '' };
 
-        // Central Database containing unique customization choices for every single menu item
         const menuCustomizations = {
             "Krabby Patty": [
                 { id: "pickles", name: "Extra Pickles", cost: 0.25 },
@@ -800,13 +890,11 @@
             ]
         };
 
-        // Fully functional toggle that interacts explicitly with bottom positioning 
         function toggleCartPanel() {
             const cartBar = document.getElementById('money-cart');
             cartBar.classList.toggle('collapsed');
         }
 
-        // Standard Add To Cart (No customization toppings)
         function addToCart(itemName, price, customizationString = "", extraCost = 0) {
             const uniqueCartKey = itemName + (customizationString ? "|" + customizationString : "");
             const finalPrice = price + extraCost;
@@ -822,12 +910,9 @@
                 };
             }
             renderCart();
-            
-            // Pop the cart open automatically whenever a fresh item drops in
             document.getElementById('money-cart').classList.remove('collapsed');
         }
 
-        // Customization Modal Dynamic Construction
         function openCustomizeModal(itemName, price) {
             currentModalItem.name = itemName;
             currentModalItem.basePrice = price;
@@ -835,17 +920,16 @@
             document.getElementById('modal-item-title').innerText = `Fixin's for ${itemName}`;
             
             const container = document.getElementById('modal-options-container');
-            container.innerHTML = ''; // Wipe out old choices
+            container.innerHTML = ''; 
             
             const options = menuCustomizations[itemName] || [];
             
-            // Map over specific options and loop individual dynamic inputs into DOM
             options.forEach(opt => {
                 const optionLabel = document.createElement('label');
                 optionLabel.className = 'customize-option';
                 optionLabel.innerHTML = `
                     <input type="checkbox" class="modal-checkbox-input" data-name="${opt.name}" data-cost="${opt.cost}">
-                    ${opt.name} (+$${opt.cost.toFixed(2)})
+                    <span>${opt.name} (+$${opt.cost.toFixed(2)})</span>
                 `;
                 container.appendChild(optionLabel);
             });
@@ -897,10 +981,11 @@
 
             if (keys.length === 0) {
                 container.innerHTML = `
-                    <div style="color: rgba(255,255,255,0.5); font-style: italic; font-size: 0.95rem; text-align: center; padding: 10px;">
+                    <div style="color: rgba(255,255,255,0.4); font-style: italic; font-size: 0.95rem; text-align: center; padding: 20px 10px;">
                         Your belly is empty... Add some Galley Grub!
                     </div>`;
-                document.getElementById('cart-total').innerText = `Total Money Owed to Mr. Krabs: $0.00 (0 items)`;
+                document.getElementById('cart-total-cash').innerText = `$0.00`;
+                document.getElementById('cart-total-count').innerText = `0 items`;
                 return;
             }
 
@@ -917,7 +1002,7 @@
 
                 itemRow.innerHTML = `
                     <div class="cart-item-details">
-                        <span>${item.displayName} (x${item.quantity}) - $${itemTotalCost.toFixed(2)}</span>
+                        <span style="font-weight: 500;">${item.displayName} (x${item.quantity}) - $${itemTotalCost.toFixed(2)}</span>
                         ${customLabelHTML}
                     </div>
                     <div class="item-qty-controls">
@@ -928,7 +1013,8 @@
                 container.appendChild(itemRow);
             });
 
-            document.getElementById('cart-total').innerText = `Total Money Owed to Mr. Krabs: $${totalCash.toFixed(2)} (${totalItems} items)`;
+            document.getElementById('cart-total-cash').innerText = `$${totalCash.toFixed(2)}`;
+            document.getElementById('cart-total-count').innerText = `${totalItems} item${totalItems > 1 ? 's' : ''}`;
         }
 
         function checkout() {
@@ -936,16 +1022,13 @@
             let totalCash = 0;
             let itemDetailsArray = [];
 
-            // Name Field Validation logic
             const customerNameInput = document.getElementById('cust-name').value.trim();
 
-            // The cheapskate validation check!
             if (!customerNameInput) {
                 alert("ENTER YOUR NAME YA CHEAPSKATE!");
                 return;
             }
 
-            // Gather order details
             Object.keys(cart).forEach(key => {
                 totalItems += cart[key].quantity;
                 totalCash += cart[key].price * cart[key].quantity;
@@ -959,13 +1042,11 @@
                 return;
             }
 
-            // Disable the checkout button while sending to prevent duplicate entries
             const checkoutBtn = document.getElementById('checkout-button');
             checkoutBtn.disabled = true;
             checkoutBtn.innerText = "SENDING ORDER TO MR. KRABS...";
 
             // --- GOOGLE SHEETS INTEGRATION ---
-            // PASTE YOUR GOOGLE WEB APP URL HERE:
             const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXb2jWMHZiA3mNU9xoHTJtYZLyQzXRVVpqWrQ8xLWO64QR761kgyRs4yDJkMUEmGPhxA/exec";
 
             const orderData = {
@@ -974,10 +1055,9 @@
                 totalSpent: `$${totalCash.toFixed(2)}`
             };
 
-            // Use fetch to send data to Google Sheets via the Apps Script
             fetch(SCRIPT_URL, {
                 method: "POST",
-                mode: "no-cors", // Required to bypass cross-origin browser restrictions
+                mode: "no-cors", 
                 cache: "no-cache",
                 headers: {
                     "Content-Type": "application/json",
@@ -985,14 +1065,12 @@
                 body: JSON.stringify(orderData)
             })
             .then(response => {
-                // Since mode is 'no-cors', we won't get a readable response body, but the data still sends successfully!
                 alert(
                     `ARRRGH! Thanks for the money, ${customerNameInput}!\n\n` +
                     `Your order has been logged in Mr. Krabs' master ledger, and we locked away $${totalCash.toFixed(2)}!\n\n` +
                     `SpongeBob is gettin' to work! ARRRGH ARGHARGH!`
                 );
 
-                // Wipe cart and name clean on completion
                 cart = {};
                 document.getElementById('cust-name').value = '';
                 renderCart();
@@ -1002,11 +1080,8 @@
                 alert("Barnacles! The order couldn't reach the spreadsheet. Try again, boyo!");
             })
             .finally(() => {
-                // Re-enable checkout button
                 checkoutBtn.disabled = false;
                 checkoutBtn.innerText = "GIVE ME ME MONEY";
-                
-                // Automatically collapse panel after transactional clearing
                 document.getElementById('money-cart').classList.add('collapsed');
             });
         }
