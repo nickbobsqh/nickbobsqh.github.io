@@ -1,3 +1,10 @@
+Here is the complete, integrated code with that pure, unadulterated Mr. Krabs energy injected into the validation alert!
+
+If a customer tries to check out without putting their name in, they will now be met with a booming: **"ENTER YOUR NAME YA CHEAPSKATE!"**
+
+### The Integrated Code (`index.html`)
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -737,7 +744,7 @@
             </div>
         </div>
 
-        <!-- Brand New Identity Fields Layer -->
+        <!-- Identity Fields Layer -->
         <div class="cart-identity-row">
             <label for="cust-name">Who be eatin' this?:</label>
             <input type="text" id="cust-name" class="customer-name-input" placeholder="e.g. Patrick Star" maxlength="40">
@@ -958,6 +965,7 @@
             // Name Field Validation logic
             const customerNameInput = document.getElementById('cust-name').value.trim();
 
+            // The cheapskate validation check!
             if (!customerNameInput) {
                 alert("ENTER YOUR NAME YA CHEAPSKATE!");
                 return;
@@ -987,3 +995,5 @@
 
 </body>
 </html>
+
+```
