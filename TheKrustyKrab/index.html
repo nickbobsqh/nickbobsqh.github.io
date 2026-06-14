@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Krusty Krab</title>
-    <!-- Importing Fredoka for branding & Inter for crisp, modern reading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -20,9 +19,9 @@
             --liquid-glass-hover: rgba(255, 255, 255, 0.09);
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-glow: rgba(0, 255, 255, 0.15);
-            /* Perfect rubbery physics curve for squash & stretch bounce */
-            --elastic-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --fluid-stretch: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+            
+            /* Toned down, premium rubbery physics curve */
+            --elastic-bounce: cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         /* Smooth, modern global styling reset */
@@ -118,7 +117,7 @@
             gap: 25px;
         }
 
-        /* Pure Dynamic Liquid Glass Card Structuring with Squash & Stretch Physics */
+        /* Pure Dynamic Liquid Glass Card Structuring with Refined Squash & Stretch Physics */
         .menu-item {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(15px);
@@ -130,13 +129,12 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            /* Target transform cleanly with elastic cubic curves */
-            transition: transform 0.45s var(--elastic-bounce), background 0.3s, border-color 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s var(--elastic-bounce), background 0.3s, border-color 0.3s, box-shadow 0.3s;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2),
                         inset 0 1px 1px rgba(255,255,255,0.1);
             position: relative;
             overflow: hidden;
-            transform-origin: bottom center; /* Keeps the squashing pinned realistically to the baseline */
+            transform-origin: center center; /* Clean, stable scaling focal point */
         }
 
         /* Glass Special Ribbon Overlay */
@@ -163,19 +161,19 @@
             letter-spacing: 0.5px;
         }
 
-        /* Fluid Hover Reaction: Stretch tall on hover */
+        /* Subtle lift with a highly controlled, sophisticated stretch factor */
         .menu-item:hover {
-            transform: translateY(-8px) scale(0.96, 1.05);
+            transform: translateY(-6px) scale(0.99, 1.01);
             background: var(--liquid-glass-hover);
             border-color: rgba(0, 255, 255, 0.3);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.4), 
-                        0 0 30px var(--glass-glow),
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 
+                        0 0 25px var(--glass-glow),
                         inset 0 1px 5px rgba(255,255,255,0.3);
         }
 
-        /* Flatten down on click */
+        /* Minimal mechanical press feedback */
         .menu-item:active {
-            transform: translateY(2px) scale(1.06, 0.9);
+            transform: translateY(-2px) scale(1.01, 0.98);
         }
 
         .item-name {
@@ -236,11 +234,11 @@
             border-color: var(--money-green);
             color: #ffffff;
             box-shadow: 0 0 20px rgba(45, 252, 112, 0.3);
-            transform: scale(0.95, 1.1);
+            transform: scale(0.98, 1.02);
         }
 
         .order-btn:active {
-            transform: scale(1.15, 0.8);
+            transform: scale(1.02, 0.96);
         }
 
         .cust-btn {
@@ -260,11 +258,11 @@
             background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
             border-color: rgba(255,255,255,0.2);
-            transform: scale(0.93, 1.08);
+            transform: scale(0.98, 1.02);
         }
 
         .cust-btn:active {
-            transform: scale(1.1, 0.85);
+            transform: scale(1.02, 0.96);
         }
 
         /* Dynamic Liquid Glass Checkout System Panel */
@@ -284,8 +282,7 @@
             box-shadow: 0 -20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.2);
             z-index: 1000;
             height: 440px; 
-            /* Rubbery drop down when hiding/showing menu */
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.42, 1.15);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .cart-bar.collapsed {
@@ -323,15 +320,14 @@
             transition: transform 0.3s var(--elastic-bounce);
         }
 
-        /* Added a pop dynamic class triggered by javascript updates */
         .cart-badge.pop-bump {
-            animation: textStretch 0.35s ease-out;
+            animation: textStretch 0.3s ease-out;
         }
 
         @keyframes textStretch {
             0% { transform: scale(1, 1); }
-            30% { transform: scale(1.4, 0.6); }
-            60% { transform: scale(0.8, 1.2); }
+            40% { transform: scale(1.15, 0.85); }
+            70% { transform: scale(0.95, 1.05); }
             100% { transform: scale(1, 1); }
         }
 
@@ -372,11 +368,11 @@
             border-radius: 14px;
             font-size: 1.05rem;
             border: 1px solid rgba(255,255,255,0.05);
-            animation: linePopIn 0.3s var(--elastic-bounce);
+            animation: linePopIn 0.25s var(--elastic-bounce);
         }
 
         @keyframes linePopIn {
-            from { transform: scale(0.7, 1.4); opacity: 0; }
+            from { transform: scale(0.9, 1.1); opacity: 0; }
             to { transform: scale(1, 1); opacity: 1; }
         }
 
@@ -418,11 +414,11 @@
         .qty-btn:hover {
             background: var(--bubble-plankton);
             border-color: transparent;
-            transform: scale(0.85, 1.2);
+            transform: scale(0.95, 1.05);
         }
 
         .qty-btn:active {
-            transform: scale(1.3, 0.7);
+            transform: scale(1.05, 0.95);
         }
 
         /* Refined Liquid-Glass Multi-Input Fields Grid Layout */
@@ -492,7 +488,7 @@
             height: 52px;
             align-self: center;
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            transition: transform 0.25s var(--elastic-bounce), background-color 0.3s, box-shadow 0.3s;
+            transition: transform 0.2s var(--elastic-bounce), background-color 0.3s, box-shadow 0.3s;
             margin-top: 4px;
             letter-spacing: 0.5px;
         }
@@ -501,11 +497,11 @@
             background: rgba(45, 252, 112, 0.25);
             border-color: var(--money-green);
             box-shadow: 0 0 30px rgba(45, 252, 112, 0.3);
-            transform: scale(0.97, 1.06);
+            transform: scale(0.99, 1.01);
         }
 
         .checkout-btn:active {
-            transform: scale(1.08, 0.82);
+            transform: scale(1.02, 0.98);
         }
 
         .checkout-btn:disabled {
@@ -544,11 +540,11 @@
             max-width: 480px;
             padding: 30px;
             box-shadow: 0 40px 80px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.2);
-            animation: modalPop 0.4s var(--elastic-bounce);
+            animation: modalPop 0.35s var(--elastic-bounce);
         }
 
         @keyframes modalPop {
-            from { transform: scale(0.7, 1.4); opacity: 0; }
+            from { transform: scale(0.9, 1.1); opacity: 0; }
             to { transform: scale(1, 1); opacity: 1; }
         }
 
@@ -581,13 +577,13 @@
             padding: 12px 16px;
             border-radius: 14px;
             transition: transform 0.2s var(--elastic-bounce), background-color 0.2s;
-            transform-origin: center left;
+            transform-origin: center center;
         }
 
         .customize-option:hover {
             background: rgba(255,255,255,0.08);
             border-color: rgba(255,255,255,0.15);
-            transform: scale(1.02, 0.97);
+            transform: scale(1.01, 0.99);
         }
 
         .customize-option input[type="checkbox"] {
@@ -624,11 +620,11 @@
         .modal-save:hover {
             background: rgba(45, 252, 112, 0.2);
             border-color: var(--money-green);
-            transform: scale(0.95, 1.1);
+            transform: scale(0.98, 1.02);
         }
 
         .modal-save:active {
-            transform: scale(1.1, 0.85);
+            transform: scale(1.02, 0.96);
         }
 
         .modal-cancel {
@@ -640,14 +636,14 @@
         .modal-cancel:hover {
             background: rgba(255, 255, 255, 0.06);
             color: white;
-            transform: scale(0.95, 1.1);
+            transform: scale(0.98, 1.02);
         }
 
         .modal-cancel:active {
-            transform: scale(1.1, 0.85);
+            transform: scale(1.02, 0.96);
         }
 
-        /* Modernized Crew Section Card Blocks with Jelly Bounces */
+        /* Crew Section Card Blocks */
         .crew-section {
             margin-top: 60px;
             border-top: 1px solid rgba(255,255,255,0.08);
@@ -679,12 +675,11 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            transition: transform 0.5s var(--elastic-bounce);
-            transform-origin: bottom center;
+            transition: transform 0.4s var(--elastic-bounce);
         }
 
         .crew-card:hover {
-            transform: translateY(-5px) scale(0.95, 1.06);
+            transform: translateY(-4px) scale(0.99, 1.01);
         }
 
         .crew-image-container {
@@ -700,11 +695,11 @@
             justify-content: center;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             position: relative;
-            transition: transform 0.4s var(--elastic-bounce);
+            transition: transform 0.3s var(--elastic-bounce);
         }
 
         .crew-card:hover .crew-image-container {
-            transform: scale(1.1) translateY(-4px);
+            transform: scale(1.05);
         }
 
         .crew-img {
@@ -746,7 +741,7 @@
             color: #94a3b8;
         }
 
-        /* Cleaner Footer Styling */
+        /* Footer Layout */
         footer {
             text-align: center;
             padding: 50px 20px;
@@ -785,7 +780,6 @@
         <h2 class="menu-title">The Galley Grub Menu</h2>
         
         <div class="menu-grid">
-            <!-- Item 1 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krabby Patty</span>
@@ -798,7 +792,6 @@
                 </div>
             </div>
 
-            <!-- Item 2 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Double Krabby Patty</span>
@@ -811,7 +804,6 @@
                 </div>
             </div>
 
-            <!-- Item 3 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krusty Combo</span>
@@ -824,7 +816,6 @@
                 </div>
             </div>
 
-            <!-- Special Item: Krusty Krab Pizza -->
             <div class="menu-item special-item">
                 <div class="item-name">
                     <span>Krusty Krab Pizza</span>
@@ -837,7 +828,6 @@
                 </div>
             </div>
 
-            <!-- New Item: Krusty Dogs -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krusty Dog</span>
@@ -850,7 +840,6 @@
                 </div>
             </div>
 
-            <!-- Item: Diet Dr. Kelp -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Diet Dr. Kelp</span>
@@ -863,7 +852,6 @@
                 </div>
             </div>
 
-            <!-- Item 4 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Coral Bits</span>
@@ -876,7 +864,6 @@
                 </div>
             </div>
 
-            <!-- Item 5 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Kelp Rings</span>
@@ -889,7 +876,6 @@
                 </div>
             </div>
 
-            <!-- Item 6 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Seafoam Soda</span>
@@ -903,12 +889,10 @@
             </div>
         </div>
 
-        <!-- Crew Section -->
         <div class="crew-section">
             <h2 class="crew-title">Meet the Krusty Krew</h2>
             <div class="crew-grid">
                 
-                <!-- SpongeBob -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/sb.png" alt="SpongeBob SquarePants">
@@ -919,7 +903,6 @@
                     <p>"I'm ready! I'm ready! I'm ready to flip your lunch with love and unmatched corporate loyalty!"</p>
                 </div>
 
-                <!-- Squidward -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/sq.png" alt="Squidward Tentacles">
@@ -930,7 +913,6 @@
                     <p>"Please state your order quickly so I can go back to regretting every single life choice that brought me here."</p>
                 </div>
 
-                <!-- Mr. Krabs -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/mrk.png" alt="Eugene H. Krabs">
@@ -946,7 +928,6 @@
 
     </div>
 
-    <!-- Floating Dynamic Checkout Panel -->
     <div class="cart-bar" id="money-cart">
         <div class="cart-header-row">
             <div class="cart-text">
@@ -956,14 +937,12 @@
             <button class="toggle-panel-btn" onclick="toggleCartPanel()">⚓ View / Hide Ledger</button>
         </div>
         
-        <!-- Live Itemized Output Box -->
         <div class="cart-items-list" id="cart-items-container">
             <div style="color: rgba(255,255,255,0.25); font-style: italic; font-size: 0.95rem; text-align: center; padding: 20px 10px;">
                 Your belly is empty... Add some Galley Grub!
             </div>
         </div>
 
-        <!-- Identity & Fully Realistic Delivery Fields Layout -->
         <div class="delivery-form-grid">
             <div class="form-field-wrapper">
                 <label for="cust-name">Customer Name</label>
@@ -982,11 +961,9 @@
         <button class="checkout-btn" id="checkout-button" onclick="checkout()">GIVE ME ME MONEY</button>
     </div>
 
-    <!-- Customization Modal -->
     <div class="modal-overlay" id="customize-modal">
         <div class="modal-content">
             <div class="modal-header" id="modal-item-title">Customize Item</div>
-            <!-- Checkboxes will be programmatically injected here per item clicked -->
             <div class="modal-options-list" id="modal-options-container"></div>
             
             <div class="modal-actions">
@@ -1003,7 +980,6 @@
         </p>
     </footer>
 
-    <!-- Advanced Interactive Ordering Script -->
     <script>
         let cart = {};
         let currentModalItem = { name: '', basePrice: '' };
@@ -1060,13 +1036,6 @@
             cartBar.classList.toggle('collapsed');
         }
 
-        function triggerBadgeBump() {
-            const badge = document.getElementById('cart-total-count');
-            badge.classList.remove('pop-bump');
-            void badge.offsetWidth; // Force CSS reflow to re-trigger animation
-            badge.add('pop-bump');
-        }
-
         function addToCart(itemName, price, customizationString = "", extraCost = 0) {
             const uniqueCartKey = itemName + (customizationString ? "|" + customizationString : "");
             const finalPrice = price + extraCost;
@@ -1083,7 +1052,7 @@
             }
             renderCart();
             
-            // Squash and Stretch badge reaction
+            // Controlled organic feedback on counter badge
             const badge = document.getElementById('cart-total-count');
             badge.classList.remove('pop-bump');
             void badge.offsetWidth; 
