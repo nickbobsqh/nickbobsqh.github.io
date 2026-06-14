@@ -20,6 +20,9 @@
             --liquid-glass-hover: rgba(255, 255, 255, 0.09);
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-glow: rgba(0, 255, 255, 0.15);
+            /* Perfect rubbery physics curve for squash & stretch bounce */
+            --elastic-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --fluid-stretch: cubic-bezier(0.6, -0.28, 0.735, 0.045);
         }
 
         /* Smooth, modern global styling reset */
@@ -115,7 +118,7 @@
             gap: 25px;
         }
 
-        /* Pure Dynamic Liquid Glass Card Structuring */
+        /* Pure Dynamic Liquid Glass Card Structuring with Squash & Stretch Physics */
         .menu-item {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(15px);
@@ -127,11 +130,13 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            /* Target transform cleanly with elastic cubic curves */
+            transition: transform 0.45s var(--elastic-bounce), background 0.3s, border-color 0.3s, box-shadow 0.3s;
             box-shadow: 0 15px 35px rgba(0,0,0,0.2),
                         inset 0 1px 1px rgba(255,255,255,0.1);
             position: relative;
             overflow: hidden;
+            transform-origin: bottom center; /* Keeps the squashing pinned realistically to the baseline */
         }
 
         /* Glass Special Ribbon Overlay */
@@ -158,14 +163,19 @@
             letter-spacing: 0.5px;
         }
 
-        /* Fluid Hover Reaction */
+        /* Fluid Hover Reaction: Stretch tall on hover */
         .menu-item:hover {
-            transform: translateY(-5px) scale(1.01);
+            transform: translateY(-8px) scale(0.96, 1.05);
             background: var(--liquid-glass-hover);
             border-color: rgba(0, 255, 255, 0.3);
             box-shadow: 0 25px 50px rgba(0,0,0,0.4), 
                         0 0 30px var(--glass-glow),
                         inset 0 1px 5px rgba(255,255,255,0.3);
+        }
+
+        /* Flatten down on click */
+        .menu-item:active {
+            transform: translateY(2px) scale(1.06, 0.9);
         }
 
         .item-name {
@@ -218,7 +228,7 @@
             border-radius: 14px;
             cursor: pointer;
             flex: 2;
-            transition: all 0.3s;
+            transition: transform 0.2s var(--elastic-bounce), background 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
 
         .order-btn:hover {
@@ -226,6 +236,11 @@
             border-color: var(--money-green);
             color: #ffffff;
             box-shadow: 0 0 20px rgba(45, 252, 112, 0.3);
+            transform: scale(0.95, 1.1);
+        }
+
+        .order-btn:active {
+            transform: scale(1.15, 0.8);
         }
 
         .cust-btn {
@@ -238,13 +253,18 @@
             border-radius: 14px;
             cursor: pointer;
             flex: 1;
-            transition: all 0.3s;
+            transition: transform 0.2s var(--elastic-bounce), background 0.3s;
         }
 
         .cust-btn:hover {
             background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
             border-color: rgba(255,255,255,0.2);
+            transform: scale(0.93, 1.08);
+        }
+
+        .cust-btn:active {
+            transform: scale(1.1, 0.85);
         }
 
         /* Dynamic Liquid Glass Checkout System Panel */
@@ -264,7 +284,8 @@
             box-shadow: 0 -20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.2);
             z-index: 1000;
             height: 440px; 
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Rubbery drop down when hiding/showing menu */
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.42, 1.15);
         }
 
         .cart-bar.collapsed {
@@ -298,6 +319,20 @@
             padding: 2px 12px;
             font-size: 0.95rem;
             font-weight: 700;
+            display: inline-block;
+            transition: transform 0.3s var(--elastic-bounce);
+        }
+
+        /* Added a pop dynamic class triggered by javascript updates */
+        .cart-badge.pop-bump {
+            animation: textStretch 0.35s ease-out;
+        }
+
+        @keyframes textStretch {
+            0% { transform: scale(1, 1); }
+            30% { transform: scale(1.4, 0.6); }
+            60% { transform: scale(0.8, 1.2); }
+            100% { transform: scale(1, 1); }
         }
 
         .toggle-panel-btn {
@@ -337,6 +372,12 @@
             border-radius: 14px;
             font-size: 1.05rem;
             border: 1px solid rgba(255,255,255,0.05);
+            animation: linePopIn 0.3s var(--elastic-bounce);
+        }
+
+        @keyframes linePopIn {
+            from { transform: scale(0.7, 1.4); opacity: 0; }
+            to { transform: scale(1, 1); opacity: 1; }
         }
 
         .cart-item-details {
@@ -371,13 +412,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
+            transition: transform 0.2s var(--elastic-bounce), background-color 0.2s;
         }
 
         .qty-btn:hover {
             background: var(--bubble-plankton);
             border-color: transparent;
-            transform: scale(1.05);
+            transform: scale(0.85, 1.2);
+        }
+
+        .qty-btn:active {
+            transform: scale(1.3, 0.7);
         }
 
         /* Refined Liquid-Glass Multi-Input Fields Grid Layout */
@@ -447,16 +492,20 @@
             height: 52px;
             align-self: center;
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            transition: all 0.3s;
+            transition: transform 0.25s var(--elastic-bounce), background-color 0.3s, box-shadow 0.3s;
             margin-top: 4px;
             letter-spacing: 0.5px;
         }
 
         .checkout-btn:hover {
-            transform: translateY(-2px);
             background: rgba(45, 252, 112, 0.25);
             border-color: var(--money-green);
             box-shadow: 0 0 30px rgba(45, 252, 112, 0.3);
+            transform: scale(0.97, 1.06);
+        }
+
+        .checkout-btn:active {
+            transform: scale(1.08, 0.82);
         }
 
         .checkout-btn:disabled {
@@ -465,6 +514,7 @@
             color: rgba(255,255,255,0.2) !important;
             box-shadow: none !important;
             cursor: not-allowed;
+            transform: none !important;
         }
 
         /* Glass Customization Frost Overlay Window Overlay */
@@ -494,12 +544,12 @@
             max-width: 480px;
             padding: 30px;
             box-shadow: 0 40px 80px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.2);
-            animation: modalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: modalPop 0.4s var(--elastic-bounce);
         }
 
         @keyframes modalPop {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+            from { transform: scale(0.7, 1.4); opacity: 0; }
+            to { transform: scale(1, 1); opacity: 1; }
         }
 
         .modal-header {
@@ -530,12 +580,14 @@
             border: 1px solid rgba(255,255,255,0.05);
             padding: 12px 16px;
             border-radius: 14px;
-            transition: all 0.2s;
+            transition: transform 0.2s var(--elastic-bounce), background-color 0.2s;
+            transform-origin: center left;
         }
 
         .customize-option:hover {
             background: rgba(255,255,255,0.08);
             border-color: rgba(255,255,255,0.15);
+            transform: scale(1.02, 0.97);
         }
 
         .customize-option input[type="checkbox"] {
@@ -560,7 +612,7 @@
             text-align: center;
             border: 1px solid transparent;
             font-family: 'Fredoka', sans-serif;
-            transition: all 0.2s;
+            transition: transform 0.2s var(--elastic-bounce), background-color 0.2s;
         }
 
         .modal-save {
@@ -572,6 +624,11 @@
         .modal-save:hover {
             background: rgba(45, 252, 112, 0.2);
             border-color: var(--money-green);
+            transform: scale(0.95, 1.1);
+        }
+
+        .modal-save:active {
+            transform: scale(1.1, 0.85);
         }
 
         .modal-cancel {
@@ -583,9 +640,14 @@
         .modal-cancel:hover {
             background: rgba(255, 255, 255, 0.06);
             color: white;
+            transform: scale(0.95, 1.1);
         }
 
-        /* Modernized Crew Section Card Blocks */
+        .modal-cancel:active {
+            transform: scale(1.1, 0.85);
+        }
+
+        /* Modernized Crew Section Card Blocks with Jelly Bounces */
         .crew-section {
             margin-top: 60px;
             border-top: 1px solid rgba(255,255,255,0.08);
@@ -617,6 +679,12 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.5s var(--elastic-bounce);
+            transform-origin: bottom center;
+        }
+
+        .crew-card:hover {
+            transform: translateY(-5px) scale(0.95, 1.06);
         }
 
         .crew-image-container {
@@ -632,6 +700,11 @@
             justify-content: center;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             position: relative;
+            transition: transform 0.4s var(--elastic-bounce);
+        }
+
+        .crew-card:hover .crew-image-container {
+            transform: scale(1.1) translateY(-4px);
         }
 
         .crew-img {
@@ -987,6 +1060,13 @@
             cartBar.classList.toggle('collapsed');
         }
 
+        function triggerBadgeBump() {
+            const badge = document.getElementById('cart-total-count');
+            badge.classList.remove('pop-bump');
+            void badge.offsetWidth; // Force CSS reflow to re-trigger animation
+            badge.add('pop-bump');
+        }
+
         function addToCart(itemName, price, customizationString = "", extraCost = 0) {
             const uniqueCartKey = itemName + (customizationString ? "|" + customizationString : "");
             const finalPrice = price + extraCost;
@@ -1002,6 +1082,13 @@
                 };
             }
             renderCart();
+            
+            // Squash and Stretch badge reaction
+            const badge = document.getElementById('cart-total-count');
+            badge.classList.remove('pop-bump');
+            void badge.offsetWidth; 
+            badge.classList.add('pop-bump');
+
             document.getElementById('money-cart').classList.remove('collapsed');
         }
 
@@ -1061,6 +1148,11 @@
                 delete cart[cartKey];
             }
             renderCart();
+
+            const badge = document.getElementById('cart-total-count');
+            badge.classList.remove('pop-bump');
+            void badge.offsetWidth; 
+            badge.classList.add('pop-bump');
         }
 
         function renderCart() {
