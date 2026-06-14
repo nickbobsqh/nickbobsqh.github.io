@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Krusty Krab</title>
+    <!-- Importing Fredoka for branding & Inter for crisp, modern reading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -43,7 +44,7 @@
         }
 
         /* Branding typography */
-        h1, h2, h3, .cart-text, .order-btn, .cust-btn, .toggle-panel-btn, .checkout-btn {
+        h1, h2, h3, h4, .cart-text, .order-btn, .cust-btn, .toggle-panel-btn, .checkout-btn {
             font-family: 'Fredoka', sans-serif;
         }
 
@@ -105,9 +106,26 @@
             color: #ffffff;
             font-size: 3.2rem;
             font-weight: 700;
-            margin-bottom: 40px;
+            margin-bottom: 15px;
             text-shadow: 0 0 25px rgba(255,255,255,0.3);
             letter-spacing: 1px;
+        }
+
+        /* Category Menu Headers */
+        .menu-category-title {
+            color: var(--krab-gold);
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 45px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 204, 0, 0.15);
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+            letter-spacing: 0.5px;
+        }
+
+        /* First section title adjustment */
+        .container > .menu-category-title:first-of-type {
+            margin-top: 25px;
         }
 
         /* Responsive Grid Integration */
@@ -255,7 +273,7 @@
         }
 
         .cust-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 1.02);
             color: #ffffff;
             border-color: rgba(255,255,255,0.2);
             transform: scale(0.98, 1.02);
@@ -612,7 +630,7 @@
         }
 
         .modal-save {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255,255,255,0.15);
             color: #ffffff;
         }
@@ -779,7 +797,10 @@
 
         <h2 class="menu-title">The Galley Grub Menu</h2>
         
+        <!-- SECTION 1: BURGERS & COMBOS -->
+        <h3 class="menu-category-title">⚓ Burgers & Combos</h3>
         <div class="menu-grid">
+            <!-- Item 1 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krabby Patty</span>
@@ -792,6 +813,7 @@
                 </div>
             </div>
 
+            <!-- Item 2 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Double Krabby Patty</span>
@@ -804,6 +826,7 @@
                 </div>
             </div>
 
+            <!-- Item 3 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krusty Combo</span>
@@ -816,6 +839,7 @@
                 </div>
             </div>
 
+            <!-- Special Item: Krusty Krab Pizza -->
             <div class="menu-item special-item">
                 <div class="item-name">
                     <span>Krusty Krab Pizza</span>
@@ -828,6 +852,7 @@
                 </div>
             </div>
 
+            <!-- New Item: Krusty Dogs -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Krusty Dog</span>
@@ -839,19 +864,12 @@
                     <button class="cust-btn" onclick="openCustomizeModal('Krusty Dog', 3.25)">🌭 Fixin's</button>
                 </div>
             </div>
+        </div>
 
-            <div class="menu-item">
-                <div class="item-name">
-                    <span>Diet Dr. Kelp</span>
-                    <span class="item-price">$1.75</span>
-                </div>
-                <div class="item-desc">Don't forget the drink! How can you expect anyone to eat their pizza without their drink?!</div>
-                <div class="item-actions">
-                    <button class="order-btn" onclick="addToCart('Diet Dr. Kelp', 1.75)">Add to Cart</button>
-                    <button class="cust-btn" onclick="openCustomizeModal('Diet Dr. Kelp', 1.75)">🥤 Fixin's</button>
-                </div>
-            </div>
-
+        <!-- SECTION 2: SIDES & STARTERS -->
+        <h3 class="menu-category-title">🍟 Sides & Starters</h3>
+        <div class="menu-grid">
+            <!-- Item 4 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Coral Bits</span>
@@ -864,6 +882,7 @@
                 </div>
             </div>
 
+            <!-- Item 5 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Kelp Rings</span>
@@ -875,7 +894,25 @@
                     <button class="cust-btn" onclick="openCustomizeModal('Kelp Rings', 1.50)">🧅 Fixin's</button>
                 </div>
             </div>
+        </div>
 
+        <!-- SECTION 3: DRINKS -->
+        <h3 class="menu-category-title">🥤 Refreshing Drinks</h3>
+        <div class="menu-grid">
+            <!-- Item: Diet Dr. Kelp -->
+            <div class="menu-item">
+                <div class="item-name">
+                    <span>Diet Dr. Kelp</span>
+                    <span class="item-price">$1.75</span>
+                </div>
+                <div class="item-desc">Don't forget the drink! How can you expect anyone to eat their pizza without their drink?!</div>
+                <div class="item-actions">
+                    <button class="order-btn" onclick="addToCart('Diet Dr. Kelp', 1.75)">Add to Cart</button>
+                    <button class="cust-btn" onclick="openCustomizeModal('Diet Dr. Kelp', 1.75)">🥤 Fixin's</button>
+                </div>
+            </div>
+
+            <!-- Item 6 -->
             <div class="menu-item">
                 <div class="item-name">
                     <span>Seafoam Soda</span>
@@ -889,10 +926,12 @@
             </div>
         </div>
 
+        <!-- Crew Section -->
         <div class="crew-section">
             <h2 class="crew-title">Meet the Krusty Krew</h2>
             <div class="crew-grid">
                 
+                <!-- SpongeBob -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/sb.png" alt="SpongeBob SquarePants">
@@ -903,6 +942,7 @@
                     <p>"I'm ready! I'm ready! I'm ready to flip your lunch with love and unmatched corporate loyalty!"</p>
                 </div>
 
+                <!-- Squidward -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/sq.png" alt="Squidward Tentacles">
@@ -913,6 +953,7 @@
                     <p>"Please state your order quickly so I can go back to regretting every single life choice that brought me here."</p>
                 </div>
 
+                <!-- Mr. Krabs -->
                 <div class="crew-card">
                     <div class="crew-image-container">
                         <img class="crew-img" src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/TheKrustyKrab/mrk.png" alt="Eugene H. Krabs">
@@ -928,6 +969,7 @@
 
     </div>
 
+    <!-- Floating Dynamic Checkout Panel -->
     <div class="cart-bar" id="money-cart">
         <div class="cart-header-row">
             <div class="cart-text">
@@ -937,12 +979,14 @@
             <button class="toggle-panel-btn" onclick="toggleCartPanel()">⚓ View / Hide Ledger</button>
         </div>
         
+        <!-- Live Itemized Output Box -->
         <div class="cart-items-list" id="cart-items-container">
             <div style="color: rgba(255,255,255,0.25); font-style: italic; font-size: 0.95rem; text-align: center; padding: 20px 10px;">
                 Your belly is empty... Add some Galley Grub!
             </div>
         </div>
 
+        <!-- Identity & Fully Realistic Delivery Fields Layout -->
         <div class="delivery-form-grid">
             <div class="form-field-wrapper">
                 <label for="cust-name">Customer Name</label>
@@ -961,6 +1005,7 @@
         <button class="checkout-btn" id="checkout-button" onclick="checkout()">GIVE ME ME MONEY</button>
     </div>
 
+    <!-- Customization Modal -->
     <div class="modal-overlay" id="customize-modal">
         <div class="modal-content">
             <div class="modal-header" id="modal-item-title">Customize Item</div>
@@ -980,6 +1025,7 @@
         </p>
     </footer>
 
+    <!-- Interactive Ordering Script -->
     <script>
         let cart = {};
         let currentModalItem = { name: '', basePrice: '' };
