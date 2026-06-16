@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Krusty Krab - Fan Chat</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --bg-deep: #0b0f19;
+            --bg-card: #161d30;
+            --jellyfish-glow: #ff6bbf;
+            --sponge-yellow: #f3c623;
+            --bubble-blue: #00d2ff;
+            --text-light: #f0f4f8;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--bg-card);
+            border: 2px solid var(--bubble-blue);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
+        }
+
+        h1 {
+            color: var(--sponge-yellow);
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            margin-top: 0;
+        }
+
+        .chat-box {
+            height: 350px;
+            overflow-y: auto;
+            border: 1px solid #2d3748;
+            background: #0d1321;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .msg {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            background: #1e293b;
+        }
+
+        .msg .author {
+            color: var(--bubble-blue);
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .msg .reply {
+            margin-top: 8px;
+            padding-left: 10px;
+            border-left: 3px solid var(--jellyfish-glow);
+            color: #cbd5e1;
+            font-style: italic;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input, textarea {
+            background: #0d1321;
+            border: 1px solid #4a5568;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--sponge-yellow);
+        }
+
+        button {
+            background: var(--sponge-yellow);
+            color: #000;
+            border: none;
+            padding: 12px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #dbb218;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Bikini Bottom Message Board</h1>
+    <div class="chat-box" id="chatBox"><!-- Messages arrive here --></div>
+    
+    <div class="input-group">
+        <input type="text" id="username" placeholder="Your Name (e.g., Patrick)" required>
+        <textarea id="message" rows="3" placeholder="Order a Krabby Patty or leave a message..." required></textarea>
+        <button onclick="sendMessage()">Send Message ⚓</button>
+    </div>
+</div>
+
+<script>
+    const SUPABASE_URL = 'https://abbsbogiyzupkymqoqxn.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiYnNib2dpeXp1cGt5bXFvcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MDU0NzIsImV4cCI6MjA5NzE4MTQ3Mn0.KWTkTksWFRlEo_m00BsDN5sttscYE0V_GdvZzBxFgOA';
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const chatBox = document.getElementById('chatBox');
+
+    async function loadMessages() {
+        const { data, error } = await supabase
+            .from('messages')
+            .select('*')
+            .order('created_at', { ascending: true });
+        
+        if (data) {
+            chatBox.innerHTML = '';
+            data.forEach(msg => appendMessage(msg));
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    }
+
+    function appendMessage(msg) {
+        const div = document.createElement('div');
+        div.className = 'msg';
+        let html = `<div class="author">🐙 ${escapeHtml(msg.sender_name)}:</div>
+                    <div>${escapeHtml(msg.message_text)}</div>`;
+        if (msg.reply_text) {
+            html += `<div class="reply"><strong>Manager Reply:</strong> ${escapeHtml(msg.reply_text)}</div>`;
+        }
+        div.innerHTML = html;
+        chatBox.appendChild(div);
+    }
+
+    async function sendMessage() {
+        const nameInput = document.getElementById('username');
+        const msgInput = document.getElementById('message');
+
+        if (!nameInput.value || !msgInput.value) return;
+
+        await supabase.from('messages').insert([
+            { sender_name: nameInput.value, message_text: msgInput.value }
+        ]);
+
+        msgInput.value = '';
+    }
+
+    supabase
+        .channel('schema-db-changes')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'messages' }, payload => {
+            loadMessages();
+        })
+        .subscribe();
+
+    function escapeHtml(str) {
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    loadMessages();
+</script>
+</body>
+</html>
