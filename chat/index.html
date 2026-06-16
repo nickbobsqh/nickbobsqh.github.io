@@ -34,6 +34,7 @@
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
+            box-sizing: border-box;
         }
 
         h1 {
@@ -87,6 +88,8 @@
             padding: 12px;
             border-radius: 8px;
             font-size: 1rem;
+            box-sizing: border-box;
+            width: 100%;
         }
 
         input:focus, textarea:focus {
@@ -103,6 +106,7 @@
             border-radius: 8px;
             cursor: pointer;
             transition: 0.2s;
+            font-size: 1rem;
         }
 
         button:hover {
@@ -115,7 +119,7 @@
 
 <div class="container">
     <h1>Bikini Bottom Message Board</h1>
-    <div class="chat-box" id="chatBox"><!-- Messages arrive here --></div>
+    <div class="chat-box" id="chatBox"></div>
     
     <div class="input-group">
         <input type="text" id="username" placeholder="Your Name (e.g., Patrick)" required>
@@ -127,12 +131,13 @@
 <script>
     const SUPABASE_URL = 'https://abbsbogiyzupkymqoqxn.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiYnNib2dpeXp1cGt5bXFvcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MDU0NzIsImV4cCI6MjA5NzE4MTQ3Mn0.KWTkTksWFRlEo_m00BsDN5sttscYE0V_GdvZzBxFgOA';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
+    
+    // Using supabaseClient variable to eliminate conflicts
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     const chatBox = document.getElementById('chatBox');
 
     async function loadMessages() {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('messages')
             .select('*')
             .order('created_at', { ascending: true });
@@ -162,14 +167,15 @@
 
         if (!nameInput.value || !msgInput.value) return;
 
-        await supabase.from('messages').insert([
+        await supabaseClient.from('messages').insert([
             { sender_name: nameInput.value, message_text: msgInput.value }
         ]);
 
         msgInput.value = '';
     }
 
-    supabase
+    // Live update subscription
+    supabaseClient
         .channel('schema-db-changes')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'messages' }, payload => {
             loadMessages();
