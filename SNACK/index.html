@@ -1,0 +1,3147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNACK</title>
+<link rel="icon" type="image/x-icon" href="/icon.ico">
+
+<style>
+:root {
+    --orange: #ff7a00;
+    --purple: #260020;
+    --muted: #cbbdca;
+    --glass-border: rgba(255,255,255,.16);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+
+    background:
+        radial-gradient(circle at 15% 15%, rgba(170,0,150,.22), transparent 35%),
+        radial-gradient(circle at 85% 25%, rgba(90,0,160,.20), transparent 35%),
+        radial-gradient(circle at 50% 100%, rgba(255,80,0,.08), transparent 40%),
+        linear-gradient(135deg, #260020, #160012 60%, #2e0028);
+
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(90px);
+    opacity: .22;
+    z-index: -1;
+    animation: floatBlob 14s ease-in-out infinite alternate;
+}
+
+body::before {
+    top: -180px;
+    left: -150px;
+    background: radial-gradient(circle, #a90091, transparent 70%);
+}
+
+body::after {
+    right: -180px;
+    bottom: -160px;
+    background: radial-gradient(circle, #6500a5, transparent 70%);
+    animation-delay: -7s;
+}
+
+@keyframes floatBlob {
+    from {
+        transform: translate3d(0,0,0) scale(1);
+    }
+
+    to {
+        transform: translate3d(70px,45px,0) scale(1.18);
+    }
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    position: sticky;
+    top: 14px;
+    width: calc(100% - 28px);
+    max-width: 1450px;
+    min-height: 76px;
+    margin: 14px auto 0;
+    padding: 10px 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    z-index: 100;
+
+    border: 1px solid var(--glass-border);
+    border-radius: 21px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.13),
+            rgba(255,255,255,.035)
+        );
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.35),
+        inset 0 1px 0 rgba(255,255,255,.18);
+
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+
+    overflow: hidden;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 7%;
+    width: 55%;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.55),
+            transparent
+        );
+}
+
+.logo {
+    height: 43px;
+    width: auto;
+    max-width: 190px;
+    object-fit: contain;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.headerSearch {
+    position: relative;
+    flex: 1;
+    min-width: 160px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 17px;
+    opacity: .72;
+    pointer-events: none;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 13px 16px 13px 43px;
+
+    color: white;
+    font-size: 15px;
+    outline: none;
+
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 13px;
+
+    background: rgba(0,0,0,.14);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.searchInput::placeholder {
+    color: rgba(255,255,255,.48);
+}
+
+.searchInput:focus {
+    border-color: rgba(255,155,70,.6);
+
+    box-shadow:
+        0 0 0 3px rgba(255,122,0,.10),
+        inset 0 1px 0 rgba(255,255,255,.1);
+}
+
+.tabs {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.tab {
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 12px;
+    padding: 12px 15px;
+
+    color: rgba(255,255,255,.68);
+
+    background: rgba(255,255,255,.045);
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+    white-space: nowrap;
+
+    transition:
+        background .2s,
+        color .2s,
+        transform .15s;
+}
+
+.tab:hover {
+    color: white;
+    background: rgba(255,255,255,.09);
+}
+
+.tab:active {
+    transform: scale(.97);
+}
+
+.tab.active {
+    color: #17100b;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff9b3d,
+            var(--orange)
+        );
+
+    border-color: rgba(255,255,255,.18);
+
+    box-shadow:
+        0 7px 20px rgba(255,122,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.4);
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.content {
+    width: calc(100% - 28px);
+    max-width: 1400px;
+    margin: auto;
+    padding: 28px 4% 70px;
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+#homeSection {
+    display: block;
+}
+
+.homeHero {
+    padding: 45px 30px;
+    margin-bottom: 28px;
+
+    text-align: center;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.11),
+            rgba(255,255,255,.035)
+        );
+
+    border: 1px solid var(--glass-border);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.3),
+        inset 0 1px 0 rgba(255,255,255,.18);
+
+    backdrop-filter: blur(28px) saturate(145%);
+    -webkit-backdrop-filter: blur(28px) saturate(145%);
+}
+
+.homeHero h1 {
+    margin: 0 0 10px;
+
+    font-size: clamp(45px, 8vw, 80px);
+
+    color: var(--orange);
+
+    letter-spacing: 4px;
+
+    text-shadow:
+        0 8px 30px rgba(255,122,0,.18);
+}
+
+.homeHero p {
+    max-width: 800px;
+    margin: auto;
+
+    color: var(--muted);
+
+    line-height: 1.65;
+}
+
+.homeSection {
+    margin-bottom: 35px;
+}
+
+.homeSectionTitle {
+    font-size: 28px;
+    margin: 0 0 18px;
+}
+
+.aboutCard {
+    padding: 25px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.035)
+        );
+
+    border: 1px solid var(--glass-border);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.13);
+
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+
+    color: var(--muted);
+
+    line-height: 1.7;
+
+    white-space: pre-wrap;
+}
+
+.membersGrid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(190px, 1fr)
+        );
+
+    gap: 17px;
+}
+
+.memberCard {
+    padding: 24px;
+
+    text-align: center;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.035)
+        );
+
+    border: 1px solid var(--glass-border);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.13);
+
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+
+    transition:
+        transform .2s,
+        border-color .2s;
+}
+
+.memberCard:hover {
+    transform: translateY(-4px);
+
+    border-color:
+        rgba(255,255,255,.27);
+}
+
+.memberImage {
+    width: 130px;
+    height: 130px;
+
+    display: block;
+
+    margin: 0 auto 15px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border:
+        3px solid
+        rgba(255,122,0,.65);
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.3);
+}
+
+.memberName {
+    margin: 0;
+
+    font-size: 19px;
+}
+
+.memberRole {
+    margin: 7px 0 0;
+
+    color:
+        rgba(255,255,255,.5);
+
+    font-size: 13px;
+}
+
+.socialGrid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(250px, 1fr)
+        );
+
+    gap: 17px;
+}
+
+.socialCard {
+    display: block;
+
+    padding: 22px;
+
+    text-decoration: none;
+
+    color: white;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.035)
+        );
+
+    border: 1px solid var(--glass-border);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.13);
+
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+
+    transition:
+        transform .2s,
+        border-color .2s;
+}
+
+.socialCard:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(255,255,255,.27);
+}
+
+.socialCard h3 {
+    margin: 0 0 7px;
+
+    color: var(--orange);
+}
+
+.socialCard p {
+    margin: 0;
+
+    color:
+        rgba(255,255,255,.55);
+}
+
+
+/* =========================
+   PLAYER
+========================= */
+
+#playerSection {
+    display: none;
+
+    position: relative;
+
+    padding: 12px;
+    margin-bottom: 28px;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.11),
+            rgba(255,255,255,.035)
+        );
+
+    border: 1px solid var(--glass-border);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.4),
+        inset 0 1px 0 rgba(255,255,255,.18);
+
+    backdrop-filter: blur(28px) saturate(145%);
+    -webkit-backdrop-filter: blur(28px) saturate(145%);
+}
+
+video {
+    width: 100%;
+    max-height: 700px;
+    display: block;
+
+    background: #050505;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.45);
+}
+
+#nowPlaying {
+    padding: 12px 5px 0;
+
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+.playerButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 4px 2px;
+}
+
+.previousButton,
+.nextButton {
+    min-width: 180px;
+
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 12px;
+
+    padding: 11px 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    color: #17100b;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff9b3d,
+            var(--orange)
+        );
+
+    box-shadow:
+        0 7px 20px rgba(255,122,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.4);
+
+    transition:
+        transform .15s,
+        opacity .2s;
+}
+
+.previousButton:hover:not(:disabled),
+.nextButton:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.previousButton:active:not(:disabled),
+.nextButton:active:not(:disabled) {
+    transform: scale(.97);
+}
+
+.previousButton:disabled,
+.nextButton:disabled {
+    opacity: .35;
+    cursor: default;
+}
+
+
+/* =========================
+   SECTIONS
+========================= */
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin: 8px 0 18px;
+}
+
+.sectionTitle {
+    font-size: 28px;
+
+    margin: 0;
+
+    letter-spacing: -.5px;
+
+    text-shadow:
+        0 2px 15px rgba(0,0,0,.35);
+}
+
+.randomButton {
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 12px;
+
+    padding: 11px 17px;
+
+    color: #17100b;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff9b3d,
+            var(--orange)
+        );
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 20px rgba(255,122,0,.16),
+        inset 0 1px 0 rgba(255,255,255,.4);
+
+    transition: transform .15s;
+}
+
+.randomButton:hover {
+    transform: translateY(-2px);
+}
+
+.randomButton:active {
+    transform: scale(.97);
+}
+
+
+/* =========================
+   SEASONS
+========================= */
+
+.seasons {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.seasonButton {
+    color: white;
+
+    border: 1px solid var(--glass-border);
+    border-radius: 11px;
+
+    padding: 10px 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background:
+        rgba(255,255,255,.055);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.seasonButton:hover {
+    background:
+        rgba(255,255,255,.09);
+}
+
+.seasonButton.active {
+    color: #17100b;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff9b3d,
+            var(--orange)
+        );
+
+    box-shadow:
+        0 7px 22px rgba(255,122,0,.16),
+        inset 0 1px 0 rgba(255,255,255,.4);
+}
+
+
+/* =========================
+   EPISODES
+========================= */
+
+#episodes,
+#favoriteEpisodes {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(310px, 1fr)
+        );
+
+    gap: 17px;
+
+    margin-bottom: 35px;
+}
+
+.episode {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    border: 1px solid var(--glass-border);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.035)
+        );
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.25),
+        inset 0 1px 0 rgba(255,255,255,.13);
+
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+
+    transition:
+        transform .2s,
+        border-color .2s,
+        box-shadow .2s;
+}
+
+.episode:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(255,255,255,.27);
+
+    box-shadow:
+        0 25px 55px rgba(0,0,0,.34),
+        inset 0 1px 0 rgba(255,255,255,.17);
+}
+
+.episodeBody {
+    padding: 19px;
+}
+
+.episodeNumber {
+    color: #ffae68;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+.episodeTitle {
+    font-size: 17px;
+    font-weight: bold;
+
+    line-height: 1.35;
+
+    min-height: 46px;
+}
+
+.filename {
+    color: rgba(255,255,255,.48);
+
+    font-size: 11px;
+
+    margin-top: 10px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 17px;
+}
+
+.play {
+    flex: 1;
+
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 10px;
+
+    padding: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    color: #17100b;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff9b3d,
+            var(--orange)
+        );
+
+    box-shadow:
+        0 6px 18px rgba(255,122,0,.15),
+        inset 0 1px 0 rgba(255,255,255,.4);
+}
+
+.copy,
+.favorite {
+    min-width: 48px;
+
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 10px;
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.055);
+
+    cursor: pointer;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.copy {
+    padding: 10px 13px;
+}
+
+.favorite {
+    padding: 10px 13px;
+    font-size: 17px;
+}
+
+.favorite.active {
+    color: #ffd45a;
+
+    text-shadow:
+        0 0 12px rgba(255,210,70,.4);
+}
+
+#status {
+    color: rgba(255,255,255,.62);
+
+    font-size: 14px;
+
+    margin: 0 0 18px;
+}
+
+.noResults {
+    color: rgba(255,255,255,.58);
+
+    padding: 30px 0;
+
+    font-size: 16px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width: 900px) {
+
+    header {
+        flex-wrap: wrap;
+        padding: 10px 13px;
+    }
+
+    .logo {
+        height: 38px;
+    }
+
+    .headerSearch {
+        order: 3;
+        flex-basis: 100%;
+    }
+
+    .tabs {
+        margin-left: auto;
+    }
+
+    header {
+        min-height: auto;
+    }
+
+}
+
+@media(max-width: 600px) {
+
+    header {
+        top: 8px;
+
+        width: calc(100% - 16px);
+
+        margin-top: 8px;
+
+        border-radius: 17px;
+    }
+
+    .logo {
+        max-width: 150px;
+    }
+
+    .tabs {
+        width: 100%;
+    }
+
+    .tab {
+        flex: 1;
+
+        padding: 11px 5px;
+
+        font-size: 12px;
+    }
+
+    .content {
+        width: calc(100% - 16px);
+
+        padding: 22px 8px 45px;
+    }
+
+    #episodes,
+    #favoriteEpisodes {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+
+    .membersGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .memberImage {
+        width: 100px;
+        height: 100px;
+    }
+
+    .sectionHeader {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .randomButton {
+        width: 100%;
+    }
+
+    .playerButtons {
+        flex-direction: row;
+    }
+
+    .previousButton,
+    .nextButton {
+        min-width: 0;
+        flex: 1;
+        padding: 11px 8px;
+    }
+
+    .sectionTitle {
+        font-size: 24px;
+    }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<header>
+
+    <img
+        class="logo"
+        src="/logo.png"
+        alt="SNACK"
+        onclick="switchTab('home')"
+    >
+
+
+    <div class="headerSearch">
+
+        <span class="searchIcon">
+            🔎
+        </span>
+
+        <input
+            id="searchInput"
+            class="searchInput"
+            type="text"
+            placeholder="Search episodes..."
+            autocomplete="off"
+        >
+
+    </div>
+
+
+    <div class="tabs">
+
+        <button
+            id="episodesTab"
+            class="tab"
+            onclick="switchTab('episodes')"
+        >
+            📺 Episodes
+        </button>
+
+
+        <button
+            id="favoritesTab"
+            class="tab"
+            onclick="switchTab('favorites')"
+        >
+            ⭐ Favorites
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="content">
+
+
+    <!-- HOME -->
+
+    <section id="homeSection">
+
+        <div class="homeHero">
+
+            <img
+                src="/logo.png"
+                alt="SNACK"
+                style="max-width: 320px; width: 80%; height: auto;"
+            >
+
+            <p>
+                
+                
+            </p>
+
+        </div>
+
+
+        <!-- ABOUT -->
+
+        <div class="homeSection">
+
+            <h2 class="homeSectionTitle">
+                About
+            </h2>
+
+            <div
+                id="aboutText"
+                class="aboutCard"
+            >
+                Loading...
+            </div>
+
+        </div>
+
+
+        <!-- NEWS -->
+
+        <div class="homeSection">
+
+            <h2 class="homeSectionTitle">
+                News
+            </h2>
+
+            <div
+                id="newsText"
+                class="aboutCard"
+            >
+                Loading...
+            </div>
+
+        </div>
+
+
+        <!-- MEMBERS -->
+
+        <div class="homeSection">
+
+            <h2 class="homeSectionTitle">
+                Members
+            </h2>
+
+
+            <div class="membersGrid">
+
+
+                <div class="memberCard">
+
+                    <img
+                        class="memberImage"
+                        src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/SNACK/NickBob.png"
+                        alt="NickBob"
+                    >
+
+                    <h3 class="memberName">
+                        NickBob
+                    </h3>
+
+                    <p class="memberRole">
+                        Member
+                    </p>
+
+                </div>
+
+
+                <div class="memberCard">
+
+                    <img
+                        class="memberImage"
+                        src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/SNACK/Creeper.png"
+                        alt="Creeper"
+                    >
+
+                    <h3 class="memberName">
+                        Creeper
+                    </h3>
+
+                    <p class="memberRole">
+                        Member
+                    </p>
+
+                </div>
+
+
+                <div class="memberCard">
+
+                    <img
+                        class="memberImage"
+                        src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/SNACK/Shayo.png"
+                        alt="Shayo"
+                    >
+
+                    <h3 class="memberName">
+                        Shayo
+                    </h3>
+
+                    <p class="memberRole">
+                        Member
+                    </p>
+
+                </div>
+
+
+                <div class="memberCard">
+
+                    <img
+                        class="memberImage"
+                        src="https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/SNACK/Sepehr.png"
+                        alt="Sepehr"
+                    >
+
+                    <h3 class="memberName">
+                        Sepehr
+                    </h3>
+
+                    <p class="memberRole">
+                        Member
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- SOCIAL LINKS -->
+
+        <div class="homeSection">
+
+            <h2 class="homeSectionTitle">
+                Social Media
+            </h2>
+
+
+            <div class="socialGrid">
+
+
+                <a
+                    class="socialCard"
+                    href="https://www.youtube.com/@snack.movies"
+                    target="_blank"
+                >
+
+                    <h3>
+                        YouTube
+                    </h3>
+
+                    <p>
+                        Follow SNACK on YouTube.
+                    </p>
+
+                </a>
+
+
+                <a
+                    class="socialCard"
+                    href="https://www.aparat.com/snack.movies"
+                    target="_blank"
+                >
+
+                    <h3>
+                        Aparat
+                    </h3>
+
+                    <p>
+                        Watch our dubbed episodes on Aparat.
+                    </p>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PLAYER -->
+
+    <div id="playerSection">
+
+        <video
+            id="player"
+            controls
+        ></video>
+
+
+        <div id="nowPlaying"></div>
+
+
+        <div class="playerButtons">
+
+            <button
+                id="previousButton"
+                class="previousButton"
+                onclick="playPrevious()"
+            >
+                ⏮ Previous Episode
+            </button>
+
+
+            <button
+                id="nextButton"
+                class="nextButton"
+                onclick="playNext()"
+            >
+                Next Episode ⏭
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- EPISODES -->
+
+    <section
+        id="episodesSection"
+        class="hidden"
+    >
+
+        <div class="sectionHeader">
+
+            <h2 class="sectionTitle">
+                Episodes
+            </h2>
+
+
+            <button
+                class="randomButton"
+                onclick="randomEpisode()"
+            >
+                🎲 Random Episode
+            </button>
+
+        </div>
+
+
+        <div
+            class="seasons"
+            id="seasons"
+        ></div>
+
+
+        <div id="status">
+            Loading library...
+        </div>
+
+
+        <div id="episodes"></div>
+
+    </section>
+
+
+    <!-- FAVORITES -->
+
+    <section
+        id="favoritesSection"
+        class="hidden"
+    >
+
+        <div class="sectionHeader">
+
+            <h2 class="sectionTitle">
+                Favorites
+            </h2>
+
+        </div>
+
+
+        <div id="favoriteEpisodes"></div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+
+/* =========================
+   ABOUT.TXT
+========================= */
+
+const ABOUT_URL =
+    "https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/SNACK/about.txt";
+
+
+async function loadAbout() {
+
+    const aboutText =
+        document.getElementById(
+            "aboutText"
+        );
+
+    try {
+
+        const response =
+            await fetch(
+                ABOUT_URL +
+                "?v=" +
+                Date.now()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Couldn't load about.txt"
+            );
+
+        }
+
+
+        const text =
+            await response.text();
+
+
+        aboutText.textContent =
+            text.trim();
+
+    } catch(error) {
+
+        console.error(error);
+
+        aboutText.textContent =
+            "SNACK is a SpongeBob Dubbing Group.";
+
+    }
+
+}
+
+
+/* =========================
+   NEWS.TXT
+========================= */
+
+const NEWS_URL =
+    "https://raw.githubusercontent.com/nickbobsqh/nickbobsqh.github.io/refs/heads/main/SNACK/news.txt";
+
+
+async function loadNews() {
+
+    const newsText =
+        document.getElementById(
+            "newsText"
+        );
+
+    try {
+
+        const response =
+            await fetch(
+                NEWS_URL +
+                "?v=" +
+                Date.now()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Couldn't load news.txt"
+            );
+
+        }
+
+
+        const text =
+            await response.text();
+
+
+        newsText.textContent =
+            text.trim();
+
+    } catch(error) {
+
+        console.error(error);
+
+        newsText.textContent =
+            "No news available.";
+
+    }
+
+}
+
+
+/* =========================
+   LIBRARY
+========================= */
+
+let library = {
+    seasons: []
+};
+
+
+let currentSeasonIndex = -1;
+
+let currentEpisodeIndex = -1;
+
+
+let favorites = JSON.parse(
+    localStorage.getItem(
+        "snack-favorites"
+    ) || "[]"
+);
+
+
+let currentTab =
+    "home";
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const seasonsDiv =
+    document.getElementById(
+        "seasons"
+    );
+
+
+const episodesDiv =
+    document.getElementById(
+        "episodes"
+    );
+
+
+const favoriteEpisodesDiv =
+    document.getElementById(
+        "favoriteEpisodes"
+    );
+
+
+const episodesSection =
+    document.getElementById(
+        "episodesSection"
+    );
+
+
+const favoritesSection =
+    document.getElementById(
+        "favoritesSection"
+    );
+
+
+const homeSection =
+    document.getElementById(
+        "homeSection"
+    );
+
+
+const status =
+    document.getElementById(
+        "status"
+    );
+
+
+const playerSection =
+    document.getElementById(
+        "playerSection"
+    );
+
+
+const player =
+    document.getElementById(
+        "player"
+    );
+
+
+const nowPlaying =
+    document.getElementById(
+        "nowPlaying"
+    );
+
+
+const previousButton =
+    document.getElementById(
+        "previousButton"
+    );
+
+
+const nextButton =
+    document.getElementById(
+        "nextButton"
+    );
+
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+
+/* =========================
+   LOAD LIBRARY
+========================= */
+
+async function loadLibrary() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/library"
+            );
+
+
+        library =
+            await response.json();
+
+
+        createSeasonButtons();
+
+
+        if (
+            library.seasons.length > 0
+        ) {
+
+            showSeason(
+                library
+                    .seasons[0]
+                    .number
+            );
+
+        } else {
+
+            renderEpisodes([]);
+
+        }
+
+    } catch(error) {
+
+        status.textContent =
+            "Couldn't load library.";
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =========================
+   TABS
+========================= */
+
+function switchTab(tab) {
+
+    currentTab =
+        tab;
+
+
+    searchInput.value =
+        "";
+
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(button => {
+
+            button.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    homeSection
+        .classList.add(
+            "hidden"
+        );
+
+
+    episodesSection
+        .classList.add(
+            "hidden"
+        );
+
+
+    favoritesSection
+        .classList.add(
+            "hidden"
+        );
+
+
+    if (
+        tab === "home"
+    ) {
+
+        homeSection
+            .classList.remove(
+                "hidden"
+            );
+
+
+        playerSection.style.display =
+            "none";
+
+    }
+
+
+    if (
+        tab === "episodes"
+    ) {
+
+        document
+            .getElementById(
+                "episodesTab"
+            )
+            .classList.add(
+                "active"
+            );
+
+
+        episodesSection
+            .classList.remove(
+                "hidden"
+            );
+
+    }
+
+
+    if (
+        tab === "favorites"
+    ) {
+
+        document
+            .getElementById(
+                "favoritesTab"
+            )
+            .classList.add(
+                "active"
+            );
+
+
+        favoritesSection
+            .classList.remove(
+                "hidden"
+            );
+
+
+        renderFavorites();
+
+    }
+
+}
+
+
+/* =========================
+   SEASONS
+========================= */
+
+function createSeasonButtons() {
+
+    seasonsDiv.innerHTML =
+        "";
+
+
+    for (
+        const season
+        of library.seasons
+    ) {
+
+        const button =
+            document.createElement(
+                "button"
+            );
+
+
+        button.className =
+            "seasonButton";
+
+
+        button.textContent =
+            season.name;
+
+
+        button.dataset.season =
+            season.number;
+
+
+        button.onclick = () => {
+
+            showSeason(
+                season.number
+            );
+
+        };
+
+
+        seasonsDiv.appendChild(
+            button
+        );
+
+    }
+
+}
+
+
+function showSeason(number) {
+
+    const season =
+        library.seasons.find(
+            s =>
+                s.number == number
+        );
+
+
+    if (!season) return;
+
+
+    document
+        .querySelectorAll(
+            ".seasonButton"
+        )
+        .forEach(button => {
+
+            button.classList.toggle(
+                "active",
+                button.dataset.season ==
+                    number
+            );
+
+        });
+
+
+    renderEpisodes(
+        season.episodes.map(
+            (ep, index) => ({
+
+                ep: ep,
+
+                season: season,
+
+                seasonIndex:
+                    library.seasons.indexOf(
+                        season
+                    ),
+
+                episodeIndex:
+                    index
+
+            })
+        )
+    );
+
+
+    status.textContent =
+        `${season.name} • ${season.episodes.length} video(s)`;
+
+}
+
+
+/* =========================
+   FAVORITES
+========================= */
+
+function getFavoriteKey(item) {
+
+    return item.path;
+
+}
+
+
+function isFavorite(item) {
+
+    return favorites.includes(
+        getFavoriteKey(item)
+    );
+
+}
+
+
+function toggleFavorite(
+    item,
+    button
+) {
+
+    const key =
+        getFavoriteKey(item);
+
+
+    if (
+        favorites.includes(key)
+    ) {
+
+        favorites =
+            favorites.filter(
+                value =>
+                    value !== key
+            );
+
+
+        button.classList.remove(
+            "active"
+        );
+
+
+        button.textContent =
+            "☆";
+
+    } else {
+
+        favorites.push(
+            key
+        );
+
+
+        button.classList.add(
+            "active"
+        );
+
+
+        button.textContent =
+            "★";
+
+    }
+
+
+    localStorage.setItem(
+        "snack-favorites",
+        JSON.stringify(
+            favorites
+        )
+    );
+
+
+    if (
+        currentTab ===
+        "favorites"
+    ) {
+
+        renderFavorites();
+
+    }
+
+}
+
+
+function createFavoriteButton(
+    item
+) {
+
+    const button =
+        document.createElement(
+            "button"
+        );
+
+
+    button.className =
+        "favorite";
+
+
+    if (
+        isFavorite(item)
+    ) {
+
+        button.classList.add(
+            "active"
+        );
+
+
+        button.textContent =
+            "★";
+
+    } else {
+
+        button.textContent =
+            "☆";
+
+    }
+
+
+    button.onclick = () => {
+
+        toggleFavorite(
+            item,
+            button
+        );
+
+    };
+
+
+    return button;
+
+}
+
+
+/* =========================
+   RENDER EPISODES
+========================= */
+
+function renderEpisodes(
+    items
+) {
+
+    episodesDiv.innerHTML =
+        "";
+
+
+    if (
+        items.length === 0
+    ) {
+
+        episodesDiv.innerHTML =
+            '<div class="noResults">No episodes found.</div>';
+
+        return;
+
+    }
+
+
+    for (
+        const item
+        of items
+    ) {
+
+        const ep =
+            item.ep;
+
+
+        const season =
+            item.season;
+
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "episode";
+
+
+        const body =
+            document.createElement(
+                "div"
+            );
+
+
+        body.className =
+            "episodeBody";
+
+
+        const number =
+            document.createElement(
+                "div"
+            );
+
+
+        number.className =
+            "episodeNumber";
+
+
+        number.textContent =
+            `${season.name} • ${ep.episode}`;
+
+
+        const title =
+            document.createElement(
+                "div"
+            );
+
+
+        title.className =
+            "episodeTitle";
+
+
+        title.textContent =
+            ep.title;
+
+
+        const filename =
+            document.createElement(
+                "div"
+            );
+
+
+        filename.className =
+            "filename";
+
+
+        filename.textContent =
+            ep.filename;
+
+
+        const buttons =
+            document.createElement(
+                "div"
+            );
+
+
+        buttons.className =
+            "buttons";
+
+
+        const play =
+            document.createElement(
+                "button"
+            );
+
+
+        play.className =
+            "play";
+
+
+        play.textContent =
+            "▶ Play";
+
+
+        play.onclick = () => {
+
+            playEpisode(
+                item.seasonIndex,
+                item.episodeIndex
+            );
+
+        };
+
+
+        const copy =
+            document.createElement(
+                "button"
+            );
+
+
+        copy.className =
+            "copy";
+
+
+        copy.textContent =
+            "Copy";
+
+
+        copy.onclick = () => {
+
+            copyLink(
+                ep.path,
+                copy
+            );
+
+        };
+
+
+        buttons.appendChild(
+            play
+        );
+
+
+        buttons.appendChild(
+            copy
+        );
+
+
+        buttons.appendChild(
+            createFavoriteButton(
+                ep
+            )
+        );
+
+
+        body.appendChild(
+            number
+        );
+
+
+        body.appendChild(
+            title
+        );
+
+
+        body.appendChild(
+            filename
+        );
+
+
+        body.appendChild(
+            buttons
+        );
+
+
+        card.appendChild(
+            body
+        );
+
+
+        episodesDiv.appendChild(
+            card
+        );
+
+    }
+
+}
+
+
+/* =========================
+   FAVORITES RENDERING
+========================= */
+
+function renderFavorites() {
+
+    favoriteEpisodesDiv.innerHTML =
+        "";
+
+
+    const episodeItems = [];
+
+
+    library.seasons.forEach(
+        (
+            season,
+            seasonIndex
+        ) => {
+
+            season.episodes.forEach(
+                (
+                    ep,
+                    episodeIndex
+                ) => {
+
+                    if (
+                        isFavorite(ep)
+                    ) {
+
+                        episodeItems.push({
+
+                            ep: ep,
+
+                            season: season,
+
+                            seasonIndex:
+                                seasonIndex,
+
+                            episodeIndex:
+                                episodeIndex
+
+                        });
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    if (
+        episodeItems.length > 0
+    ) {
+
+        const title =
+            document.createElement(
+                "h3"
+            );
+
+
+        title.className =
+            "sectionTitle";
+
+
+        title.style.margin =
+            "0 0 18px";
+
+
+        title.textContent =
+            "Episodes";
+
+
+        favoriteEpisodesDiv
+            .appendChild(
+                title
+            );
+
+
+        const grid =
+            document.createElement(
+                "div"
+            );
+
+
+        grid.style.display =
+            "grid";
+
+
+        grid.style.gridTemplateColumns =
+            "repeat(auto-fill, minmax(310px, 1fr)";
+
+
+        grid.style.gap =
+            "17px";
+
+
+        episodeItems.forEach(
+            item => {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "episode";
+
+
+                const body =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                body.className =
+                    "episodeBody";
+
+
+                const number =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                number.className =
+                    "episodeNumber";
+
+
+                number.textContent =
+                    `${item.season.name} • ${item.ep.episode}`;
+
+
+                const title =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                title.className =
+                    "episodeTitle";
+
+
+                title.textContent =
+                    item.ep.title;
+
+
+                const buttons =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                buttons.className =
+                    "buttons";
+
+
+                const play =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                play.className =
+                    "play";
+
+
+                play.textContent =
+                    "▶ Play";
+
+
+                play.onclick = () => {
+
+                    playEpisode(
+                        item.seasonIndex,
+                        item.episodeIndex
+                    );
+
+                };
+
+
+                buttons.appendChild(
+                    play
+                );
+
+
+                buttons.appendChild(
+                    createFavoriteButton(
+                        item.ep
+                    )
+                );
+
+
+                body.appendChild(
+                    number
+                );
+
+
+                body.appendChild(
+                    title
+                );
+
+
+                body.appendChild(
+                    buttons
+                );
+
+
+                card.appendChild(
+                    body
+                );
+
+
+                grid.appendChild(
+                    card
+                );
+
+            }
+        );
+
+
+        favoriteEpisodesDiv
+            .appendChild(
+                grid
+            );
+
+
+    } else {
+
+        favoriteEpisodesDiv.innerHTML =
+            '<div class="noResults">You haven\'t added anything to your favorites yet.</div>';
+
+    }
+
+}
+
+
+/* =========================
+   PLAYER
+========================= */
+
+function playEpisode(
+    seasonIndex,
+    episodeIndex
+) {
+
+    const season =
+        library.seasons[
+            seasonIndex
+        ];
+
+
+    if (!season) return;
+
+
+    const ep =
+        season.episodes[
+            episodeIndex
+        ];
+
+
+    if (!ep) return;
+
+
+    currentSeasonIndex =
+        seasonIndex;
+
+
+    currentEpisodeIndex =
+        episodeIndex;
+
+
+    player.src =
+        ep.path;
+
+
+    playerSection.style.display =
+        "block";
+
+
+    nowPlaying.textContent =
+        `${season.name} • ${ep.episode} • ${ep.title}`;
+
+
+    updateNavigationButtons();
+
+
+    player.play().catch(
+        () => {}
+    );
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+/* =========================
+   PREVIOUS
+========================= */
+
+function playPrevious() {
+
+    if (
+        currentSeasonIndex < 0 ||
+        currentEpisodeIndex < 0
+    ) {
+
+        return;
+
+    }
+
+
+    let seasonIndex =
+        currentSeasonIndex;
+
+
+    let episodeIndex =
+        currentEpisodeIndex - 1;
+
+
+    if (
+        episodeIndex < 0
+    ) {
+
+        seasonIndex =
+            currentSeasonIndex - 1;
+
+
+        if (
+            seasonIndex < 0
+        ) {
+
+            return;
+
+        }
+
+
+        episodeIndex =
+            library
+                .seasons[
+                    seasonIndex
+                ]
+                .episodes.length - 1;
+
+    }
+
+
+    playEpisode(
+        seasonIndex,
+        episodeIndex
+    );
+
+}
+
+
+/* =========================
+   NEXT
+========================= */
+
+function playNext() {
+
+    if (
+        currentSeasonIndex < 0 ||
+        currentEpisodeIndex < 0
+    ) {
+
+        return;
+
+    }
+
+
+    let seasonIndex =
+        currentSeasonIndex;
+
+
+    let episodeIndex =
+        currentEpisodeIndex + 1;
+
+
+    if (
+        episodeIndex >=
+        library
+            .seasons[
+                seasonIndex
+            ]
+            .episodes.length
+    ) {
+
+        seasonIndex =
+            currentSeasonIndex + 1;
+
+
+        episodeIndex =
+            0;
+
+    }
+
+
+    if (
+        !library.seasons[
+            seasonIndex
+        ]
+    ) {
+
+        return;
+
+    }
+
+
+    playEpisode(
+        seasonIndex,
+        episodeIndex
+    );
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function updateNavigationButtons() {
+
+    if (
+        currentSeasonIndex < 0 ||
+        currentEpisodeIndex < 0
+    ) {
+
+        previousButton.disabled =
+            true;
+
+
+        nextButton.disabled =
+            true;
+
+
+        return;
+
+    }
+
+
+    previousButton.disabled =
+        !(
+            currentEpisodeIndex > 0 ||
+            currentSeasonIndex > 0
+        );
+
+
+    const season =
+        library.seasons[
+            currentSeasonIndex
+        ];
+
+
+    nextButton.disabled =
+        !(
+            currentEpisodeIndex <
+                season.episodes.length - 1 ||
+
+            currentSeasonIndex <
+                library.seasons.length - 1
+        );
+
+}
+
+
+player.addEventListener(
+    "ended",
+    () => {
+
+        if (
+            !nextButton.disabled
+        ) {
+
+            playNext();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   RANDOM EPISODE
+========================= */
+
+function randomEpisode() {
+
+    const all = [];
+
+
+    library.seasons.forEach(
+        (
+            season,
+            seasonIndex
+        ) => {
+
+            season.episodes.forEach(
+                (
+                    ep,
+                    episodeIndex
+                ) => {
+
+                    all.push({
+
+                        seasonIndex:
+                            seasonIndex,
+
+                        episodeIndex:
+                            episodeIndex
+
+                    });
+
+                }
+            );
+
+        }
+    );
+
+
+    if (
+        !all.length
+    ) {
+
+        return;
+
+    }
+
+
+    const selected =
+        all[
+            Math.floor(
+                Math.random() *
+                all.length
+            )
+        ];
+
+
+    playEpisode(
+        selected.seasonIndex,
+        selected.episodeIndex
+    );
+
+}
+
+
+/* =========================
+   COPY
+========================= */
+
+async function copyLink(
+    path,
+    button
+) {
+
+    try {
+
+        await navigator.clipboard.writeText(
+            path
+        );
+
+
+        button.textContent =
+            "Copied!";
+
+
+        setTimeout(
+            () => {
+
+                button.textContent =
+                    "Copy";
+
+            },
+            1200
+        );
+
+
+    } catch(error) {
+
+        console.error(
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+searchInput.addEventListener(
+    "input",
+    () => {
+
+        const query =
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        if (!query) {
+
+            if (
+                currentTab ===
+                    "episodes" &&
+                library.seasons.length
+            ) {
+
+                showSeason(
+                    library
+                        .seasons[0]
+                        .number
+                );
+
+            }
+
+
+            if (
+                currentTab ===
+                    "favorites"
+            ) {
+
+                renderFavorites();
+
+            }
+
+
+            return;
+
+        }
+
+
+        if (
+            currentTab ===
+                "episodes"
+        ) {
+
+            const results = [];
+
+
+            library.seasons.forEach(
+                (
+                    season,
+                    seasonIndex
+                ) => {
+
+                    season.episodes.forEach(
+                        (
+                            ep,
+                            episodeIndex
+                        ) => {
+
+                            const searchable =
+                                (
+                                    season.name +
+                                    " " +
+                                    ep.episode +
+                                    " " +
+                                    ep.title +
+                                    " " +
+                                    ep.filename
+                                ).toLowerCase();
+
+
+                            if (
+                                searchable.includes(
+                                    query
+                                )
+                            ) {
+
+                                results.push({
+
+                                    ep: ep,
+
+                                    season: season,
+
+                                    seasonIndex:
+                                        seasonIndex,
+
+                                    episodeIndex:
+                                        episodeIndex
+
+                                });
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+
+            renderEpisodes(
+                results
+            );
+
+
+            status.textContent =
+                `${results.length} result${
+                    results.length === 1
+                        ? ""
+                        : "s"
+                } found`;
+
+        } else if (
+            currentTab ===
+            "favorites"
+        ) {
+
+            renderFavoritesSearch(
+                query
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   FAVORITES SEARCH
+========================= */
+
+function renderFavoritesSearch(
+    query
+) {
+
+    const allEpisodes = [];
+
+
+    library.seasons.forEach(
+        (
+            season,
+            seasonIndex
+        ) => {
+
+            season.episodes.forEach(
+                (
+                    ep,
+                    episodeIndex
+                ) => {
+
+                    if (
+                        !isFavorite(ep)
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const searchable =
+                        (
+                            season.name +
+                            " " +
+                            ep.episode +
+                            " " +
+                            ep.title +
+                            " " +
+                            ep.filename
+                        ).toLowerCase();
+
+
+                    if (
+                        searchable.includes(
+                            query
+                        )
+                    ) {
+
+                        allEpisodes.push({
+
+                            ep: ep,
+
+                            season: season,
+
+                            seasonIndex:
+                                seasonIndex,
+
+                            episodeIndex:
+                                episodeIndex
+
+                        });
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    favoriteEpisodesDiv.innerHTML =
+        "";
+
+
+    if (
+        allEpisodes.length === 0
+    ) {
+
+        favoriteEpisodesDiv.innerHTML =
+            '<div class="noResults">No favorite episodes found.</div>';
+
+        return;
+
+    }
+
+
+    allEpisodes.forEach(
+        item => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "episode";
+
+
+            const body =
+                document.createElement(
+                    "div"
+                );
+
+
+            body.className =
+                "episodeBody";
+
+
+            const number =
+                document.createElement(
+                    "div"
+                );
+
+
+            number.className =
+                "episodeNumber";
+
+
+            number.textContent =
+                `${item.season.name} • ${item.ep.episode}`;
+
+
+            const title =
+                document.createElement(
+                    "div"
+                );
+
+
+            title.className =
+                "episodeTitle";
+
+
+            title.textContent =
+                item.ep.title;
+
+
+            const buttons =
+                document.createElement(
+                    "div"
+                );
+
+
+            buttons.className =
+                "buttons";
+
+
+            const play =
+                document.createElement(
+                    "button"
+                );
+
+
+            play.className =
+                "play";
+
+
+            play.textContent =
+                "▶ Play";
+
+
+            play.onclick = () => {
+
+                playEpisode(
+                    item.seasonIndex,
+                    item.episodeIndex
+                );
+
+            };
+
+
+            buttons.appendChild(
+                play
+            );
+
+
+            buttons.appendChild(
+                createFavoriteButton(
+                    item.ep
+                )
+            );
+
+
+            body.appendChild(
+                number
+            );
+
+
+            body.appendChild(
+                title
+            );
+
+
+            body.appendChild(
+                buttons
+            );
+
+
+            card.appendChild(
+                body
+            );
+
+
+            favoriteEpisodesDiv
+                .appendChild(
+                    card
+                );
+
+        }
+    );
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+loadAbout();
+
+loadNews();
+
+loadLibrary();
+
+</script>
+
+</body>
+</html>
